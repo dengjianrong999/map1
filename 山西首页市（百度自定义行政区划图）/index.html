@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>山西省机动车环境管理综合业务平台</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/normalize.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/global.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/responsive.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/index.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/iconfont.css" />
+		<!-- <link rel="stylesheet" type="text/css" media="screen" href="./css//Animate.css" /> -->
+		<link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=pGScV42Ns1QGBLDF1B0EPs5TZ4u5VScv"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+		<!-- plugin select2 -->
+		<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" /> -->
+		<script src="./js/echarts.min.js"></script>
+	</head>
+
+	<body>
+		<div id="erp_container">
+			<a href="./Visualization.html" id="visual">
+				<!-- <img src="./images/visualization.png" alt="大屏可视化"> -->
+			</a>
+			<div id="erp_wrapper">
+				<div class="erp_content">
+					<div class="content_wrap">
+						<div class="map_blcok">
+							<div class="top_wrap">
+								<div class="block_wrap exceedingSTCar_wrap line_one">
+									<div class="title">
+										<i class="iconfont icon-jiantou-xiangxia icon-xiangzuo-copy"></i>
+										<span>超标车型结构分析</span>
+									</div>
+									<div id="exceedingSTCar" class="map map_wrap"></div>
+								</div>
+								<div class="block_wrap connection_wrap line_one">
+									<div class="block_wrap equitment_wrap">
+										<div class="title">
+											<span>设备连接率</span>
+										</div>
+										<div id="equitment" class="map map_wrap"></div>
+									</div>
+									<div class="equitment_label">
+										<ul>
+											<li class="label_li">
+												<div>连接率</div>
+											</li>
+											<li class="label_li">
+												<span></span>
+												<span>90-100%</span>
+											</li>
+											<li class="label_li">
+												<span></span>
+												<span>80-90%</span>
+											</li>
+											<li class="label_li">
+												<span></span>
+												<span>70-80%</span>
+											</li>
+											<li class="label_li">
+												<span></span>
+												<span>60-70%</span>
+											</li>
+											<li class="label_li">
+												<span></span>
+												<span>50-60%</span>
+											</li>
+											<li class="label_li">
+												<span></span>
+												<span>＜50%</span>
+											</li>
+										</ul>
+									</div>
+									<div class="title">
+										<i class="iconfont icon-jiantou-xiangxia icon-xiangzuo-copy"></i>
+										<span>各地市连接情况</span>
+									</div>
+									<div id="shanxiMap" class="map map_wrap"></div>
+								</div>
+								<div class="block_wrap check_wrap line_one">
+									<div class="title">
+										<i class="iconfont icon-jiantou-xiangxia icon-xiangzuo-copy"></i>
+										<span>超标车辆近1个月的监测站排名</span>
+									</div>
+									<div class="map map_wrap" style="padding: 10px;">
+										<table class="tables">
+											<thead>
+												<tr>
+													<th>检测机构</th>
+													<th>排名</th>
+												</tr>
+											</thead>
+											<tbody class="tableTbody"></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="bottom_wrap">
+								<div class="block_wrap report_wrap">
+									<div class="title">
+										<i class="iconfont icon-jiantou-xiangxia icon-xiangzuo-copy"></i>
+										<span>数据连接情况</span>
+									</div>
+									<div class="map_short map_wrap">
+										<div class="left">
+											<div class="line_ line_one">
+												<span>总接收量</span>
+												<p class="count">
+													<span>3</span>
+													<span>5</span>
+													<span>8</span>
+													<span>4</span>
+													<span>5</span>
+													<span>5</span>
+												</p>
+												<span>条</span>
+											</div>
+											<div class="line_ line_two">
+												<span>总上报量</span>
+												<p class="count">
+													<span>3</span>
+													<span>5</span>
+													<span>8</span>
+													<span>4</span>
+													<span>8</span>
+													<span>2</span>
+												</p>
+												<span>条</span>
+											</div>
+										</div>
+										<div class="right" id="report"></div>
+									</div>
+								</div>
+								<div class="block_wrap enterprise_wrap">
+									<div class="title">
+										<i class="iconfont icon-jiantou-xiangxia icon-xiangzuo-copy"></i>
+										<span>设备连接日历</span>
+									</div>
+									<div class="map_short map_wrap" id="enterprise"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<!-- plugins select2 jquery -->
+	<script src="./js/jquery-1.9.1.min.js"></script>
+	<script src="./js/jinzhong.js"></script>
+	<script src="./js/shanxi.js"></script>
+
+</html>
+
+<script>
+	var exceedingSTCarChart = echarts.init(document.getElementById("exceedingSTCar"));
+	var reportChart = echarts.init(document.getElementById("report"));
+	var enterpriseChart = echarts.init(document.getElementById("enterprise"));
+	var equitmentChart = echarts.init(document.getElementById("equitment"));
+
+	var exceedingSTCarOption = {
+		tooltip: {
+			trigger: 'item',
+			formatter: "{b} : {c} ({d}%)"
+		},
+		color: ['#8ba4ff', '#ffb6ff', '#a88fe3', '#60daff', '#508ff9', '#4ebade', '#8ef5e2', '#f8b274', '#41aeff',
+			'#ff21bc', '#ed7d31', '#2099de'
+		],
+		legend: {
+			x: 'center',
+			// y : 'bottom',
+			left: 20,
+			right: 20,
+			bottom: 15,
+			// width: 160,
+			itemGap: 12,
+			itemWidth: 12,
+			itemHeight: 6,
+			formatter: "{name}",
+			data: ['微型货车', '轻微货车', '中型客车', '中型货车', '重型货车', '大型客车', '牵引车', '专项作业车', '专用汽车', '小型客车']
+		},
+		calculable: true,
+		series: [{
+			name: '面积模式',
+			type: 'pie',
+			radius: ['40%', '58%'],
+			center: ['50%', '40%'],
+			label: {
+				normal: {
+					fontSize: 15,
+					formatter: "{d}%"
+				}
+			},
+			data: [{
+				value: 10,
+				name: '微型货车'
+			}, {
+				value: 5,
+				name: '轻微货车'
+			}, {
+				value: 15,
+				name: '中型客车'
+			}, {
+				value: 25,
+				name: '中型货车'
+			}, {
+				value: 20,
+				name: '重型货车'
+			}, {
+				value: 35,
+				name: '大型客车'
+			}, {
+				value: 30,
+				name: '牵引车'
+			}, {
+				value: 40,
+				name: '专项作业车'
+			}, {
+				value: 30,
+				name: '专用汽车'
+			}, {
+				value: 30,
+				name: '小型客车'
+			}]
+		}, {
+			name: '面积模式',
+			type: 'pie',
+			radius: ['0%', '30%'],
+			center: ['50%', '40%'],
+			label: {
+				normal: {
+					position: 'inner',
+					fontSize: 15,
+					formatter: "{b} \n {d}%"
+				}
+			},
+			data: [{
+				value: 30,
+				name: '柴油'
+			}, {
+				value: 70,
+				name: '汽油'
+			}]
+		}]
+	};
+
+
+	var reportOption = {
+		tooltip: {
+			trigger: 'axis'
+		},
+		color: ['#6380e0', '#f69641'],
+		legend: {
+			show: false,
+			data: ['总上报量', '超标量']
+		},
+		grid: [{
+			left: 10,
+			right: 20,
+			bottom: 20,
+			top: 50,
+			containLabel: true
+		}],
+		calculable: true,
+		xAxis: [{
+			type: 'category',
+			axisLine: {
+				show: true,
+				lineStyle: {
+					color: '#dbdbdb',
+					width: 4
+				}
+			},
+			axisTick: {
+				show: false
+			},
+			axisLabel: {
+				show: true,
+				textStyle: {
+					color: '#333'
+				},
+			},
+			data: ['榆次区', '榆社县', '左权县', '和顺县', '昔阳县', '寿阳县', '太谷县', '祁县', '平遥县', '灵石县', '介休市']
+		}],
+		yAxis: [{
+			type: 'value',
+			name: '条',
+			nameTextStyle: {
+				fontSize: 14
+			}
+		}],
+		series: [{
+				name: '总上报量',
+				type: 'bar',
+				data: [112, 114, 117, 123, 125, 176, 135, 162, 132, 120, 116],
+				barWidth: 12,
+				barGap: '50%',
+				itemStyle: {
+					normal: {
+						//柱形图圆角，初始化效果
+						barBorderRadius: [5, 5, 5, 5],
+						label: {
+							show: true, //是否展示
+							textStyle: {
+								fontWeight: 'normal',
+								fontSize: '10',
+								fontFamily: '微软雅黑',
+							}
+						}
+					}
+				},
+				label: {
+					normal: {
+						show: true,
+						fontSize: 10,
+						position: 'top'
+					}
+				},
+			},
+			{
+				name: '超标量',
+				type: 'bar',
+				data: [12, 15, 19, 26, 28, 70, 75, 82, 48, 18, 16],
+				barWidth: 12,
+				barGap: '50%',
+				itemStyle: {
+					normal: {
+						//柱形图圆角，初始化效果
+						barBorderRadius: [5, 5, 5, 5],
+						label: {
+							show: true, //是否展示
+							textStyle: {
+								fontWeight: 'normal',
+								fontSize: '10',
+								fontFamily: '微软雅黑',
+							}
+						}
+					}
+				},
+				label: {
+					normal: {
+						show: true,
+						fontSize: 10,
+						position: 'top'
+					}
+				},
+			}
+		]
+	};
+	// 日历
+	var dateList = [
+		['2017-1-1'],
+		['2017-1-2'],
+		['2017-1-3'],
+		['2017-1-4'],
+		['2017-1-5'],
+		['2017-1-6'],
+		['2017-1-7'],
+		['2017-1-8'],
+		['2017-1-9'],
+		['2017-1-10'],
+		['2017-1-11'],
+		['2017-1-12'],
+		['2017-1-13'],
+		['2017-1-14'],
+		['2017-1-15'],
+		['2017-1-16'],
+		['2017-1-17'],
+		['2017-1-18'],
+		['2017-1-19'],
+		['2017-1-20'],
+		['2017-1-21'],
+		['2017-1-22'],
+		['2017-1-23'],
+		['2017-1-24'],
+		['2017-1-25'],
+		['2017-1-26'],
+		['2017-1-27'],
+		['2017-1-28'],
+		['2017-1-29'],
+		['2017-1-30'],
+		['2017-1-31'],
+		['2017-2-1'],
+		['2017-2-2'],
+		['2017-2-3'],
+		['2017-2-4'],
+		['2017-2-5'],
+		['2017-2-6'],
+		['2017-2-7'],
+		['2017-2-8'],
+		['2017-2-9'],
+		['2017-2-10'],
+		['2017-2-11'],
+		['2017-2-12'],
+		['2017-2-13'],
+		['2017-2-14'],
+		['2017-2-15'],
+		['2017-2-16'],
+		['2017-2-17'],
+		['2017-2-18'],
+		['2017-2-19'],
+		['2017-2-20'],
+		['2017-2-21'],
+		['2017-2-22'],
+		['2017-2-23'],
+		['2017-2-24'],
+		['2017-2-25'],
+		['2017-2-26'],
+		['2017-2-27'],
+		['2017-2-28'],
+		['2017-3-1'],
+		['2017-3-2'],
+		['2017-3-3'],
+		['2017-3-4'],
+		['2017-3-5'],
+		['2017-3-6'],
+		['2017-3-7'],
+		['2017-3-8'],
+		['2017-3-9'],
+		['2017-3-10'],
+		['2017-3-11'],
+		['2017-3-12'],
+		['2017-3-13'],
+		['2017-3-14'],
+		['2017-3-15'],
+		['2017-3-16'],
+		['2017-3-17'],
+		['2017-3-18'],
+		['2017-3-19'],
+		['2017-3-20'],
+		['2017-3-21'],
+		['2017-3-22'],
+		['2017-3-23'],
+		['2017-3-24'],
+		['2017-3-25'],
+		['2017-3-26'],
+		['2017-3-27'],
+		['2017-3-28'],
+		['2017-3-29'],
+		['2017-3-30'],
+		['2017-3-31'],
+	];
+
+	var heatmapData = [];
+	var lunarData = [];
+	for (var i = 0; i < dateList.length; i++) {
+		heatmapData.push([
+			dateList[i][0],
+			Math.random() * 100
+		]);
+		lunarData.push([
+			dateList[i][0],
+			1,
+		]);
+	}
+
+	var enterpriseOption = {
+		tooltip: {
+			formatter: function(params) {
+				return '降雨量: ' + params.value[1].toFixed(2);
+			}
+		},
+		visualMap: {
+			type: 'piecewise',
+			seriesIndex: [2],
+			left: '0',
+			top: 'center',
+			pieces: [{
+				max: 50,
+				label: '<50%'
+			}, {
+				min: 50,
+				max: 60,
+				label: '50-60%'
+			}, {
+				min: 60,
+				max: 70,
+				label: '60-70%'
+			}, {
+				min: 70,
+				max: 80,
+				label: '70-80%'
+			}, {
+				min: 80,
+				max: 90,
+				label: '80-90%'
+			}, {
+				min: 90,
+				// max: 100,
+				label: '90-100%'
+			}],
+			calculable: true,
+			inRange: {
+				color: ['#fd4907', '#e9791b', '#e494b9', '#eac489', '#f1f04c', '#93dd24']
+			}
+		},
+
+		calendar: [{
+			left: '20%',
+			right: '5%',
+			bottom: '5%',
+			top: '20%',
+			cellSize: 'auto',
+			yearLabel: {
+				show: false
+			},
+			orient: 'vertical',
+			dayLabel: {
+				firstDay: 1,
+				nameMap: 'cn'
+			},
+			monthLabel: {
+				show: false
+			},
+			range: '2017-03'
+		}],
+
+		series: [{
+			type: 'scatter',
+			coordinateSystem: 'calendar',
+			symbolSize: 1,
+			label: {
+				normal: {
+					show: true,
+					formatter: function(params) {
+						var d = echarts.number.parseDate(params.value[0]);
+						return d.getDate();
+					},
+					textStyle: {
+						color: '#000'
+					}
+				}
+			},
+			data: lunarData
+		}, {
+			type: 'scatter',
+			coordinateSystem: 'calendar',
+			symbolSize: 1,
+			label: {
+				normal: {
+					show: true,
+					formatter: function(params) {
+						return '\n\n\n' + (params.value[3] || '');
+					},
+					textStyle: {
+						fontSize: 14,
+						fontWeight: 700,
+						color: '#a00'
+					}
+				}
+			},
+			data: lunarData
+		}, {
+			name: '降雨量',
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: heatmapData
+		}]
+	};
+
+	var equitmentOption = {
+		tooltip: {
+			trigger: 'item',
+			formatter: '{a} <br/>{b} : {c} %'
+		},
+		series: [{
+			name: '仪表盘',
+			type: 'gauge',
+			data: [{
+				value: '89',
+			}],
+			radius: '80%',
+			center: ['50%', '50%'],
+			min: 0,
+			max: 100,
+			splitNumber: 10,
+			axisLine: { // 坐标轴线
+				lineStyle: { // 属性lineStyle控制线条样式
+					width: 8,
+					color: [
+						[0.2, '#62c87f'],
+						[0.8, '#5d9cec'],
+						[1, '#f15755']
+					]
+				}
+			},
+			axisTick: { // 坐标轴小标记
+				length: 13, // 属性length控制线长
+				lineStyle: { // 属性lineStyle控制线条样式
+					color: 'auto'
+				}
+			},
+			splitLine: { // 分隔线
+				length: 15, // 属性length控制线长
+				lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+					color: 'auto'
+				}
+			},
+			axisLabel: {
+				color: '#666',
+				fontSize: 10,
+			},
+			detail: {
+				formatter: '{value}%',
+				fontSize: 16,
+				offsetCenter: [0, '85%']
+			},
+			pointer: {
+				width: 3 // 指针大小
+			}
+		}]
+	};
+
+
+	if (document.body.offsetWidth >= 1920) {
+		exceedingSTCarOption.legend.itemWidth = 15;
+		exceedingSTCarOption.legend.itemHeight = 8;
+		exceedingSTCarOption.legend.itemGap = 15;
+	}
+	exceedingSTCarChart.setOption(exceedingSTCarOption);
+	reportChart.setOption(reportOption);
+	enterpriseChart.setOption(enterpriseOption);
+	equitmentChart.setOption(equitmentOption);
+
+
+	window.onresize = function(e) {
+		if (document.body.offsetWidth >= 1920) {
+			exceedingSTCarOption.legend.itemWidth = 15;
+			exceedingSTCarOption.legend.itemHeight = 8;
+			exceedingSTCarOption.legend.itemGap = 15;
+		} else {
+			exceedingSTCarOption.legend.itemWidth = 12;
+			exceedingSTCarOption.legend.itemHeight = 6;
+			exceedingSTCarOption.legend.itemGap = 12;
+		}
+		exceedingSTCarChart.setOption(exceedingSTCarOption);
+		enterpriseChart.setOption(enterpriseOption);
+		equitmentChart.setOption(equitmentOption);
+		exceedingSTCarChart.resize();
+		reportChart.resize();
+		enterpriseChart.resize();
+		equitmentChart.resize();
+	}
+
+
+	// 表格
+	$(function() {
+		var datas = [{
+			name: '晋中通泰汽车检测有限公司',
+			rank: '23'
+		}, {
+			name: '晋中通泰汽车检测有限公司',
+			rank: '20'
+		}, {
+			name: '山西省亨钰通机动车辆检测有限公司',
+			rank: '18'
+		}, {
+			name: '晋中市源达机动车尾气检测有限公司',
+			rank: '16'
+		}, {
+			name: '山西永安机动车检测有限公司',
+			rank: '13'
+		}, {
+			name: '晋中通泰汽车检测有限公司',
+			rank: '10'
+		}, {
+			name: '晋中通泰汽车检测有限公司',
+			rank: '8'
+		}, {
+			name: '山西省亨钰通机动车辆检测有限公司',
+			rank: '6'
+		}, {
+			name: '晋中市源达机动车尾气检测有限公司',
+			rank: '5'
+		}, {
+			name: '山西永安机动车检测有限公司',
+			rank: '4'
+		}, {
+			name: '晋中市源达机动车尾气检测有限公司',
+			rank: '3'
+		}, {
+			name: '晋中市源达机动车尾气检测有限公司',
+			rank: '2'
+		}]
+		var html = "";
+		for (var i = 0; i < datas.length; i++) {
+			html += "<tr>";
+			html += "<td>" + datas[i].name + "</td>"
+			if (datas[i].rank > 6) {
+				html += "<td class='tableColor'>" + datas[i].rank + "</td>"
+			} else {
+				html += "<td>" + datas[i].rank + "</td>"
+			}
+			html += "</tr>";
+		}
+		$(".tableTbody").html(html);
+	})
+
+</script>
