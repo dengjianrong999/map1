@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环保大数据综合展示平台</title>
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/rest.css">
+    <link rel="stylesheet" href="./css/data-index.css">
+</head>
+
+<body>
+    <div id="dataPlate">
+        <header>
+            <div class="header-left">
+                <img src="./images/xiayu2.png" alt="">
+                <span>6℃</span>
+                <span>小雨</span>
+                <span>东北风3-4级</span>
+                <span>102 轻度</span>
+                <span>2019年4月1日</span>
+            </div>
+            <div class="header-title">环保大数据综合展示平台</div>
+            <div class="header-right">
+                <img src="./images/daqihuanjing-weixuanzhong.png" alt="">
+                <img src="./images/shuihuanjing-weixuanzhong.png" alt="">
+                <img src="./images/turan-weixuanzhong.png" alt="">
+                <img src="./images/gufei-weixuanzhong.png" alt="">
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="top-contetn">
+                <div class="top-left-contetn box">
+                    <div class="title map-title">天山市综合展示一张图</div>
+                    <iframe src="./map.html" frameborder="0"></iframe>
+                </div>
+                <div class="top-center-contetn box ">
+                    <div class="title">空气质量状况</div>
+                    <div class="air-port">
+                        <div class="port-title">
+                            <span>本年优良率与去年同期相比</span>
+                            <span>空气质量日报</span>
+                        </div>
+                        <div id="pieChart"></div>
+                        <div class="detail-port">
+                            <div class="time-port">2018-4-01</div>
+                            <div class="detail-span">
+                                <p>轻度</p>
+                                <p>温度:32℃</p>
+                                <p>温度:70%</p>
+                                <p>PM2.5指数:53</p>
+                                <p>PM10指数81</p>
+                                <p>AQI:42</p>
+                                <p>首要污染物:SO2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aqi">
+                        <span>近7天全市AQI指数变化</span>
+                        <div id="linecharts"></div>
+                    </div>
+                    <div class="date-yb">
+                        <span>7天空气质量预报</span>
+                        <div class="weather">
+                            <div class="wea1">
+                                <img src="./images/xiayu.png" alt="">
+                                <div class="wt">
+                                    <span>6</span>
+                                    <div class="wdb">
+                                        <span>℃</span>
+                                        <span>小雨</span>
+                                    </div>
+                                </div>
+                                <div>4~8℃</div>
+                                <div class="bt">
+                                    <span>轻度</span>
+                                    <span>102</span>
+                                </div>
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周六</div>
+                                <div class="data-t">04月02日</div>
+                                <div class="bt1">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周日</div>
+                                <div class="data-t">04月03日</div>
+                                <div class="bt1">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周一</div>
+                                <div class="data-t">04月04日</div>
+                                <div class="bt1 bt2">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周二</div>
+                                <div class="data-t ">04月05日</div>
+                                <div class="bt1 bt2">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周三</div>
+                                <div class="data-t">04月06日</div>
+                                <div class="bt1 bt2">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周四</div>
+                                <div class="data-t">04月07日</div>
+                                <div class="bt1 bt2">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                            <div class="wea1">
+                                <div class="tate-yb">周五</div>
+                                <div class="data-t">04月08日</div>
+                                <div class="bt1 bt2">89</div>
+                                <div class="weath-t">1~5℃</div>
+                                <img src="./images/xiayu.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-right-contetn">
+                    <div class="right-top1 box">
+                        <div class="title">数据融合情况(条)</div>
+                        <div class="nums-t">
+                            <div class="num-t">
+                                <span class="nums">48926</span>
+                                <span>总记<br>录数</span>
+                            </div>
+                            <div class="num-t">
+                                <span class="nums">45650</span>
+                                <span>文件<br>总数</span>
+                            </div>
+                            <div class="num-t">
+                                <span class="nums">450</span>
+                                <span>对接系<br>统总数</span>
+                            </div>
+                            <div class="num-t">
+                                <span class="nums">4595</span>
+                                <span>接口<br>统数</span>
+                            </div>
+                            <div class="num-t">
+                                <span class="nums">4595</span>
+                                <span>共享服<br>务次数</span>
+                            </div>
+                        </div>
+                        <div class="chart-num">
+                            <div class="munts">
+                                <div class="num-t num-g">
+                                    <span class="nums">4778926</span>
+                                    <span>结构化数据</span>
+                                </div>
+                                <div class="num-t num-g">
+                                    <div class="nums">1148926</div>
+                                    <div>非结构化数据</div>
+                                </div>
+                            </div>
+                            <div id="piechart2"> </div>
+                        </div>
+                    </div>
+                    <div class="right-top2 box">
+                        <div class="title">排污许可证</div>
+                        <div class="topcicre">
+                            <div class="cicle1">
+                                <div id="semiCicle1"></div>
+                                <div class="num-">
+                                    <span>0</span>
+                                    <span>件</span>
+                                    <span>200</span>
+                                </div>
+                            </div>
+                            <div class="cicle1">
+                                <div id="semiCicle2"></div>
+                                <div class="num-">
+                                    <span>0</span>
+                                    <span>件</span>
+                                    <span>200</span>
+                                </div>
+                            </div>
+                            <div class="cicle1">
+                                <div id="semiCicle3"></div>
+                                <div class="num-">
+                                    <span>0</span>
+                                    <span>件</span>
+                                    <span>200</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="botcicre">
+                            <div class="cicle1">
+                                <div id="semiCicle4"></div>
+                                <div class="num-">
+                                    <span>0</span>
+                                    <span>件</span>
+                                    <span>200</span>
+                                </div>
+                            </div>
+                            <div class="cicle1">
+                                <div id="semiCicle5"></div>
+                                <div class="num-">
+                                    <span>0</span>
+                                    <span>件</span>
+                                    <span>200</span>
+                                </div>
+                            </div>
+                            <div class="cicle1">
+                                <div id="semiCicle6"></div>
+                                <div class="num-">
+                                    <span>0</span>
+                                    <span>件</span>
+                                    <span>200</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bot-contetn">
+                <div class="bot-content1 box">
+                    <div class="title">重点企业分布(家)</div>
+                    <div class="num-n">
+                        <div>
+                            <span>企业总数</span>
+                            <span class="nums">13066</span>
+                        </div>
+                        <div>
+                            <span>铝冶炼</span>
+                            <span class="nums">266</span>
+                        </div>
+                        <div>
+                            <span>化工</span>
+                            <span class="nums">166</span>
+                        </div>
+                        <div>
+                            <span>黑色金属冶炼</span>
+                            <span class="nums">136</span>
+                        </div>
+                    </div>
+                    <div id="maps"></div>
+                </div>
+                <div class="bot-content2 box">
+                    <div class="title">水质状况分析</div>
+                    <div id="cirw1"></div>
+                    <div id="barchart"></div>
+                </div>
+                <div class="bot-content3 box">
+                    <div class="title">土壤状况分析</div>
+                    <div class="sort-pie">
+                        <div id="sort1"></div>
+                        <div id="sort2"></div>
+                    </div>
+                </div>
+                <div class="bot-content4 box">
+                    <div class="title">固废危废分析</div>
+                    <div id="linchart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/vue.min.js"></script>
+<script src="./js/echarts.common.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B5MOkhGZH7RbC4GGILokeMw2Bo88fIMf"></script>
+<script>
+    new Vue({
+        el: '#dataPlate',
+        data() {
+            return {
+                cireData: [
+                    { value: '33', color: '#03e989', title: "申请" },
+                    { value: '18', color: '#17bffc', title: "变更" },
+                    { value: '23', color: '#a817cf', title: "延续" },
+                    { value: '33', color: '#0468ff', title: "补办" },
+                    { value: '18', color: '#ff8c04', title: "注销" },
+                    { value: '34', color: '#ff3904', title: "撤销" },
+                ],
+                itemGap: 20,
+                cireoption: null,
+                type:'scroll',
+                pos: [
+                    {
+                        left: "17%",
+                        bottom: "10%"
+                    },
+                    {
+                        left: "52%",
+                        bottom: "-8%"
+                    },
+                    {
+                        left: "83%",
+                        bottom: "10%"
+                    },
+                ],
+            }
+        },
+        mounted() {
+            this.initechart1();
+            this.initlinechart();
+            this.initcharts3();
+            this.initcirel();
+            this.initbarchart();
+            this.initsoil1();
+            this.initsoil2();
+            this.initlinch();
+            this.initcicle("semiCicle1", this.cireData[0].title, this.cireData[0].value, this.cireData[0].color);
+            this.initcicle("semiCicle2", this.cireData[1].title, this.cireData[1].value, this.cireData[1].color);
+            this.initcicle("semiCicle3", this.cireData[2].title, this.cireData[2].value, this.cireData[2].color);
+            this.initcicle("semiCicle4", this.cireData[3].title, this.cireData[3].value, this.cireData[3].color);
+            this.initcicle("semiCicle5", this.cireData[4].title, this.cireData[4].value, this.cireData[4].color);
+            this.initcicle("semiCicle6", this.cireData[5].title, this.cireData[5].value, this.cireData[5].color);
+            if (window.screen.width == 1920) {
+                this.pos = [
+                    {
+                        left: "17%",
+                        bottom: "35%"
+                    },
+                    {
+                        left: "52%",
+                        bottom: "20%"
+                    },
+                    {
+                        left: "83%",
+                        bottom: "35%"
+                    },
+                ]
+                this.initcirel();
+
+
+                this.itemGap = 60;
+                this.initcicle("semiCicle1", this.cireData[0].title, this.cireData[0].value, this.cireData[0].color);
+                this.initcicle("semiCicle2", this.cireData[1].title, this.cireData[1].value, this.cireData[1].color);
+                this.initcicle("semiCicle3", this.cireData[2].title, this.cireData[2].value, this.cireData[2].color);
+                this.initcicle("semiCicle4", this.cireData[3].title, this.cireData[3].value, this.cireData[3].color);
+                this.initcicle("semiCicle5", this.cireData[4].title, this.cireData[4].value, this.cireData[4].color);
+                this.initcicle("semiCicle6", this.cireData[5].title, this.cireData[5].value, this.cireData[5].color);
+                 
+
+                this.type = 'plain';
+                this.initsoil1();
+                this.initsoil2();
+            };
+
+
+
+            //重点企业分布
+            // 百度地图API功能
+            var map = new BMap.Map("maps");
+            var point = new BMap.Point(116.487442, 40.080532);
+            map.centerAndZoom(point, 15);
+            //坐标
+            // map.addEventListener("click", function (e) {
+            //     alert(e.point.lng + "," + e.point.lat);
+            // });
+
+            var styleJson = [
+                {
+                    "featureType": "all",
+                    "elementType": "geometry",
+                    "stylers": {
+                        "hue": "#26385a",
+                        "saturation": 89
+                    }
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": {
+                        "color": "#ffffff"
+                    }
+                }
+            ]
+            map.setMapStyle({ styleJson: styleJson });
+            // 编写自定义函数,创建标注116.493118,40.07744
+            var arr = [{ lng: ' 116.489453', lat: '40.078654', img: './images/zidongqita.png' }, { lng: ' 116.493118', lat: '40.07744', img: './images/shengkao.png' }, { lng: ' 116.481189', lat: '40.078212', img: "./images/shengkao.png" }, { lng: ' 116.484782', lat: '40.080421', img: './images/zaixian-xiao.png' }, { lng: ' 116.485213', lat: '40.076556', img: './images/zidongqita.png' }, { lng: ' 116.493406', lat: '40.079427', img: './images/zidongqita.png' }];
+            for (let i = 0; i < arr.length; i++) {
+                var pt = new BMap.Point(arr[i].lng, arr[i].lat);
+                var myIcon = new BMap.Icon(arr[i].img, new BMap.Size(40, 55));
+                myIcon.setImageSize(new BMap.Size(20, 30));
+                var marker = new BMap.Marker(pt, { icon: myIcon });  // 创建标注
+                map.addOverlay(marker);
+            }
+
+        },
+        methods: {
+            initechart1() {
+                let piechart1 = echarts.init(document.getElementById("pieChart"));
+                let pieoption1 = {
+                    color: ["#03e989", "#24a3fc"],
+                    title: {
+                        text: '91.58%',
+                        subtext: '优良率',
+                        x: 'center',
+                        y: 'center',
+                        itemGap: 2,
+                        textStyle: {
+                            color: "#fff",
+                            fontSize: 14,
+                        },
+                        subtextStyle: {
+                            color: "#fff",
+                            fontSize: 14,
+                        }
+                    },
+                    tooltip: {
+                        show: false,
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        textStyle: {
+                            color: "#fff",
+                        },
+                        data: ["2017", "2018"]
+                    },
+                    series: [
+                        {
+                            name: '2017',
+                            type: 'pie',
+                            radius: ['45%', '50%'],
+                            center: ['50%', '50%'],
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'inner'
+                                }
+                            },
+
+                            data: [
+                                {
+                                    value: '967',
+                                    itemStyle: {
+                                        emphasis: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+                                            normal: {
+                                                color: '#dc1439'
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    value: '30',
+                                    itemStyle: {
+                                        normal: {
+                                            color: 'transparent'
+                                        }
+                                    }
+                                }
+                            ]
+                        }, {
+                            name: '2018',
+                            type: 'pie',
+                            center: ['50%', '50%'],
+                            radius: ['70%', '80%'],
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'inner'
+                                }
+                            },
+                            data: [
+                                {
+                                    value: '600',
+                                    name: '2017',
+                                    itemStyle: {
+                                        emphasis: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+                                            normal: {
+                                                color: '#dc1439'
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    value: '20',
+                                    itemStyle: {
+                                        normal: {
+                                            color: 'transparent'
+                                        }
+                                    }
+                                }
+                            ]
+
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    piechart1.resize();
+				});
+                piechart1.setOption(pieoption1)
+
+            },
+            initlinechart() {
+                let linechart1 = echarts.init(document.getElementById('linecharts'));
+                let lineOption = {
+                    color: ["#05c85b"],
+                    grid: {
+                        left: '1%',
+                        right: '2%',
+                        bottom: '1%',
+                        top: '5%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: ["red"]
+                            },
+                        },
+                        axisLabel: {
+                            color: '#f5f5f5',
+                            interval: 0,
+                            fontSize: 12,
+                            rotate: 20
+                        },
+                        data: ['2019-04-01', '2019-04-02', '2019-04-03', '2019-04-04', '2019-04-05', '2019-04-06', '2019-04-07']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+
+                        axisLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisTick: {
+                            show: false,
+
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisLabel: {
+                            color: '#f5f5f5',
+                            interval: 0,
+                            fontSize: 12,
+                            rotate: 20,
+
+                        }
+                    },
+                    series: [{
+                        data: [120, 100, 80, 60, 40, 30, 40],
+                        type: 'line'
+                    }]
+                }
+                window.addEventListener("resize", function() {
+                    linechart1.resize();
+				});
+                linechart1.setOption(lineOption)
+
+
+            },
+            initcharts3() {
+                let pie3 = echarts.init(document.getElementById("piechart2"))
+                var giftImageUrl = "./images/jiaohuan.png";
+                let pieoption3 = {
+                    color: ["#029ad1", "#24a3fc", "#a817fc", "#ff8c04", "#ff0404", "#09e154"],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    title: {
+                        text: '交换数据统计',
+                        left: 'center',
+                        bottom: '0',
+                        textStyle: {
+                            color: "#fff",
+                            fontSize: "12"
+                        }
+                    },
+                    graphic: {
+                        elements: [{
+                            type: 'image',
+                            style: {
+                                image: giftImageUrl,
+                                width: 20,
+                                height: 36
+                            },
+                            left: 'center',
+                            top: 'center'
+                        }]
+                    },
+                    legend: {
+                        show: false,
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['EXCEL导入', '手工录入', '接口', '一次性导入', '手工上传', "ETL"]
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    textStyle: {
+                                        color: '#fff'
+                                    }
+                                },
+                                emphasis: {
+                                    show: false,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [
+                                { value: 15, name: 'EXCEL导入' },
+                                { value: 14, name: '手工录入' },
+                                { value: 13, name: '接口' },
+                                { value: 42, name: '一次性导入' },
+                                { value: 3, name: '手工上传' },
+                                { value: 13, name: 'ETL' },
+                            ]
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    pie3.resize();
+				});
+                pie3.setOption(pieoption3);
+
+            },
+            initcicle(id, name, num, color) {
+                let cicle = echarts.init(document.getElementById(id))
+                let cicleOption = {
+                    title: {
+                        text: name,
+                        subtext: '33',
+                        left: 'center',
+                        top: '0%',
+                        textStyle: {
+                            color: "#bbe7ff",
+                            fontSize: 14,
+                        },
+                        itemGap: this.itemGap,
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            label: {
+                                show: false
+                            },
+                            center: ['50%', '90%'],
+                            radius: ['80%', '100%'],
+                            startAngle: 180,
+                            data: [
+                                {
+                                    name: '用量',
+                                    value: num,
+                                    itemStyle: {
+                                        color: color,
+                                    }
+                                },
+                                {
+                                    name: 'rest',// 实际显示部分是总量-用量
+                                    value: 100 - num,
+                                    itemStyle: {
+                                        color: '#bad5fe'
+                                    }
+                                },
+                                {
+                                    name: 'bottom',
+                                    value: 100,
+                                    itemStyle: {
+                                        color: 'transparent'
+                                    }
+                                },
+                            ]
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    cicle.resize();
+				});
+                cicle.setOption(cicleOption);
+            },
+            initcirel() {
+                let cirew = echarts.init(document.getElementById("cirw1"));
+                this.cireoption = {
+                    title: [
+                        {
+                            text: "+0.9",
+                            subtext: "水质富营养化指数",
+                            left: this.pos[0].left,
+                            bottom: this.pos[0].bottom,
+                            textAlign: "center",
+                            textStyle: {
+                                color: "#bbe7ff",
+                                fontSize: 12,
+                            },
+                            subtextStyle: {
+                                color: "#fff",
+                                fontSize: 12,
+                            }
+                        },
+                        {
+                            text: "75%",
+                            subtext: "河道综合整治(161)\nIII类水比例",
+                            left: this.pos[1].left,
+                            bottom: this.pos[1].bottom,
+
+                            textAlign: "center",
+                            textStyle: {
+                                color: "#bbe7ff",
+                                fontSize: 12,
+                            },
+                            subtextStyle: {
+                                color: "#fff",
+                                fontSize: 12,
+                            }
+                        },
+                        {
+                            text: "75%",
+                            left: this.pos[2].left,
+                            bottom: this.pos[2].bottom,
+                            subtext: "地表水达标率",
+
+                            textAlign: "center",
+                            textStyle: {
+                                color: "#bbe7ff",
+                                fontSize: 12,
+                            },
+                            subtextStyle: {
+                                color: "#fff",
+                                fontSize: 12,
+                            }
+                        },
+                    ],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: false,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: ['50%', '60%'],
+                            center: ['19%', '30%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [
+                                {
+                                    value: 335, name: '', itemStyle: {
+                                        color: '#03e989'
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            type: 'pie',
+                            radius: ['50%', '60%'],
+                            center: ['53%', '30%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [
+                                {
+                                    value: 335, name: '', itemStyle: {
+                                        color: "#24a3fc"
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            type: 'pie',
+                            radius: ['50%', '60%'],
+                            center: ['85%', '30%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [
+                                {
+                                    value: 335, name: '', itemStyle: {
+                                        color: "#c5f507"
+                                    }
+                                },
+                            ]
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    cirew.resize();
+				});
+                cirew.setOption(this.cireoption);
+            },
+            initbarchart() {
+                let barchart = echarts.init(document.getElementById("barchart"))
+                let baroption = {
+
+                    color: ['#24a3fc'],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        top: "28%",
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: ['十里河', '庐山河', '鹤山河', '七里河', '太公河', '秦川河', '小西河', "大西河", "中青河"],
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            axisLabel: {
+                                color: '#f5f5f5',
+                                interval: 0,
+                                fontSize: 12,
+                                rotate: 20
+                            },
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: "达标情况%",
+                            nameTextStyle: {
+                                color: "#fff",
+                                lineHeight: 5,
+
+                            },
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#15488d',
+
+                                }
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: ["#017ca9"]
+                                },
+                            },
+                            axisLabel: {
+                                color: '#f5f5f5',
+                                interval: 0,
+                                fontSize: 10,
+                                rotate: 20
+                            },
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '达标率',
+                            type: 'bar',
+                            barWidth: '60%',
+                            data: [10, 52, 30, 70, 40, 90, 80, 60, 90]
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    barchart.resize();
+				});
+                barchart.setOption(baroption);
+            },
+            initsoil1() {
+                let soilchart1 = echarts.init(document.getElementById("sort1"))
+                let solioption = {
+                    color: ["#03e989", "#24a3fc", "#c5f507", "#ff8c04", "#a817fc"],
+                    title: {
+                        text: '土壤污染超标评价\n占比分析',
+                        textStyle: {
+                            fontSize: 10,
+                            color: "#fff",
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'horizontal',
+                        itemWidth: 10,
+                        itemHeight: 5,
+                        textStyle: {
+                            color: "#fff",
+                            fontSize: 10,
+                        },
+                        x: 'left',
+                        y: '20%',
+                        data: ['无污染', '轻微污染', '轻度污染', '中度污染', '重度污染']
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: ['20%', '40%'],
+                            center: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    formatter: " {d}%",
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                length: .1,
+                                length2: .1,
+                                normal: {
+                                    show: true
+                                }
+                            },
+                            data: [
+                                { value: 32, name: '无污染' },
+                                { value: 26, name: '轻微污染' },
+                                { value: 19, name: '轻度污染' },
+                                { value: 16, name: '中度污染' },
+                                { value: 7, name: '重度污染' }
+                            ]
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    soilchart1.resize();
+				});
+                soilchart1.setOption(solioption)
+            },
+            initsoil2() {
+                let soilchart2 = echarts.init(document.getElementById("sort2"))
+                let solioption2 = {
+                    color: ["#03e989", "#24a3fc", "#c5f507", "#ff8c04", "#a817fc"],
+                    title: {
+                        text: '土壤污染防治\n下降目标',
+                        textStyle: {
+                            fontSize: 10,
+                            color: "#fff",
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    legend: {
+                        type:this.type,
+                        orient: 'horizontal',
+                        itemWidth: 10,
+                        itemHeight: 5,
+                        textStyle: {
+                            color: "#fff",
+                            fontSize: 10,
+                        },
+                        x: 'left',
+                        y: '20%',
+                        data: ['土壤环境质量调查', '质量监测网络', '标准体系构建', '监管执法加强', '数据库搭建']
+                    },
+                    series: [
+                        {
+                            name: '下降目标',
+                            type: 'pie',
+                            radius: ['0%', '40%'],
+                            center: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    formatter: " {d}%",
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                length: 0,
+                                length2: 0,
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [
+                                { value: 32, name: '土壤环境质量调查' },
+                                { value: 26, name: '质量监测网络' },
+                                { value: 19, name: '标准体系构建' },
+                                { value: 16, name: '监管执法加强' },
+                                { value: 7, name: '数据库搭建' }
+                            ]
+                        }
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    soilchart2.resize();
+				});
+                soilchart2.setOption(solioption2)
+            },
+            initlinch() {
+                linch = echarts.init(document.getElementById("linchart"))
+                optionch = {
+                    color: ["#17bffc", "#ff8205", "#fdbf04", "#03e989"],
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['危险固废', '一般工业固废', '污水污泥', '医疗废物',],
+                        textStyle: {
+                            color: "#fff"
+                        }
+                    },
+                    grid: {
+                        left: '12%',
+                        right: '8%',
+                        top: "80",
+                        bottom: '15%',
+                        containLabel: false
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['第一季度', '第二季度', '第三季度', '第四季度'],
+                        axisTick: {
+                            alignWithLabel: false
+                        },
+
+                        axisLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisTick: {
+                            show: false,
+
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisLabel: {
+                            color: '#f5f5f5',
+                            interval: 0,
+                            fontSize: 12,
+
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: "吨",
+                        nameTextStyle: {
+                            color: "#fff"
+                        },
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+
+                        axisLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisTick: {
+                            show: false,
+
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: '#15488d',
+                            }
+                        },
+                        axisLabel: {
+                            color: '#f5f5f5',
+                            interval: 0,
+                            fontSize: 12,
+                            rotate: 20,
+
+                        }
+                    },
+                    series: [
+                        {
+                            name: '危险固废',
+                            type: 'line',
+                            stack: '总量',
+                            data: [120, 132, 101, 134, 90, 230]
+                        },
+                        {
+                            name: '一般工业固废',
+                            type: 'line',
+                            stack: '总量',
+                            data: [220, 182, 191, 234, 290, 330]
+                        },
+                        {
+                            name: '污水污泥',
+                            type: 'line',
+                            stack: '总量',
+                            data: [150, 232, 201, 154, 190, 330]
+                        },
+                        {
+                            name: '医疗废物',
+                            type: 'line',
+                            stack: '总量',
+                            data: [320, 332, 301, 334, 390, 330]
+                        },
+                    ]
+                }
+                window.addEventListener("resize", function() {
+                    linch.resize();
+				});
+                linch.setOption(optionch)
+            }
+        }
+    })
+</script>
+
+</html>

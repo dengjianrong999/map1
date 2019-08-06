@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #allmap {
+            height: 500px;
+            width: 100%;
+        }
+
+        #control {
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=2.0&ak=B5MOkhGZH7RbC4GGILokeMw2Bo88fIMf"></script>
+    <title>设置线、面可编辑</title>
+</head>
+
+<body>
+    <div id="allmap"></div>
+    <div id="control">
+        <button onclick="polyline.enableEditing();polygon.enableEditing();">开启线、面编辑功能</button>
+        <button onclick="polyline.disableEditing();polygon.disableEditing();">关闭线、面编辑功能</button>
+    </div>
+</body>
+<script src="./china.js"></script>
+
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 15);
+    map.enableScrollWheelZoom();
+
+
+
+    var townArr = tcTowns.features;
+            var townsArr = [];
+            for (var k = 0; k < townArr.length; k++) {
+              for (var j in townArr[k]) {
+                if (j === 'geometry') {
+                  var townPosArr = townArr[k]['geometry'].coordinates[0]; // 每个镇坐标 19
+                  console.log(townPosArr)
+                  var townPos = '';
+                  for (var i = 0; i < townPosArr.length; i++) { //
+                    if (i == townPosArr.length - 1) {
+                      townPos += (townPosArr[i][0] ) + ',' + (townPosArr[i][1]);
+                    } else {
+                      townPos += (townPosArr[i][0]) + ',' + (townPosArr[i][1]) + ';'
+                    }
+                  }
+                  townsArr.push(townPos);
+                }
+              }
+            }
+
+    console.log(townsArr)
+    /* 镇级 */
+    for (var i = 0; i < townsArr.length; i++) {
+        (function (i) {
+            var ply1 = new BMap.Polygon(townsArr[i], {
+                strokeWeight: 2,
+                strokeColor: "#72cef7",
+                fillColor: 'red',
+                fillOpacity: 0.2
+            }); //建立多边形覆盖物
+            map.addOverlay(ply1); //添加覆盖物
+            // map.setViewport(ply1.getPath());    //调整视野    
+        })(i);
+    }
+</script>

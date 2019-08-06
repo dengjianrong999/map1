@@ -1,0 +1,185 @@
+/* 布局 */
+.content {
+	padding: 10px;
+	background: #0c0024;
+	display: flex;
+	flex-flow: column;
+}
+
+.all-top {
+	width: 100%;
+	height: calc(100% - (100% / 3));
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.all-top .top-about {
+	width: 27%;
+	display: flex;
+	flex-flow: column;
+}
+
+.all-top .top-about .box {
+	width: 100%;
+	height: 50%;
+	margin-bottom: 10px;
+}
+
+.all-top .top-about .box:last-child {
+	margin-bottom: 0;
+}
+
+.all-top .top-center {
+	width: 46%;
+	margin: 0 10px;
+}
+
+.all-bottom {
+	width: 100%;
+	height: calc(100% / 3);
+	display: flex;
+	justify-content: space-between;
+}
+
+.all-bottom .box {
+	width: calc(100% / 3);
+	height: 100%;
+	margin-right: 10px;
+}
+
+.all-bottom .box:last-child {
+	margin-right: 0px;
+}
+
+.box {
+	background: url(../images/zuoshang.png), url(../images/youshang.png), url(../images/zuoxia.png), url(../images/youxia.png);
+	background-size: 25px 25px;
+	background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.box-title {
+	padding: 5px 20px 0;
+	font-size: 1.14rem;
+	height: 1.8rem;
+	color: #FBFBFB;
+}
+
+.box-content {
+	width: 100%;
+	height: calc(100% - 1.8rem);
+}
+
+/* 内容 */
+#quanti,
+#zardou,
+#transf,
+#monit {
+	width: 100%;
+	height: 100%;
+}
+
+.statis {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.summat {
+	width: calc(50% - 10px);
+	height: calc(50% - 10px);
+	margin: 5px;
+	background: #111440;
+}
+
+.summat div {
+	width: 100%;
+	height: calc(100% / 4);
+	font-size: 1rem;
+}
+
+.summat-title {
+	color: #bce7ff;
+	border: 1px solid #9ec7d9;
+	background: -webkit-linear-gradient(left, #0666ac, #0d3772);
+	background: -o-linear-gradient(right, #0666ac, #0d3772);
+	background: -moz-linear-gradient(right, #0666ac, #0d3772);
+	background: linear-gradient(to right, #0666ac, #0d3772);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.summat-content {
+	color: #bbe7ff;
+}
+
+.summat-content span {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	float: left;
+}
+
+.summat-content span:first-child {
+	width: 40%;
+	justify-content: flex-end;
+	padding-right: 10px;
+}
+
+.summat-content img {
+	height: 60%;
+}
+
+.prises {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0.6rem;
+}
+
+.prises-box {
+	width: 50%;
+	height: calc(100% / 3);
+}
+
+@font-face {
+	font-family: Unicode;
+	src: url(../font/unidreamled.woff);
+}
+
+.pri-nums,
+.pri-font {
+	width: 100%;
+	height: 50%;
+	padding-left: 16%;
+	display: flex;
+}
+
+.pri-nums span:first-child {
+	font-family: Unicode;
+	font-size: 2rem;
+	background-image: -webkit-linear-gradient(bottom, #1c90d5, #74defd);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	letter-spacing: 4px;
+}
+
+.pri-nums span:last-child {
+	font-size: 1rem;
+	color: #FFFFFF;
+	letter-spacing: 4px;
+	display: flex;
+	align-items: flex-end;
+}
+
+@media screen and (min-width:1920px) {
+	.pri-nums span:last-child {
+		padding-left: 0.4rem;
+		padding-bottom: 7.5px;
+	}
+}
+
+.pri-font {
+	font-size: 1.3rem;
+	color: #bbe7ff;
+}

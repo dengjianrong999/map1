@@ -1,0 +1,171 @@
+/* 布局 */
+.content {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	background: #0c0024;
+}
+
+.all-left {
+	width: 70%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.all-left .left-tep {
+	width: calc(42% - 10px);
+	height: calc(70% - 10px);
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.all-left .preven {
+	width: 100%;
+	height: calc(42% - 10px);
+	margin-bottom: 10px;
+}
+
+.all-left .utilize {
+	width: 100%;
+	height: 58%;
+}
+
+.all-left .overview {
+	width: 58%;
+	height: calc(70% - 10px);
+	margin-bottom: 10px;
+}
+
+.all-left .receive {
+	width: 100%;
+	height: 30%;
+}
+
+.all-right {
+	width: 30%;
+	height: 100%;
+	margin-left: 10px;
+}
+
+.all-right .box {
+	width: 100%;
+	height: calc((100% - 30px) / 4);
+	margin-bottom: 10px;
+}
+
+.all-right .box:last-child {
+	margin-bottom: 0px;
+}
+
+.box {
+	background: url(../images/zuoshang.png), url(../images/youshang.png), url(../images/zuoxia.png), url(../images/youxia.png);
+	background-size: 25px 25px;
+	background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.box-title {
+	padding: 5px 20px 0;
+	font-size: 1.14rem;
+	height: 1.8rem;
+	color: #FBFBFB;
+}
+
+.box-content {
+	width: 100%;
+	height: calc(100% - 1.8rem);
+}
+
+/* 内容 */
+.box-quality {
+	width: 40%;
+	height: 100%;
+	float: left;
+}
+
+.box-quality div {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	color: #FFFFFF;
+	font-size: 1.5rem;
+}
+
+.box-quality div:first-child {
+	height: 50%;
+	align-items: flex-end;
+}
+
+.box-quality div:last-child {
+	align-items: flex-end;
+}
+
+.box-quality div .datas {
+	color: #6cbdf1;
+	font-size: 3rem;
+	display: flex;
+	align-items: flex-end;
+	padding-left: 3rem;
+}
+
+#quality {
+	width: 60%;
+	height: 100%;
+	float: left;
+}
+
+#overp1,
+#overp2 {
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+
+#preven,
+#discha,
+#receive,
+#detail {
+	width: 100%;
+	height: 100%;
+}
+
+.box-utilize {
+	width: 33.333%;
+	height: 25%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	float: left;
+	padding: 0 10px;
+}
+
+.images {
+	width: 3.5rem;
+	height: 3.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	border: 1px solid #8fd8ee;
+	background: #eeeeee;
+	margin-right: 10px;
+}
+
+.images img {
+	width: 50%;
+}
+
+.written {
+	width: calc(100% - 3.5rem - 10px);
+	height: 100%;
+	color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.1rem;
+}
+
+.written .numbers {
+	color: #e9bd0d;
+}

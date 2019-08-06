@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>环保大数据综合展示平台</title>
+    <link rel="stylesheet" href="./css/map.css">
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html,
+    body,
+    #air,
+    #allmap {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .leftMenu {
+        position: absolute;
+        z-index: 66;
+        left: 10px;
+        top: 30px;
+        max-height: 300px;
+        overflow: scroll;
+    }
+
+    .marks {
+        position: absolute;
+        z-index: 33;
+        right: 10px;
+        bottom: 10px;
+        display: flex;
+        font-size: 12px;
+        /* color: #fff; */
+    }
+
+    .marks>div>div {
+        display: flex;
+        align-items: center;
+    }
+
+    .marks>div img {
+        width: 15px;
+    }
+</style>
+
+<body>
+    <div id="air">
+        <div id="allmap"></div>
+        <div class="marks">
+            <div class="leftmark">
+                <div>
+                    <img src="./images/kongqibiaozhun.png" alt="">
+                    <span>空气标准站</span>
+                </div>
+                <div>
+                    <img src="./images/kongqiweixing.png" alt="">
+                    <span>空气微型站</span>
+                </div>
+                <div>
+                    <img src="./images/qixiangleida.png" alt="">
+                    <span>气象雷达</span>
+                </div>
+                <div>
+                    <img src="./images/hongse.png" alt="">
+                    <span>土壤检测</span>
+                </div>
+            </div>
+            <div class="rightmark">
+                <div>
+                    <img src="./images/dibiaoshui.png" alt="">
+                    <span>地表水</span>
+                </div>
+                <div>
+                    <img src="./images/wuranyuan.png" alt="">
+                    <span>污染源</span>
+                </div>
+                <div>
+                    <img src="./images/gufeiyunshu.png" alt="">
+                    <span>固废运输</span>
+                </div>
+                <div>
+                    <img src="./images/qita.png" alt="">
+                    <span>其他</span>
+                </div>
+            </div>
+        </div>
+        <div class="leftMenu">
+            <div class="menu" v-for="(item,index) in leftData ">
+                <div class="titleOne">
+                    <div class="titleContent" @click.stop="isShow(item)"> <img :src="item.img" alt="">{{item.title}}
+                        <input v-model="item.isChangeAll" type="checkbox" @click.stop="changebox(item,index)"></div>
+                    <div class="titleTwo" v-for="(ite,ind) in item.children " v-if="item.isShow">
+                        <input type="checkbox" :value='ite.title' v-model="item.chooseArr"
+                            @change="chioseTwo(item,ite,index)">{{ite.title}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="./js/vue.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=B5MOkhGZH7RbC4GGILokeMw2Bo88fIMf"></script>
+<script>
+    new Vue({
+        el: "#air",
+        data() {
+            return {
+                arrType: [[], [], [], [], [], [], [], [],],
+                map: null,
+                leftData: [
+                    {
+                        title: '水',
+                        img: './images/shui.png',
+                        isShow: true,       //展开的状态
+                        chooseArr: ['水系网', '地表水自动站', '人工采样点', '饮用水源地自动站', '水视频监控'],  //选中的数组
+                        isChangeAll: true,  //全选的状态
+                        children: [
+                            {
+                                title: '水系网',
+                            },
+                            {
+                                title: '地表水自动站',
+                            },
+                            {
+                                title: '人工采样点',
+                            },
+                            {
+                                title: '饮用水源地自动站',
+                            },
+                            {
+                                title: '水视频监控',
+                            },
+                        ],
+
+                    },
+                    {
+                        title: '气',
+                        img: './images/qi-xuanzhong.png',
+                        isShow: true,
+                        chooseArr: ["大气监测网格", "标准空气站", "微型空气站", "超级观测站", "雷达区", '风场', "大气质量渲染", "气视频监控"],
+                        isChangeAll: true,
+                        children: [
+                            {
+                                title: '大气监测网格',
+                            },
+                            {
+                                title: '标准空气站',
+                            },
+                            {
+                                title: '微型空气站',
+                            },
+                            {
+                                title: '超级观测站',
+                            },
+                            {
+                                title: '雷达区',
+                            },
+                            {
+                                title: '风场',
+                            },
+                            {
+                                title: '大气质量渲染',
+                            },
+                            {
+                                title: '气视频监控',
+                            },
+                        ]
+                    },
+                    {
+                        title: '污',
+                        img: './images/wu-xuanzhong.png',
+                        isShow: false,
+                        chooseArr: ["污染源监测站"],
+                        isChangeAll: true,
+                        children: [
+                            {
+                                title: '污染源监测站',
+                            },
+                        ]
+                    },
+                    {
+                        title: '土',
+                        img: './images/tu-ixuanzhong.png',
+                        isShow: false,
+                        chooseArr: ["土壤污染监测站"],
+                        isChangeAll: true,
+                        children: [
+                            {
+                                title: '土壤污染监测站',
+                            },
+                        ]
+                    },
+                    {
+                        title: '废',
+                        img: './images/fei-xuanzhong.png',
+                        isShow: false,
+                        chooseArr: ["固废污染监测站"],
+                        isChangeAll: true,
+                        children: [
+                            {
+                                title: '固废污染监测站',
+                            },
+                        ]
+                    },
+                    {
+                        title: '其他',
+                        img: '',
+                        isShow: false,
+                        chooseArr: ["其他监测站"],
+                        isChangeAll: true,
+                        children: [
+                            {
+                                title: '其他监测站',
+                            },
+                        ]
+                    },
+                ],
+                //空气标准站
+                airStation: [
+                    { 'lng': '116.406916', 'lat': '40.213997', 'img': './images/kongqibiaozhun.png' },
+                    { 'lng': '116.551795', 'lat': '40.360174', 'img': './images/kongqibiaozhun.png' },
+                    { 'lng': '116.551795', 'lat': '39.979097', 'img': './images/kongqibiaozhun.png' },
+                    { 'lng': '116.423014', 'lat': '39.670552', 'img': './images/kongqibiaozhun.png' },
+                    { 'lng': '116.133257', 'lat': '39.720297', 'img': './images/kongqibiaozhun.png' },
+                ],
+                // 空气微站
+                airWx: [
+                    { 'lng': '116.114859', 'lat': '40.356655', 'img': './images/kongqiweixing.png' },
+                    { 'lng': '117.034724', 'lat': '40.609521', 'img': './images/kongqiweixing.png' },
+                    { 'lng': '116.151654', 'lat': '40.067501', 'img': './images/kongqiweixing.png' },
+                    { 'lng': '115.760711', 'lat': '39.943703', 'img': './images/kongqiweixing.png' },
+                    { 'lng': '115.705519', 'lat': '39.805491', 'img': './images/kongqiweixing.png' },
+                ],
+                // 气象雷达
+                airLd: [
+                    { 'lng': '115.914859', 'lat': '40.556655', 'img': './images/qixiangleida.png' },
+                    { 'lng': '116.834724', 'lat': '40.309521', 'img': './images/qixiangleida.png' },
+                    { 'lng': '116.351654', 'lat': '.267501', 'img': './images/qixiangleida.png' },
+                    { 'lng': '115.660711', 'lat': '39.743703', 'img': './images/qixiangleida.png' },
+                    { 'lng': '115.805519', 'lat': '40.05491', 'img': './images/qixiangleida.png' },
+                ],
+                // 土壤检测
+                soilJc: [
+                    { 'lng': '116.314859', 'lat': '39.682992', 'img': './images/hongse.png' },
+                    { 'lng': '116.234724', 'lat': '39.64211', 'img': './images/hongse.png' },
+                    { 'lng': '115.951654', 'lat': '39.7501', 'img': './images/hongse.png' },
+                    { 'lng': '115.861896', 'lat': '39.83703', 'img': './images/hongse.png' },
+                    { 'lng': '116.105519', 'lat': '39.75491', 'img': './images/hongse.png' },
+                ],
+                // 地表水
+                waterDb: [
+                    { 'lng': '116.662179', 'lat': '40.160079', 'img': './images/dibiaoshui.png' },
+                    { 'lng': '116.804758', 'lat': '40.099521', 'img': './images/dibiaoshui.png' },
+                    { 'lng': '116.606987', 'lat': '39.816132', 'img': './images/dibiaoshui.png' },
+                    { 'lng': '116.460711', 'lat': '39.716745', 'img': './images/dibiaoshui.png' },
+                    { 'lng': '116.205519', 'lat': '39.638554', 'img': './images/dibiaoshui.png' },
+                ],
+                // 污染源
+                sourceWr: [
+                    { 'lng': '117.202025', 'lat': '40.218404', 'img': './images/wuwuran.png' },
+                    { 'lng': '117.057146', 'lat': '40.379521', 'img': './images/wuwuran.png' },
+                    { 'lng': '116.670803', 'lat': '40.652447', 'img': './images/wuwuran.png' },
+                    { 'lng': '116.260711', 'lat': '40.718972', 'img': './images/wuwuran.png' },
+                    { 'lng': '116.105519', 'lat': '40.501643', 'img': './images/wuwuran.png' },
+                ],
+                // 固废运输
+                Gufei: [
+                    { 'lng': '116.214859', 'lat': '40.256655', 'img': './images/gufeiyunshu.png' },
+                    { 'lng': '116.634724', 'lat': '40.509521', 'img': './images/gufeiyunshu.png' },
+                    { 'lng': '115.951654', 'lat': '40.367501', 'img': './images/gufeiyunshu.png' },
+                    { 'lng': '116.160711', 'lat': '40.443703', 'img': './images/gufeiyunshu.png' },
+                    { 'lng': '116.105519', 'lat': '39.95491', 'img': './images/gufeiyunshu.png' },
+                ],
+                // 其他
+                Qita: [
+                    { 'lng': '116.114859', 'lat': '40.256655', 'img': './images/qita.png' },
+                    { 'lng': '116.134724', 'lat': '39.89521', 'img': './images/qita.png' },
+                    { 'lng': '116.21654', 'lat': '40.67501', 'img': './images/qita.png' },
+                    { 'lng': '116.360711', 'lat': '39.93703', 'img': './images/qita.png' },
+                    { 'lng': '116.155519', 'lat': '39.7491', 'img': './images/qita.png' },
+                ],
+                contains: true,
+
+            }
+        },
+        mounted() {
+            this.initMap();
+            this.addPoint(this.airStation, 0);//添加空气标准站
+            this.addPoint(this.airWx, 1);//添加空气微型站
+            this.addPoint(this.airLd, 2);//添加气象雷达
+            this.addPoint(this.soilJc, 3);//添加土壤检测
+            this.addPoint(this.waterDb, 4);//添加地表水
+            this.addPoint(this.sourceWr, 5);//添加污染源
+            this.addPoint(this.Gufei, 6);//添加固废
+            this.addPoint(this.Qita, 7);//添加其他
+        },
+        methods: {
+            //侧边栏展开收起
+            isShow(item) {
+                item.isShow = !item.isShow;
+            },
+            // 全选
+            changebox(item, index) {
+                item.isChangeAll != item.isChangeAll;
+                if (item.isChangeAll === true) {
+                    item.chooseArr = [];
+                } else {
+                    item.children.forEach(value => {
+                        //去重
+                        if (item.chooseArr.indexOf(value.title) == '-1') {
+                            item.chooseArr.push(value.title);
+
+                        }
+                    });
+                }
+
+                this.isShowPoint(item, index);
+            },
+            // 单选
+            chioseTwo(item, ite, index) {
+
+                if (item.chooseArr.length == item.children.length) {
+                    item.isChangeAll = true;
+                } else {
+                    item.isChangeAll = false;
+                }
+                this.isShowPoint(item, index);
+
+            },
+            //判断数组中的字符串添加点位
+            isShowPoint(item, index) {
+                console.log(index)
+                var _this = this;
+                if (index == 0) {
+                    if (item.chooseArr.indexOf("地表水自动站") != '-1') {
+                        _this.arrType[4].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[4].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                } else if (index == 1) {
+                    if (item.chooseArr.indexOf("标准空气站") != '-1') {
+                        _this.arrType[0].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[0].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                    if (item.chooseArr.indexOf("微型空气站") != '-1') {
+                        _this.arrType[1].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[1].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                    if (item.chooseArr.indexOf("雷达区") != '-1') {
+                        _this.arrType[2].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[2].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                } else if (index == 3) {
+                    if (item.chooseArr.indexOf("土壤污染监测站") != '-1') {
+                        _this.arrType[3].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[3].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                } else if (index == 2) {
+                    if (item.chooseArr.indexOf("污染源监测站") != '-1') {
+                        _this.arrType[5].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[5].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                } else if (index == 4) {
+                    if (item.chooseArr.indexOf("固废污染监测站") != '-1') {
+                        _this.arrType[6].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[6].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                } else if (index == 5) {
+                    if (item.chooseArr.indexOf("其他监测站") != '-1') {
+                        _this.arrType[7].forEach(function (v) {
+                            _this.map.addOverlay(v);
+                        })
+                    } else {
+                        _this.arrType[7].forEach(function (v) {
+                            _this.map.removeOverlay(v);
+
+                        })
+                    }
+                }
+
+
+            },
+            initMap() {
+                var _this = this;
+                // 百度地图API功能
+                _this.map = new BMap.Map("allmap");
+                _this.map.centerAndZoom(new BMap.Point(116.429913, 40.124019), 9);
+                _this.map.enableScrollWheelZoom();
+                //坐标
+                _this.map.addEventListener("click", function (e) {
+                    alert(e.point.lng + "," + e.point.lat);
+                });
+                //行政区划
+                function getBoundary() {
+                    var arr = ["北京", "北京市顺义区", "北京市密云区", "北京市延庆区", "北京市朝阳区", "北京市丰台区", "北京市石景山区", "北京市海淀区", "北京市门头沟区", "北京市房山区", "北京市通州区", "北京市昌平区", "北京市西城区", "北京市怀柔区", "北京市大兴区", "北京市平谷区", "北京市东城区"]
+                    var color = ['', "#a411db", "#004986", "#e3710b", '#88abda', '#8fc31f', "#8f82bc", "#002e73", "#ffff00", "#5c6ebd", "#009944", "#00b7ee", "#ff0000", "#8f82bc", "#f19ec2", '#ffff00', "#ff0000"];
+                    for (let j = 0; j < arr.length; j++) {
+                        var bdary = new BMap.Boundary();
+                        bdary.get(arr[j], function (rs) {       //获取行政区域    
+                            var count = rs.boundaries.length; //行政区域的点有多少个
+                            var pointArray = [];
+                            console.log((rs.boundaries))
+                            for (var i = 0; i < count; i++) {
+                                var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 2, strokeColor: color[j], fillColor: color[j], fillOpacity: ".8", strokeOpacity: '.8' }); //建立多边形覆盖物
+                                _this.map.addOverlay(ply);  //添加覆盖物
+                                pointArray = pointArray.concat(ply.getPath());
+                            }
+                            // map.setViewport(pointArray);    //调整视野  
+                            addlabel();
+                        });
+
+                    }
+
+                }
+
+                getBoundary();
+
+
+                /*
+   * 利用百度地图接口描边(name,map[,borderColor,backgroundColor,backgroundOpacity,coverFlag])
+   */
+                function getBoundary1(name, map, borderColor, backgroundColor, backgroundOpacity, coverFlag) {
+                    if (!name) return;
+                    var bdary = new BMap.Boundary();
+                    bdary.get(name, function (rs) { //获取行政区域
+                        // map.clearOverlays(); //清除地图覆盖物
+                        var count = rs.boundaries.length; //行政区域的点有多少个
+                        var pointArray = [];
+                        console.log(count)
+                        if (count === 0) {
+                            console.log('未能获取当前输入行政区域');
+                            alert('未能获取当前输入行政区域');
+                            return;
+                        }
+                        for (var i = 0; i < count; i++) { //边界线
+                            var ply = new BMap.Polygon(rs.boundaries[i], {
+                                strokeWeight: 2,
+                                strokeColor: borderColor || "#3385ff",
+                                fillColor: backgroundColor || "rgba(255,255,255,0)",
+                                fillOpacity: backgroundOpacity || 0.2
+                            }); //建立多边形覆盖物
+                            pointArray = pointArray.concat(ply.getPath());
+                            map.addOverlay(ply); //添加覆盖物
+                        }
+                        map.setViewport(pointArray); //调整视野
+
+                        /*=========外层遮罩层================================*/
+                        // if (coverFlag && count < 3)
+                            fillMask(rs.boundaries[0],_this.map); // 当count>2时有可能不准,取决于百度返回的边界数据
+                    });
+                }
+                getBoundary1('北京市',_this.map,null,null,null,true)
+                /*
+                * addMarker 添加图标点位 （"116.111,24.666",map对象[,iconUrl(可为空),icon宽,icon高]）
+                *
+        
+                /*
+                *  添加外层遮罩层
+                */
+                function fillMask(borderData,map) {
+                    console.log("333",map)
+                    var strs = new Array(); // 外层边界所有坐标
+                    strs = borderData.split(";");
+                    var EN = "" //行政区划东北段点的集合
+                        , NW = "" //行政区划西北段点的集合
+                        , WS = "" //行政区划西南段点的集合
+                        , SE = "" //行政区划东南段点的集合
+                        , pt_e = strs[0] //行政区划最东边点的经纬度
+                        , pt_n = strs[0] //行政区划最北边点的经纬度
+                        , pt_w = strs[0] //行政区划最西边点的经纬度
+                        , pt_s = strs[0] //行政区划最南边点的经纬度
+                        , n1 = "" //行政区划最东边点在点集合中的索引位置
+                        , n2 = "" //行政区划最北边点在点集合中的索引位置
+                        , n3 = "" //行政区划最西边点在点集合中的索引位置
+                        , n4 = ""; //行政区划最南边点在点集合中的索引位置
+
+                    //4.自定义外围边框点的集合
+                    var E_JW = "170.672126, 39.623555;" //东
+                        , S_JW = "114.15563, -68.045308;" //南
+                        , W_JW = "-169.604276, 38.244136;" //西
+                        , N_JW = "105.913641, 81.291804;" //北
+                        , EN_JW = "170.672126, 81.291804;" //东北角
+                        , NW_JW = "-169.604276,  81.291804;" //西北角
+                        , WS_JW = "-169.604276, -68.045308;" //西南角
+                        , SE_JW = "170.672126, -68.045308;"; //东南角
+
+                    var EN_cover = '' // 东北的区域
+                        , NW_cover = ''
+                        , WS_cover = ''
+                        , SE_cover = '';
+
+                    //2.循环行政区划边框点集合找出最东南西北四个点的经纬度以及索引位置
+                    for (var n = 0; n < strs.length; n++) {
+                        var pt_e_f = parseFloat(pt_e.split(",")[0])
+                            , pt_n_f = parseFloat(pt_n.split(",")[1])
+                            , pt_w_f = parseFloat(pt_w.split(",")[0])
+                            , pt_s_f = parseFloat(pt_s.split(",")[1])
+
+                        var sPt = new Array();
+                        try {
+                            sPt = strs[n].split(",");
+                            var spt_j = parseFloat(sPt[0]);
+                            var spt_w = parseFloat(sPt[1]);
+                            if (pt_e_f < spt_j) { //东
+                                pt_e = strs[n];
+                                pt_e_f = spt_j; //经度最大
+                                n1 = n;
+                            }
+                            if (pt_n_f < spt_w) { //北
+                                pt_n_f = spt_w;
+                                pt_n = strs[n];
+                                n2 = n;
+                            }
+                            if (pt_w_f > spt_j) { //西
+                                pt_w_f = spt_j; //经度最小
+                                pt_w = strs[n];
+                                n3 = n;
+                            }
+                            if (pt_s_f > spt_w) { //南
+                                pt_s_f = spt_w;
+                                pt_s = strs[n];
+                                n4 = n;
+                            }
+                        } catch (err) {
+                            alert(err);
+                        }
+                    }
+
+                    n1 == '' ? n1 = 0 : n1 = n1;//刚好为0点
+                    n2 == '' ? n2 = 0 : n2 = n2;
+                    n3 == '' ? n3 = 0 : n3 = n3;
+                    n4 == '' ? n4 = 0 : n4 = n4;
+
+                    var sortObjArr = [ // 用于排序
+                        { name: "n1", value: n1 },
+                        { name: "n2", value: n2 },
+                        { name: "n3", value: n3 },
+                        { name: "n4", value: n4 },
+                    ]
+                    sortObjArr = sortObjArr.sort(function (a, b) { //从小到大
+                        return a.value - b.value
+                    });
+                    var direObj = [
+                        { name: "SE", value: '' },
+                        { name: "WS", value: '' },
+                        { name: "NW", value: '' },
+                        { name: "EN", value: '' },
+                    ]
+                    //3.得出东北、西北、西南、东南四段行政区划的边框点的集合
+                    var direction = 1; //1顺时针 0逆时针  以下使用n1,n2作比较得出方向
+                    if (sortObjArr[3].name == 'n1' && sortObjArr[0].name == 'n2' || sortObjArr[0].name == 'n1' && sortObjArr[3].name == 'n2') { // 0点落在n1-n2区域
+                        if (sortObjArr[3].name > sortObjArr[0].name) {
+                            direction = 1;
+                        } else {
+                            direction = 0;
+                        }
+                    } else {// 0点不在n1-n2区域
+                        if (n1 > n2) {
+                            direction = 1;
+                        } else {
+                            direction = 0;
+                        }
+                    }
+                    if (direction) {//顺时针
+                        switch (sortObjArr[3].name) { //根据最大的数判断
+                            case 'n1':
+                                borderPointsAdd(rollRight(direObj, 0));
+                                break;
+                            case 'n2':
+                                borderPointsAdd(rollRight(direObj, 1));
+                                break;
+                            case 'n3':
+                                borderPointsAdd(rollRight(direObj, 2));
+                                break;
+                            case 'n4':
+                                borderPointsAdd(rollRight(direObj, 3));
+                                break;
+                        }
+                        for (var i = 0; i < 4; i++) {
+                            if (direObj[i].name == 'EN') {
+                                EN_cover = direObj[i].value + E_JW + EN_JW + N_JW;
+                            } else if (direObj[i].name == 'NW') {
+                                NW_cover = direObj[i].value + N_JW + NW_JW + W_JW;
+                            } else if (direObj[i].name == 'WS') {
+                                WS_cover = direObj[i].value + W_JW + WS_JW + S_JW;
+                            } else if (direObj[i].name == 'SE') {
+                                SE_cover = direObj[i].value + S_JW + SE_JW + E_JW;
+                            }
+                        }
+                    } else { // 逆时针
+                        switch (sortObjArr[3].name) {
+                            case 'n1':
+                                borderPointsAdd(rollLeft(direObj.reverse(), 0));
+                                break;
+                            case 'n2':
+                                borderPointsAdd(rollLeft(direObj.reverse(), 1));
+                                break;
+                            case 'n3':
+                                borderPointsAdd(rollLeft(direObj.reverse(), 2));
+                                break;
+                            case 'n4':
+                                borderPointsAdd(rollLeft(direObj.reverse(), 3));
+                                break;
+                        }
+                        for (var i = 0; i < 4; i++) {
+                            if (direObj[i].name == 'EN') {
+                                EN_cover = direObj[i].value + N_JW + EN_JW + E_JW;
+                            } else if (direObj[i].name == 'NW') {
+                                NW_cover = direObj[i].value + W_JW + NW_JW + N_JW;
+                            } else if (direObj[i].name == 'WS') {
+                                WS_cover = direObj[i].value + S_JW + WS_JW + W_JW;
+                            } else if (direObj[i].name == 'SE') {
+                                SE_cover = direObj[i].value + E_JW + SE_JW + S_JW;
+                            }
+                        }
+                    }
+                    function borderPointsAdd(obj) {
+                        for (var o = sortObjArr[3].value; o < strs.length; o++) {
+                            obj[0].value += strs[o] + ";"
+                        }
+                        for (var o = 0; o <= sortObjArr[0].value; o++) {
+                            obj[0].value += strs[o] + ";"
+                        }
+                        for (var o = sortObjArr[0].value; o <= sortObjArr[1].value; o++) {
+                            obj[1].value += strs[o] + ";"
+                        }
+                        for (var o = sortObjArr[1].value; o <= sortObjArr[2].value; o++) {
+                            obj[2].value += strs[o] + ";"
+                        }
+                        for (var o = sortObjArr[2].value; o <= sortObjArr[3].value; o++) {
+                            obj[3].value += strs[o] + ";"
+                        }
+                        return obj;
+                    }
+
+                    console.log('方向:', direction == 1 ? '顺时针' : '逆时针', '东n1', n1, '北n2', n2, '西n3', n3, '南n4', n4)
+                    // console.log('东', pt_e, '北', pt_n, '西', pt_w, '南', pt_s)
+                    //4.添加环形遮罩层
+                    var ENPoints = EN_cover.split(';')//['118.34434,23.34254',...]
+                        , SEPoints = SE_cover.split(';')//['118.34434,23.34254',...]
+                        , WSPoints = WS_cover.split(';')//['118.34434,23.34254',...]
+                        , NWPoints = NW_cover.split(';')//['118.34434,23.34254',...]
+                        , ENBPoints = BPointIt(ENPoints)
+                        , SEBPoints = BPointIt(SEPoints)
+                        , WSBPoints = BPointIt(WSPoints)
+                        , NWBPoints = BPointIt(NWPoints)
+
+                    function BPointIt(arr) {
+                        var Barr = []
+                        for (var i = 0; i < arr.length; i++) {
+                            if (arr[i].length == 0) continue;
+                            Barr.push(new BMap.Point(arr[i].split(',')[0], arr[i].split(',')[1]))
+                        }
+                        return Barr;
+                    }
+                    for (var i = 0; i < 2; i++) {
+                        var ply3 = new BMap.Polygon(ENBPoints, {
+                            strokeColor: "none",
+                            strokeWeight: 2,
+                            fillColor: "#0c145f"
+                        }); //建立多边形覆盖物
+                        map.addOverlay(ply3); //遮罩物是半透明的，如果需要纯色可以多添加几层
+                        var ply4 = new BMap.Polygon(SEBPoints, {
+                            strokeColor: "none",
+                            strokeWeight: 2,
+                            fillColor: "#0c145f"
+                        }); //建立多边形覆盖物
+                        map.addOverlay(ply4); //遮罩物是半透明的，如果需要纯色可以多添加几层
+                        var ply5 = new BMap.Polygon(WSBPoints, {
+                            strokeColor: "none",
+                            strokeWeight: 2,
+                            fillColor: "#0c145f"
+                        }); //建立多边形覆盖物
+                        map.addOverlay(ply5); //遮罩物是半透明的，如果需要纯色可以多添加几层
+                        var ply6 = new BMap.Polygon(NWBPoints, {
+                            strokeColor: "none",
+                            strokeWeight: 2,
+                            fillColor: "#0c145f"
+                        }); //建立多边形覆盖物
+                        map.addOverlay(ply6); //遮罩物是半透明的，如果需要纯色可以多添加几层
+                    }
+                }
+
+
+
+                function rollLeft(array, times) {
+                    for (let time = 0; time < times; time++) {
+                        let length = array.length - 1
+                        let temp = array[0]
+                        for (let i = 0; i < length; i++) {
+                            array[i] = array[i + 1]
+                        }
+                        array[length] = temp
+                    }
+                    return array.concat();
+                }
+                /*
+                * 数组整体右移一位，最后一位移至第一
+                */
+                function rollRight(array, times) {
+                    for (let time = 0; time < times; time++) {
+                        let length = array.length - 1
+                        let temp = array[length]
+                        for (let i = length; i > 0; i--) {
+                            array[i] = array[i - 1]
+                        }
+                        array[0] = temp
+                    }
+                    return array.concat(); //array.concat()为浅拷贝，若改变里面的对象，则array也会改变
+                }
+                //添加区划名称
+                function addlabel() {
+                    var pointArray = [
+                        new BMap.Point(116.71632, 40.163491),
+                        new BMap.Point(116.942828, 40.54537),
+                        new BMap.Point(116.147055, 40.536745),
+                        new BMap.Point(116.5196, 39.964942),
+                        new BMap.Point(116.252839, 39.862227),
+                        new BMap.Point(115.812454, 40.009167),
+                        new BMap.Point(116.177238, 39.945695),
+                        new BMap.Point(115.880294, 39.710529),
+                        new BMap.Point(116.698973, 39.858683),
+                        new BMap.Point(116.24594, 40.037457),
+                        new BMap.Point(116.211445, 40.236913),
+                        new BMap.Point(116.367822, 39.919802),
+                        new BMap.Point(116.604687, 40.567443),
+                        new BMap.Point(116.38162, 39.677661),
+                        new BMap.Point(117.126711, 40.211352),
+                        new BMap.Point(116.423014, 39.921573),
+                    ];
+                    var optsArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},];
+                    var labelArray = [];
+                    var contentArray = [
+                        "顺义区", "密云区", "延庆区", "朝阳区", "丰台区", "门头沟区", "石景山区", "房山区", "通州区", "海淀区", "昌平区", "西城区", "怀柔区", "大兴区", "平谷区", "东城区"];
+                    for (var i = 0; i < pointArray.length; i++) {
+                        optsArray[i].position = pointArray[i];
+                        labelArray[i] = new BMap.Label(contentArray[i], optsArray[i]);
+                        labelArray[i].setStyle({
+                            color: "#333",
+                            fontSize: "12px",
+                            backgroundColor: "none",
+                            border: "none",
+                            height: "20px",
+                            lineHeight: "20px",
+                            fontFamily: "微软雅黑"
+                        });
+                        _this.map.addOverlay(labelArray[i]);
+                    }
+                }
+            },
+            addPoint(pointArr, type) {
+                var _this = this;
+                for (let i = 0; i < pointArr.length; i++) {
+                    var pt = new BMap.Point(pointArr[i].lng, pointArr[i].lat);
+                    if (pointArr == _this.Gufei) {
+                        var myIcon = new BMap.Icon(pointArr[i].img, new BMap.Size(40, 20));
+                        myIcon.setImageSize(new BMap.Size(40, 20));
+                    } else {
+                        var myIcon = new BMap.Icon(pointArr[i].img, new BMap.Size(20, 30));
+                        myIcon.setImageSize(new BMap.Size(20, 30));
+                    }
+                    var marker = new BMap.Marker(pt, { icon: myIcon });  // 创建标注
+                    _this.map.addOverlay(marker);
+                    switch (type) {
+                        case 0:
+                            _this.arrType[0].push(marker);
+                            break;
+                        case 1:
+                            _this.arrType[1].push(marker);
+                            break;
+                        case 2:
+                            _this.arrType[2].push(marker);
+                            break;
+                        case 3:
+                            _this.arrType[3].push(marker);
+                            break;
+                        case 4:
+                            _this.arrType[4].push(marker);
+                            break;
+                        case 5:
+                            _this.arrType[5].push(marker);
+                            break;
+                        case 6:
+                            _this.arrType[6].push(marker);
+                            break;
+                        case 7:
+                            _this.arrType[7].push(marker);
+                            break;
+                        default:
+
+                    }
+
+                }
+
+
+
+            },
+
+        }
+    })
+</script>
+
+
+</html>

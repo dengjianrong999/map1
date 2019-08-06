@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>地图遮罩</title>
+    <style>
+    html,
+    body,
+    #container {
+        margin:0;
+        height: 100%;
+    }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=409a1ee5427f6b95b961e8f44e12501c&plugin=AMap.DistrictSearch"></script>
+<script>
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom: 8,
+        center:[115.89 ,25.68],
+        // layers:[
+        //     new AMap.TileLayer.RoadNet({
+        //         zIndex:12
+        //     }),
+        //     new AMap.TileLayer({
+        //         zIndex:6,
+        //         opacity:1,
+        //         getTileUrl:'https://t{1,2,3,4}.tianditu.gov.cn/DataServer?T=ter_w&x=[x]&y=[y]&l=[z]'
+        //         })]
+    });
+    new AMap.DistrictSearch({
+        extensions:'all',
+        subdistrict:0
+    }).search('江西省',function(status,result){
+        // 外多边形坐标数组和内多边形坐标数组
+        var outer = [
+            new AMap.LngLat(-360,90,true),
+            new AMap.LngLat(-360,-90,true),
+            new AMap.LngLat(360,-90,true),
+            new AMap.LngLat(360,90,true),
+        ];
+        var holes = result.districtList[0].boundaries
+
+        var pathArray = [
+            outer
+        ];
+        pathArray.push.apply(pathArray,holes)
+        var polygon = new AMap.Polygon( {
+            pathL:pathArray,
+            strokeColor: '#00eeff',
+            strokeWeight: 1,
+            fillColor: '#71B3ff',
+            fillOpacity: 0.5
+        });
+        polygon.setPath(pathArray);
+        map.add(polygon)
+    })
+    
+</script>
+</body>
+</html>

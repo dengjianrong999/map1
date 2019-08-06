@@ -1,0 +1,319 @@
+#dataPlate{
+    width: 100%;
+    height: 100%;
+}
+.main-content{
+    width: 100%;
+    height: calc(100% - 60px);
+    padding: 10px;
+    background-color: #0c0024;
+
+}
+.top-contetn{
+    width: 100%;
+    height: 66.6%;
+    display: flex;
+    margin-bottom: 10px;
+}
+.bot-contetn{
+    width: 100%;
+    height: calc(33.3% - 10px);
+}
+.top-left-contetn{
+    width: 50%;
+    height: 100%;
+    margin-right: 10px;
+}
+.top-center-contetn{
+    margin-right: 10px;
+}
+.top-center-contetn, .top-right-contetn{
+    width: 25%;
+    height: 100%;
+}
+.right-top1 , .right-top2{
+    width: 100%;
+    height: 50%;
+    margin-bottom: 10px;
+}
+.right-top2{
+    height: calc(50% - 10px);
+}
+.box{
+    background: url(../images/zuoshang.png), url(../images/zuoxia.png), url(../images/youshang.png), url(../images/youxia.png);
+    background-size: 15px 15px;
+    background-position: 0 0, 0 100%, 100% 0, 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #001930;
+}
+.bot-contetn{
+    display: flex;
+}
+.bot-contetn>div{
+ width:25%;
+ height: 100%;
+ margin-right: 10px;
+}
+.bot-contetn .bot-content3{
+    width: calc(25% + 5px);
+    margin-right: 5px;
+
+}
+.bot-contetn .bot-content4{
+    width: calc(25% + 5px);
+    margin-left: 5px;
+    margin-right: 0px;
+
+}
+iframe{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.title{
+    color: #fff;
+    padding: 5px 0 0 10px;
+}
+.map-title{
+    position: absolute;
+}
+
+/* 空气质量状况 */
+
+.air-port , .aqi ,.date-yb{
+    width: 100%;
+    height:calc(30.3% - 0px);
+    color: #fff;
+}
+.port-title{
+    display: flex;
+    justify-content: space-between;
+}
+.port-title span{
+    color: #bbe7ff;
+    font-size: 12px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+#pieChart,.detail-port{
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+.detail-port{
+    border: 1px solid #bbe7ff;
+
+}
+.time-port{
+    /* padding: 5px; */
+    text-align: center;
+    background: #24a3fc;
+}
+.detail-span p:nth-child(1){
+   color: #f76707;
+   font-size: 16px;
+   line-height: 20px;
+   text-align: right;
+   padding-right: 20px;
+}
+p{
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    line-height: 12px;
+    padding-left: 20px;
+}
+ .aqi span,.date-yb span{
+    font-size: 12px;
+    color: #bbe7ff;
+ }
+ #linecharts{
+     width:100%;
+     height: 80%;
+ }
+ .weather{
+     width: 100%;
+     height: 100%;
+     display: flex;
+     transform: scale(.9);
+ }
+ .weather>div{
+     width: 12%;
+     height: 80%;
+     border-right: 1px solid #15488d;
+ }
+ .weather div{
+    font-size: 12px;
+ }
+ .weather>div img{
+     width: 20px;
+ }
+ .weather>div span{
+     font-size: 12px;
+     color: #fff;
+ }
+ .wt{
+     display: flex;
+ 
+ }
+ .wdb{
+     display: flex;
+     flex-direction: column;
+     
+ }
+ .bt{
+     text-align: center;
+     border-radius: 3px;
+     background-color: #f76707;
+     color: #fff;
+ }
+ .wea1{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+ }
+ .wea1>div{
+     text-align: center;
+ }
+ .bt1{
+    text-align: center;
+    border-radius: 3px;
+    background-color: #f76707;
+    color: #fff;
+    padding: 5px;
+ }
+ .bt2{
+    background-color: #04d26b;
+ }
+ .tate-yb{
+     color:#02fddd; 
+ }
+
+ @font-face {
+    font-family: Unicode;
+    /* src: url('./UnidreamLED.ttf'); */
+    src: url('./unidreamled.woff');
+}
+.nums{
+    font-family: Unicode;
+    font-size:20px;
+    background-image:-webkit-linear-gradient(bottom,#fbfbfb,#0398fd); 
+    -webkit-background-clip:text; 
+    -webkit-text-fill-color:transparent; 
+    letter-spacing: 4px;
+}
+.nums-t{
+    height: 30%;
+    display: flex;
+}
+.chart-num{
+    height: calc(70% - 30px);
+    display: flex;
+}
+.num-t{
+    width: 25%;
+    text-align: center;
+    color: #bbe7ff;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.num-g{
+    width: 100%;
+}
+.munts{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#piechart2{
+    width: 70%;
+    height: 100%;
+}
+#semiCicle{
+    width: 100%;
+    height: 100%;
+}
+.topcicre ,.botcicre{
+    width: 100%;
+    height: calc(50% - 15px);
+    display: flex; 
+    justify-content: space-between;
+}
+.cicle1{
+    width: 33.3%;
+    height: 100%;
+    padding: 2px;
+}
+.num-{
+    display: flex;
+    justify-content: space-between;
+    color:#fff;
+    font-size: 12px; 
+    padding: 0 20px;
+
+}
+#semiCicle1 ,#semiCicle2 ,#semiCicle3,#semiCicle4 ,#semiCicle5 ,#semiCicle6{
+    width: 100%;
+    height: calc(100% - 20px);
+}
+#maps{
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+.anchorBL{
+    display: none !important;
+}
+.num-n{
+    width: calc(25% - 15px);
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 666;
+    background: rgba(0,0,0,0.5)
+}
+
+.num-n div{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.num-n div span:nth-child(1){
+    color: #bbe7ff;
+}
+#cirw1{
+    width: 100%;
+    height: 35%;
+}
+#barchart{
+    width: 100%;
+    height: calc(65% - 30px)
+}
+.sort-pie{
+    width: 100%;
+    display: flex;
+    height: calc(100% - 30px);
+}
+#sort1 ,#sort2{
+    width: 50%;
+    height: 100%;
+}
+#linchart{
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+@media (width:1920px){
+    p{
+        line-height: 20px;
+    }
+    .detail-span p:nth-child(1) {
+        line-height: 30px;
+        font-size: 18px;
+    }
+}

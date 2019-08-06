@@ -1,0 +1,42 @@
+header{
+    height: 60px;
+    width: 100%;
+    background: url(../images/toubukuang.png);
+    background-size:100% 100%;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header>div{
+    width: 33.3%;
+    padding: 5px 20px;
+}
+.header-left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-left img{
+    width: 20px;
+}
+.header-left span:nth-last-child(2){
+    padding: 5px;
+    background-color: coral;
+    border-radius: 3px;
+}
+.header-title{
+    text-align: center;
+    font-size: 25px;
+    background-image:-webkit-linear-gradient(bottom,#fbfbfb,#0398fd); 
+    -webkit-background-clip:text; 
+    -webkit-text-fill-color:transparent; 
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.header-right img{
+    width: 24%;
+}

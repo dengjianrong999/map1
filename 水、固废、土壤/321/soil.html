@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/response.css" />
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/header.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" type="text/css" href="css/soil.css" />
+	<body>
+		<div id="app">
+			<div class="header">
+				<div class="head-left">
+					<span class="weather space"><img src="images/xiayu.png"></span>
+					<span>6</span>
+					<span class="space">℃</span>
+					<span class="space">小雨</span>
+					<span class="space">东北风3-4级</span>
+					<span class="level space">102 轻度</span>
+					<span class="space">2019年4月3日</span>
+					<span class="revert"><img src="images/fanhui.png"> 返回</span>
+				</div>
+				<div class="head-center">
+					土壤环境综合监管平台
+				</div>
+				<div class="head-right">
+					<span>
+						<img v-for="(item, index) in headRight" :key="index" :src="item.hovering" @mouseover="hovering($event,index)"
+						 @mouseout="departure($event,index)">
+					</span>
+				</div>
+			</div>
+			<div class="content">
+				<div class="all-left">
+					<div class="left-tep">
+						<div class="preven box">
+							<div class="box-title">土壤污染防治目标</div>
+							<div class="box-content">
+								<div id="preven"></div>
+							</div>
+						</div>
+						<div class="utilize box">
+							<div class="box-title">土壤利用概括</div>
+							<div class="box-content">
+								<div class="box-utilize" v-for="item in utilize">
+									<div class="images"><img :src="item.images"></div>
+									<div class="written">
+										<span>
+											<span class="numbers">{{item.numbers}}</span>
+											<span>{{item.written}}</span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="overview box">
+						<div class="box-title">土壤总览</div>
+						<div class="box-content">
+
+						</div>
+					</div>
+					<div class="receive box">
+						<div class="box-title">当前土壤环境管理接收实时数据分析</div>
+						<div class="box-content">
+							<div id="receive"></div>
+						</div>
+					</div>
+				</div>
+				<div class="all-right">
+					<div class="box">
+						<div class="box-title">农用地详查</div>
+						<div class="box-content">
+							<div class="box-quality">
+								<div>样品数量</div>
+								<div><span class="datas">298</span>处</div>
+							</div>
+							<div id="quality"></div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">土壤超标分析</div>
+						<div class="box-content">
+							<div id="overp1"></div>
+							<div id="overp2"></div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">重点行业重金属排放较上一年下降目标</div>
+						<div class="box-content">
+							<div id="discha"></div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">重点企业用地详查</div>
+						<div class="box-content">
+							<div id="detail"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					headRight: [{
+						hovering: 'images/daqihuanjing-weixuanzhong.png',
+						departure: 'images/daqihuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/shuihuanjing-weixuanzhong.png',
+						departure: 'images/shuihuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/turan-weixuanzhong.png',
+						departure: 'images/turanhuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/gufei-weixuanzhong.png',
+						departure: 'images/gufei-xuanzhong.png',
+					}],
+					utilize: [{
+						images: 'images/tudi.png',
+						numbers: '509812',
+						written: '亩集体土地',
+					}, {
+						images: 'images/lindi.png',
+						numbers: '593920',
+						written: '亩集体林地',
+					}, {
+						images: 'images/lindi.png',
+						numbers: '2.5',
+						written: '万亩其他',
+					}, {
+						images: 'images/zhaoze.png',
+						numbers: '8.5',
+						written: '万亩沼泽区域',
+					}, {
+						images: 'images/jianshe.png',
+						numbers: '368',
+						written: '万亩建设用地',
+					}, {
+						images: 'images/chanfang.png',
+						numbers: '12',
+						written: '万平方米厂房',
+					}, {
+						images: 'images/linye.png',
+						numbers: '460',
+						written: '万平方米林业区域',
+					}, {
+						images: 'images/nongyongdi.png',
+						numbers: '380',
+						written: '万平方米农用地',
+					}, {
+						images: 'images/weikuangku.png',
+						numbers: '980',
+						written: '万平方米尾矿库',
+					}, {
+						images: 'images/jiaotong.png',
+						numbers: '260',
+						written: '千公里交通资源',
+					}],
+					cake: [{
+						titleShow: 'false',
+						orient: 'vertical',
+						legendX: 'left',
+						legendY: 'center',
+						legendData: ['土壤环境质量调查', '质量监测网络', '标准体系构建', '监管执法强化', '数据库搭建'],
+						color: ['#d076f2', '#e3642f', '#a3dabf', '#29a9f2', '#0373fd'],
+						center: ['60%', '50%'],
+						radius: ['50%', '70%'],
+						value: [23, 23, 23, 23, 23],
+						series: [],
+					}, {
+						titleShow: 'true',
+						titleText: '按土壤类型',
+						orient: 'horizontal',
+						legendX: 'center',
+						legendY: '20',
+						legendData: ['耕地', '林地', '草地', '未利用土地'],
+						color: ['#00abfb', '#b600fb', '#b5fc0d', '#ff0202'],
+						center: ['50%', '70%'],
+						radius: ['25%', '35%'],
+						value: [40, 20, 30, 10],
+						series: [],
+					}, {
+						titleShow: 'true',
+						titleText: '按重金属类型',
+						orient: 'horizontal',
+						legendX: 'center',
+						legendY: '20',
+						legendData: ['镉', '砷', '汞', '铅', '铜', '锌'],
+						color: ['#00abfb', '#b600fb', '#02fcff', '#b5fc0d', '#ffcc02', '#ff0202'],
+						center: ['50%', '70%'],
+						radius: ['25%', '35%'],
+						value: [28, 18, 22, 10, 14, 8],
+						series: [],
+					}, {
+						titleShow: 'false',
+						orient: 'vertical',
+						legendX: 'left',
+						legendY: 'center',
+						legendData: ['铅锌冶炼行业', '铜冶炼行业', '铅蓄电池行业', '铬盐行业', '电镀行业'],
+						color: ['#00abfb', '#095b96', '#b5fc0d', '#fd9500', '#6804fe'],
+						center: ['60%', '50%'],
+						radius: ['0', '70%'],
+						value: [45, 18, 17, 10, 10],
+						series: [],
+					}]
+				}
+			},
+			mounted() {
+				this.sample();
+			},
+			methods: {
+				hovering(images, index) {
+					var el = images.target;
+					el.src = this.headRight[index].departure;
+				},
+				departure(images, index) {
+					var el = images.target;
+					el.src = this.headRight[index].hovering;
+				},
+				setFontSize() {
+					var windowWidth = document.body.clientWidth;
+					if (windowWidth > 1600) {
+						return size = 14;
+					} else if (windowWidth <= 1600 && windowWidth > 1366) {
+						return size = 12;
+					} else if (windowWidth <= 1366) {
+						return size = 10;
+					}
+				},
+				sample() {
+					var preven = echarts.init(document.getElementById('preven'));
+					var overp1 = echarts.init(document.getElementById('overp1'));
+					var overp2 = echarts.init(document.getElementById('overp2'));
+					var discha = echarts.init(document.getElementById('discha'));
+					var quality = echarts.init(document.getElementById('quality'));
+					var detail = echarts.init(document.getElementById('detail'));
+					var receive = echarts.init(document.getElementById('receive'));
+					var cake = this.cake;
+					var FontSize = this.setFontSize();
+					cake[0].value.length
+					for (var i = 0; i < cake.length; i++) {
+						for (var j = 0; j < cake[i].legendData.length; j++) {
+							cake[i].series.push({
+								name: cake[i].legendData[j],
+								value: cake[i].value[j],
+								label: {
+									color: '#FBFBFB',
+									formatter: "{d}%",
+									fontSize: FontSize,
+								}
+							});
+						}
+					}
+					this.pies(preven, cake[0], FontSize);
+					this.pies(overp1, cake[1], FontSize);
+					this.pies(overp2, cake[2], FontSize);
+					this.pies(discha, cake[3], FontSize);
+					this.quality(quality, FontSize);
+					this.broken(detail, FontSize);
+					this.histogram(receive, FontSize);
+				},
+				pies(myChart, cake, FontSize) {
+					var option = {
+						title: {
+							show: cake.titleShow,
+							text: cake.titleText,
+							x: 'center',
+							textStyle: {
+								color: '#d5e6ec',
+								fontSize: FontSize + 5,
+							}
+						},
+						tooltip: {
+							trigger: 'item',
+							formatter: "{b}: {c} ({d}%)"
+						},
+						color: cake.color,
+						legend: {
+							orient: cake.orient,
+							x: cake.legendX,
+							y: cake.legendY,
+							data: cake.legendData,
+							itemWidth: FontSize + 5,
+							itemHeight: FontSize - 5,
+							padding: [FontSize - 10, 10],
+							textStyle: {
+								color: '#fbfbfb',
+								fontSize: FontSize,
+							}
+						},
+						series: [{
+							type: 'pie',
+							center: cake.center,
+							radius: cake.radius,
+							data: cake.series,
+							itemStyle: {
+								emphasis: {
+									shadowBlur: 10,
+									shadowOffsetX: 0,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						}],
+					};
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				quality(myChart, FontSize) {
+					var option = {
+						color: ['#02defb', '#00abfb', '#b5fe04', '#b600fb', '#ff0102'],
+						series: [{
+							type: 'pie',
+							radius: ['20%', '70%'],
+							center: ['50%', '50%'],
+							roseType: 'area',
+							data: [{
+								value: 6,
+								name: '优',
+								label: {
+									color: '#FBFBFB',
+									formatter: "{b}  {d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 76,
+								name: '良',
+								label: {
+									color: '#FBFBFB',
+									formatter: "{b}  {d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 8,
+								name: '中',
+								label: {
+									color: '#FBFBFB',
+									formatter: "{b}  {d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 8,
+								name: '差',
+								label: {
+									color: '#FBFBFB',
+									formatter: "{b}  {d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 4,
+								name: '极差',
+								label: {
+									color: '#FBFBFB',
+									formatter: "{b}  {d}%",
+									fontSize: FontSize,
+								}
+							}],
+						}, {
+							type: 'pie',
+							radius: ['0', '20%'],
+							center: ['50%', '50%'],
+							color: '#ffffff',
+							hoverAnimation: false,
+							label: {
+								show: false
+							},
+							data: [{
+								value: 100,
+							}],
+						}],
+					};
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				broken(myChart, FontSize) {
+					var option = {
+						grid: {
+							top: '20',
+							left: '20',
+							right: '20',
+							bottom: '0',
+							containLabel: true
+						},
+						tooltip: {
+							trigger: 'item',
+							formatter: "{b}: {c}"
+						},
+						color: '#b5fe04',
+						xAxis: {
+							type: 'category',
+							data: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09',
+								'2018-10', '2018-11', '2018-12'
+							],
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								rotate: 25,
+								color: '#fff',
+								fontSize: FontSize,
+							},
+							boundaryGap: 0,
+						},
+						yAxis: {
+							name: '千亩',
+							type: 'value',
+							min: 0,
+							max: 400,
+							nameGap: '0',
+							nameTextStyle: {
+								color: '#fff'
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fff',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						},
+						series: [{
+							data: [250, 100, 260, 350, 300, 270, 400, 350, 220, 100, 200, 370],
+							type: 'line'
+						}]
+					};
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				histogram(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						color: ['#00abfa', '#b5fe04', '#6804fe', '#ff0202'],
+						legend: {
+							data: ['土壤业务数据(条)', '重金属排放数据(条)', '农用地数据(条)', '重点行业企业数据(条)'],
+							align: 'left',
+							right: 10,
+							textStyle: {
+								color: '#fbfbfb',
+								fontSize: FontSize,
+							}
+						},
+						grid: {
+							top: '42',
+							left: '0',
+							right: '30',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['平山区', '大雁区', '淮河区', '黄河区', '怀山区', '秦江区', '山河区', '河里区', '河方区', '黄村区'],
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#bbe7ff',
+								fontSize: FontSize,
+							},
+						}],
+						yAxis: [{
+							show: false,
+						}],
+						series: [{
+							name: '土壤业务数据(条)',
+							type: 'bar',
+							data: [50, 53, 46, 42, 43, 20, 38, 31, 36, 43],
+							label: {
+								show: true,
+								fontSize: FontSize,
+								color: '#ffffff',
+								position:'top',
+							}
+						}, {
+							name: '重金属排放数据(条)',
+							type: 'bar',
+							data: [26, 26, 36, 29, 30, 16, 25, 20, 26, 32],
+							label: {
+								show: true,
+								fontSize: FontSize,
+								color: '#ffffff',
+								position:'top',
+							}
+						}, {
+							name: '农用地数据(条)',
+							type: 'bar',
+							data: [32, 34, 32, 19, 40, 26, 30, 49, 32, 29],
+							label: {
+								show: true,
+								fontSize: FontSize,
+								color: '#ffffff',
+								position:'top',
+							}
+						}, {
+							name: '重点行业企业数据(条)',
+							type: 'bar',
+							data: [25, 26, 20, 16, 25, 18, 22, 12, 28, 22],
+							label: {
+								show: true,
+								fontSize: FontSize,
+								color: '#ffffff',
+								position:'top',
+							}
+						}]
+					};
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+
+				}
+			}
+		})
+	</script>
+</html>

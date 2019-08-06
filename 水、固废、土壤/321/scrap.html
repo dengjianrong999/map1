@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/response.css" />
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/header.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" type="text/css" href="css/scrap.css" />
+	</head>
+	<body>
+		<div id="app">
+			<div class="header">
+				<div class="head-left">
+					<span class="weather space"><img src="images/xiayu.png"></span>
+					<span>6</span>
+					<span class="space">℃</span>
+					<span class="space">小雨</span>
+					<span class="space">东北风3-4级</span>
+					<span class="level space">102 轻度</span>
+					<span class="space">2019年4月3日</span>
+					<span class="revert"><img src="images/fanhui.png"> 返回</span>
+				</div>
+				<div class="head-center">
+					固体废物综合监管平台
+				</div>
+				<div class="head-right">
+					<span>
+						<img v-for="(item, index) in headRight" :key="index" :src="item.hovering" @mouseover="hovering($event,index)"
+						 @mouseout="departure($event,index)">
+					</span>
+				</div>
+			</div>
+			<div class="content">
+				<div class="all-top">
+					<div class="top-about">
+						<div class="box">
+							<div class="box-title">各类企业类型数量统计</div>
+							<div class="box-content prises">
+								<div class="prises-box">
+									<div class="pri-nums">
+										<span>666</span>
+										<span>家</span>
+									</div>
+									<div class="pri-font">
+										工业危废源
+									</div>
+								</div>
+								<div class="prises-box">
+									<div class="pri-nums">
+										<span>623</span>
+										<span>家</span>
+									</div>
+									<div class="pri-font">
+										非工业危废源
+									</div>
+								</div>
+								<div class="prises-box">
+									<div class="pri-nums">
+										<span>663</span>
+										<span>家</span>
+									</div>
+									<div class="pri-font">
+										城镇生活污水厂
+									</div>
+								</div>
+								<div class="prises-box">
+									<div class="pri-nums">
+										<span>623</span>
+										<span>家</span>
+									</div>
+									<div class="pri-font">
+										危废经营单位
+									</div>
+								</div>
+								<div class="prises-box">
+									<div class="pri-nums">
+										<span>653</span>
+										<span>家</span>
+									</div>
+									<div class="pri-font">
+										一般工业固废源
+									</div>
+								</div>
+								<div class="prises-box">
+									<div class="pri-nums">
+										<span>523</span>
+										<span>家</span>
+									</div>
+									<div class="pri-font">
+										豁免利用处置单位
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box">
+							<div class="box-title">月度转移联单数量统计</div>
+							<div class="box-content">
+								<div id="quanti"></div>
+							</div>
+						</div>
+					</div>
+					<div class="top-center box">
+						<div class="box-title">2018年固体废物转移联单情况</div>
+						<div class="box-content">
+
+						</div>
+					</div>
+					<div class="top-about">
+						<div class="box">
+							<div class="box-title">年度转移重量统计</div>
+							<div class="box-content statis">
+								<div class="summat">
+									<div class="summat-title">危险废物转移总量</div>
+									<div class="summat-content">
+										<span><img src="images/zhongliang.png"></span>
+										<span>88588吨</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/shuliang.png"></span>
+										<span>6586个</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/qizi.png"></span>
+										<span>1112支</span>
+									</div>
+								</div>
+								<div class="summat">
+									<div class="summat-title">跨市转移总量</div>
+									<div class="summat-content">
+										<span><img src="images/zhongliang.png"></span>
+										<span>885488吨</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/shuliang.png"></span>
+										<span>4526个</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/qizi.png"></span>
+										<span>5111支</span>
+									</div>
+								</div>
+								<div class="summat">
+									<div class="summat-title">室内转移总量</div>
+									<div class="summat-content">
+										<span><img src="images/zhongliang.png"></span>
+										<span>888558吨</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/shuliang.png"></span>
+										<span>6526个</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/qizi.png"></span>
+										<span>44521支</span>
+									</div>
+								</div>
+								<div class="summat">
+									<div class="summat-title">跨省转移总量</div>
+									<div class="summat-content">
+										<span><img src="images/zhongliang.png"></span>
+										<span>52888吨</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/shuliang.png"></span>
+										<span>6676个</span>
+									</div>
+									<div class="summat-content">
+										<span><img src="images/qizi.png"></span>
+										<span>1111支</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box">
+							<div class="box-title">2018年危废联单类型</div>
+							<div class="box-content">
+								<div id="zardou"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="all-bottom">
+					<div class="box">
+						<div class="box-title">转移过程监控</div>
+						<div class="box-content">
+
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">2018年各类危险废物转移情况</div>
+						<div class="box-content">
+							<div id="transf"></div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">处置量监控</div>
+						<div class="box-content">
+							<div id="monit"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					headRight: [{
+						hovering: 'images/daqihuanjing-weixuanzhong.png',
+						departure: 'images/daqihuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/shuihuanjing-weixuanzhong.png',
+						departure: 'images/shuihuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/turan-weixuanzhong.png',
+						departure: 'images/turanhuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/gufei-weixuanzhong.png',
+						departure: 'images/gufei-xuanzhong.png',
+					}],
+				}
+			},
+			mounted() {
+				this.sample();
+			},
+			methods: {
+				hovering(images, index) {
+					var el = images.target;
+					el.src = this.headRight[index].departure;
+				},
+				departure(images, index) {
+					var el = images.target;
+					el.src = this.headRight[index].hovering;
+				},
+				setFontSize() {
+					var windowWidth = document.body.clientWidth;
+					if (windowWidth > 1600) {
+						return size = 14;
+					} else if (windowWidth <= 1600 && windowWidth > 1366) {
+						return size = 12;
+					} else if (windowWidth <= 1366) {
+						return size = 10;
+					}
+				},
+				sample() {
+					var quanti = echarts.init(document.getElementById('quanti'));
+					var zardou = echarts.init(document.getElementById('zardou'));
+					var transf = echarts.init(document.getElementById('transf'));
+					var monit = echarts.init(document.getElementById('monit'));
+					var FontSize = this.setFontSize();
+					this.quantity(quanti, FontSize);
+					this.bigCake(zardou, FontSize);
+					this.transfer(transf, FontSize);
+					this.Monitor(monit, FontSize);
+				},
+				quantity(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							top: '50',
+							left: '20',
+							right: '20',
+							bottom: '0',
+							containLabel: true
+						},
+						color: ['#40ece2', '#00abfb', '#e87a06', '#f2e922', '#1bd34b', '#e001f6', '#ff001e', '#033bdd', '#a43bfd'],
+						legend: {
+							data: ['平山区', '大雁区', '淮河区', '黄河区', '昌山区', '怀山区', '秦江区', '山河区', '河里区'],
+							align: 'left',
+							right: 10,
+							padding: 1,
+							itemGap: 3,
+							textStyle: {
+								color: '#fbfbfb',
+								fontSize: FontSize - 2,
+							}
+						},
+						xAxis: {
+							type: 'category',
+							data: ['2019-01-24', '2019-01-29', '2019-02-03', '2019-02-08', '2019-02-13', '2019-02-18', '2019-02-23'],
+							boundaryGap: 0,
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								rotate: 25,
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								show: true,
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						},
+						yAxis: {
+							type: 'value',
+							name: '份',
+							nameGap: 0,
+							nameTextStyle: {
+								color: '#fff'
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						},
+						series: [{
+							type: 'line',
+							name: '平山区',
+							data: [400, 590, 440, 450, 410, 400, 460],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '大雁区',
+							data: [220, 210, 150, 200, 100, 250, 200],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '淮河区',
+							data: [390, 380, 400, 500, 380, 450, 500],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '黄河区',
+							data: [700, 650, 700, 620, 680, 550, 600],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '昌山区',
+							data: [720, 770, 750, 740, 780, 710, 700],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '怀山区',
+							data: [650, 700, 630, 680, 660, 700, 610],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '秦江区',
+							data: [500, 550, 510, 450, 580, 530, 550],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '山河区',
+							data: [800, 720, 740, 680, 800, 750, 700],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}, {
+							type: 'line',
+							name: '河里区',
+							data: [100, 50, 90, 70, 120, 150, 100],
+							symbol: 'circle',
+							symbolSize: FontSize / 2,
+						}]
+					}
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				bigCake(myChart, FontSize) {
+					var option = {
+						title: {
+							text: '联单类型占比',
+							textStyle: {
+								color: '#f2f2f2',
+								fontSize: FontSize + FontSize / 2 - 5,
+							},
+							x: 'center',
+							y: 'center',
+						},
+						tooltip: {
+							trigger: 'item',
+							formatter: "{a} <br/>{b}: {c} ({d}%)"
+						},
+						legend: {
+							orient: 'vertical',
+							x: 'left',
+							data: ['跨省', '跨市', '市内'],
+							textStyle: {
+								color: '#c6ecfa',
+								fontSize: FontSize,
+							}
+						},
+						color: ['#f2e922', '#267fe9', '#3aede8'],
+						series: [{
+							name: '联单类型占比',
+							type: 'pie',
+							radius: ['50%', '70%'],
+							avoidLabelOverlap: false,
+							data: [{
+								value: 28,
+								name: '跨省',
+								label: {
+									color: '#FFFFFF',
+									formatter: "{b}\n{d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 42,
+								name: '跨市',
+								label: {
+									color: '#FFFFFF',
+									formatter: "{b}\n{d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 30,
+								name: '市内',
+								label: {
+									color: '#FFFFFF',
+									formatter: "{b}\n{d}%",
+									fontSize: FontSize,
+								}
+							}]
+						}, {
+							type: 'pie',
+							color: ["#143966"],
+							radius: ['0%', '45%'],
+							hoverAnimation: false,
+							silent: true,
+							data: [{
+								value: 0,
+							}]
+						}]
+					}
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				transfer(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							top: '40',
+							left: '20',
+							right: '20',
+							bottom: '0',
+							containLabel: true
+						},
+						xAxis: {
+							type: 'category',
+							data: ['HW01', 'HW02', 'HW03', 'HW04', 'HW05', 'HW06', 'HW07', 'HW08', 'HW09', 'HW10', 'HW11', 'HW12', 'HW13',
+								'HW14', 'HW15', 'HW16', 'HW17', 'HW18', 'HW19', 'HW20', 'HW21'
+							],
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								rotate: 45,
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+						},
+						yAxis: {
+							type: 'value',
+							name: '万吨',
+							nameTextStyle: {
+								color: '#fff'
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						},
+						series: [{
+							type: 'bar',
+							data: [760, 620, 670, 430, 700, 440, 580, 680, 720, 580, 320, 500, 410, 660, 420, 790, 700, 670, 740, 610,
+								480
+							],
+							itemStyle: {
+								normal: {
+									color: new echarts.graphic.LinearGradient(
+										0, 0, 0, 1,
+										[{
+												offset: 0,
+												color: '#3ceee6'
+											},
+											{
+												offset: 1,
+												color: '#1062c2'
+											}
+										]
+									)
+								},
+								emphasis: {
+									color: new echarts.graphic.LinearGradient(
+										0, 0, 0, 1,
+										[{
+												offset: 0,
+												color: '#3ceee6'
+											},
+											{
+												offset: 1,
+												color: '#1062c2'
+											}
+										]
+									)
+								}
+							},
+							markLine: {
+								data: [{
+									yAxis: 600,
+								}],
+								lineStyle: {
+									type: 'solid',
+									color: '#fbfbfb',
+								}
+							}
+						}]
+					}
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				Monitor(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							top: '4%',
+							left: '3%',
+							right: '8%',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis: {
+							type: 'value',
+							name: '处',
+							nameTextStyle: {
+								color: '#fff'
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						},
+						yAxis: {
+							type: 'category',
+							data: ['未用处置量', '已用处置量', '许可处置量'],
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fefefe',
+								fontSize: FontSize,
+							}
+						},
+						series: [{
+							type: 'bar',
+							data: [200, 405, 600],
+							barWidth: '50%',
+							itemStyle: {
+								normal: {
+									color: function(params) {
+										// build a color map as your need.
+										var colorList = ['#ff0202', '#b5fc0d', '#b600fb'];
+										return colorList[params.dataIndex]
+									},
+								}
+							}
+						}]
+					}
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				}
+			}
+		})
+	</script>
+</html>

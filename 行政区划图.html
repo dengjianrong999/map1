@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>行政区边界查询</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            height: 100%;
+        }
+
+        .input-item-text {
+            width: 7rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=409a1ee5427f6b95b961e8f44e12501c&plugin=AMap.DistrictSearch"></script>
+    <script type="text/javascript">
+        //初始化地图对象，加载地图
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [115.89 ,25.68],//地图中心点
+            zoom: 8 //地图显示的缩放级别
+        });
+        var district = null;
+        var polygons = [];
+        function drawBounds() {
+            var colorList = ['red', 'pink', 'green', 'yellow', 'grey'];
+            var cityArr = ['章贡区', '南康区', '瑞金市', '赣县', '信丰县', '大余县', '上犹县', '崇义县', '安远县', '龙南县', '定南县', '全南县', '兴国县', '宁都县', '于都县', '会昌县', '寻乌县', '石城县'];
+            let IndexCur = 0;
+            for (i = 0; i < cityArr.length; i++) {
+                new AMap.DistrictSearch({
+                    extensions: 'all',
+                    subdistrict: 0
+                }).search(cityArr[i], function (status, result) {
+                    polygons = [];
+                    var bounds = result.districtList[0].boundaries;
+                    if (bounds) {
+                        for (let j = 0; j < bounds.length; j++) {
+                            //生成行政区划polygon
+                            var polygon = new AMap.Polygon({
+                                strokeWeight: 1,
+                                path: bounds[j],
+                                fillOpacity: 0.4,
+                                fillColor: colorList[IndexCur++ % 5],
+                                strokeColor: '#0091ea'
+                            });
+                            polygons.push(polygon);
+                        }
+                    }
+                    map.add(polygons)
+                    // map.setFitView();//视口自适应
+                    // map.setMap(map);
+                });
+
+            }
+        }
+        drawBounds();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+.input{
+    position: absolute;
+}
+input[type="checkbox"]{
+    -webkit-appearance: none;
+    vertical-align:middle;
+    margin-top:0;
+    background:#fff;
+    border:#3190e8 solid 1px;
+    border-radius: 8px;
+    min-height: 15px;
+    min-width: 15px;
+
+}
+input[type="checkbox"]:checked {
+    background: #fff;
+}
+input[type=checkbox]:checked::after{
+    content: '';
+    /* top: 13px;
+    left: 33px; */
+    position: absolute;
+    border: #3190e8 solid 2px;
+    border-top: none;
+    border-right: none;
+    height: 4px;
+    width: 9px;
+    margin-top: 2px;
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg); 
+    transform: rotate(-45deg);
+}
+input{
+    outline:none;
+    cursor: pointer;
+}
+.leftMenu{
+    background: #b0bcdc;
+    padding: 10px;
+}
+.menu{
+    margin-bottom: 5px;
+}
+.menu:nth-last-child(1) img{
+ display: none;
+}
+.leftMenu{
+    width: 150px;
+}
+.titleContent{
+    width: 50%;
+    padding: 5px;
+    color: #fff;
+    border-radius: 0 12px 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: -moz-linear-gradient(top, #c3ecfb    0%, #17b4ec 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c3ecfb   ), color-stop(100%,#17b4ec));
+    background: -webkit-linear-gradient(top, #c3ecfb    bdfe0  0%,#17b4ec 100%);
+    background: -o-linear-gradient(top, #c3ecfb    0%,#17b4ec 100%);
+    background: -ms-linear-gradient(top, #c3ecfb    0%,#17b4ec 100%);
+    background: linear-gradient(to bottom, #c3ecfb    0%,#17b4ec 100%);
+}
+.titleContent img{
+    width: 20px;
+}
+.titleTwo{
+    color: #3190e8;
+}
+::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #c8e7ff;
+}
+::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background: #0184cb;
+}
+.anchorBL{
+    display: none !important;
+}

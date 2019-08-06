@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/response.css" />
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/header.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" type="text/css" href="css/water.css" />
+	</head>
+	<body>
+		<div id="app">
+			<div class="header">
+				<div class="head-left">
+					<span class="weather space"><img src="images/xiayu.png"></span>
+					<span>6</span>
+					<span class="space">℃</span>
+					<span class="space">小雨</span>
+					<span class="space">东北风3-4级</span>
+					<span class="level space">102 轻度</span>
+					<span class="space">2019年4月3日</span>
+					<span class="revert"><img src="images/fanhui.png"> 返回</span>
+				</div>
+				<div class="head-center">
+					水环境综合监管平台
+				</div>
+				<div class="head-right">
+					<span>
+						<img v-for="(item, index) in headRight" :key="index" :src="item.hovering" @mouseover="hovering($event,index)"
+						 @mouseout="departure($event,index)">
+					</span>
+				</div>
+			</div>
+			<div class="content">
+				<div class="all-left">
+					<div class="quality box">
+						<div class="box-title">水质概括</div>
+						<div class="box-content">
+
+						</div>
+					</div>
+					<div class="calenda box">
+						<div class="box-title">近两个月各站点C0D均值日历</div>
+						<div class="box-content">
+							<div class="box-left">
+								<div class="box-text">2019年1月黄河区站点C0D均值日历</div>
+								<div class="box-calendar">
+									<ul>
+										<li v-for="item in 31">{{item}}</li>
+									</ul>
+								</div>
+							</div>
+							<div class="box-right">
+								<div class="box-text">2019年2月黄河区站点C0D均值日历</div>
+								<div class="box-calendar">
+									<ul>
+										<li v-for="item in 28">{{item}}</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="contras box">
+						<div class="box-title">
+							各站点各指标对比
+							<span class="SubText">COD/氨氮/溶解氧(mg/L)</span>
+						</div>
+						<div class="box-content">
+							<div id="contras"></div>
+						</div>
+					</div>
+					<div class="informa box">
+						<div class="box-title">自动监测站预警、报警信息</div>
+						<div class="box-content">
+							<table class="table warning">
+								<thead>
+									<tr>
+										<th>预警或报警内容</th>
+										<th>监测时间</th>
+										<th>监测点名称</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in warning">
+										<td>{{item.warn1}}</td>
+										<td>{{item.warn2}}</td>
+										<td>{{item.warn3}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="all-right">
+					<div class="box">
+						<div class="box-title">自动监测站实时联网情况</div>
+						<div class="box-content">
+							<div id="network"></div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">
+							自动站排名
+							<div class="choice">
+								<span class="active">达标率</span>
+								<span>超标率</span>
+								<span>故障</span>
+							</div>
+						</div>
+						<div class="box-content">
+							<table class="table ranking">
+								<thead>
+									<tr>
+										<th>年月</th>
+										<th>站点</th>
+										<th>本月综合排名</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in ranking">
+										<td>{{item.rank1}}</td>
+										<td>{{item.rank2}}</td>
+										<td>{{item.rank3}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">自动监测站数据上传率</div>
+						<div class="box-content">
+							<div id="upload"></div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">
+							水质实况
+							<span class="SubText">2019-01-25</span>
+						</div>
+						<div class="box-content">
+							<table class="table situation">
+								<thead>
+									<tr>
+										<th>站点</th>
+										<th>水质类别</th>
+										<th>目标类别</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in situation">
+										<td>{{item.situa1}}</td>
+										<td>{{item.situa2}}</td>
+										<td>{{item.situa3}}</td>
+										<td><span>{{item.situa4}}</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">水质监测任务完成情况</div>
+						<div class="box-content">
+							<table class="table complete">
+								<thead>
+									<tr>
+										<th>采样点</th>
+										<th>类型</th>
+										<th>等级</th>
+										<th>应测</th>
+										<th>实测</th>
+										<th>是否完成</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="item in complete">
+										<td>{{item.compl1}}</td>
+										<td>{{item.compl2}}</td>
+										<td>{{item.compl3}}</td>
+										<td>{{item.compl4}}</td>
+										<td>{{item.compl5}}</td>
+										<td>{{item.compl6}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-title">水环境质量情况</div>
+						<div class="box-content">
+							<div class="dashboard">
+								<div id="dashboard1"></div>
+								<span>考核断面达标率</span>
+							</div>
+							<div class="dashboard">
+								<div id="dashboard2"></div>
+								<span>河流水达标率</span>
+							</div>
+							<div class="dashboard">
+								<div id="dashboard3"></div>
+								<span>饮用水达标率</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					headRight: [{
+						hovering: 'images/daqihuanjing-weixuanzhong.png',
+						departure: 'images/daqihuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/shuihuanjing-weixuanzhong.png',
+						departure: 'images/shuihuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/turan-weixuanzhong.png',
+						departure: 'images/turanhuanjing-xuanzhong.png',
+					}, {
+						hovering: 'images/gufei-weixuanzhong.png',
+						departure: 'images/gufei-xuanzhong.png',
+					}],
+					warning: [{
+						warn1: 'COD监测值:40mg/L超过预警值35mg/L',
+						warn2: '2019/4/1 14:30',
+						warn3: '黄河区1#',
+					}, {
+						warn1: 'COD监测值:50mg/L超过预警值45mg/L',
+						warn2: '2019/4/1 14:30',
+						warn3: '淮天区2#',
+					}, {
+						warn1: 'COD监测值:50mg/L超过预警值45mg/L',
+						warn2: '2019/4/1 14:30',
+						warn3: '黄河区3#',
+					}, {
+						warn1: 'COD监测值:50mg/L超过预警值45mg/L',
+						warn2: '2019/4/1 14:30',
+						warn3: '平山区4#',
+					}, {
+						warn1: 'COD监测值:50mg/L超过预警值45mg/L',
+						warn2: '2019/4/1 14:30',
+						warn3: '黄河区5#',
+					}, {
+						warn1: 'COD监测值:50mg/L超过预警值45mg/L',
+						warn2: '2019/4/1 14:30',
+						warn3: '河里区6#',
+					}],
+					ranking: [{
+						rank1: '2019年1月',
+						rank2: '山源森林公园',
+						rank3: '1',
+					}, {
+						rank1: '2019年1月',
+						rank2: '西部矿业有限公司',
+						rank3: '2',
+					}, {
+						rank1: '2019年1月',
+						rank2: '天山盟川污水治理厂',
+						rank3: '3',
+					}, {
+						rank1: '2019年1月',
+						rank2: '明城制衣有限公司',
+						rank3: '4',
+					}, {
+						rank1: '2019年1月',
+						rank2: '爱立雅有限公司',
+						rank3: '5',
+					}, {
+						rank1: '2019年1月',
+						rank2: '明达实业有限公司',
+						rank3: '6',
+					}, {
+						rank1: '2019年1月',
+						rank2: '阳新管茂有限公司',
+						rank3: '7',
+					}, {
+						rank1: '2019年1月',
+						rank2: '平山国泰管理机构',
+						rank3: '8',
+					}, {
+						rank1: '2019年1月',
+						rank2: '天山四方污水治理厂',
+						rank3: '9',
+					}],
+					situation: [{
+						situa1: '秦淮区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '达标',
+					}, {
+						situa1: '大雁区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '达标',
+					}, {
+						situa1: '黄河区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '未达标',
+					}, {
+						situa1: '昌山区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '达标',
+					}, {
+						situa1: '怀山区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '未达标',
+					}, {
+						situa1: '秦江区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '达标',
+					}, {
+						situa1: '山河区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '未达标',
+					}, {
+						situa1: '高兴区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '达标',
+					}, {
+						situa1: '河里区自动站',
+						situa2: 'Ⅱ类',
+						situa3: 'Ⅱ类',
+						situa4: '未达标',
+					}],
+					complete: [{
+						compl1: '中心桥下',
+						compl2: '地表水',
+						compl3: '省考',
+						compl4: '12次',
+						compl5: '10次',
+						compl6: '未完成',
+					}, {
+						compl1: '东山水库',
+						compl2: '饮用水源地',
+						compl3: '国考',
+						compl4: '24次',
+						compl5: '24次',
+						compl6: '完成',
+					}, {
+						compl1: '中心桥下',
+						compl2: '地表水',
+						compl3: '省考',
+						compl4: '12次',
+						compl5: '10次',
+						compl6: '未完成',
+					}, {
+						compl1: '秦淮水库',
+						compl2: '饮用水源地',
+						compl3: '国考',
+						compl4: '24次',
+						compl5: '20次',
+						compl6: '未完成',
+					}, {
+						compl1: '中心桥下',
+						compl2: '地表水',
+						compl3: '省考',
+						compl4: '12次',
+						compl5: '10次',
+						compl6: '未完成',
+					}, {
+						compl1: '东山水源',
+						compl2: '饮用水源地',
+						compl3: '国考',
+						compl4: '24次',
+						compl5: '18次',
+						compl6: '完成',
+					}],
+					meterData: [{
+						titleText: '全区责任考核监测\n点位5个',
+						seriesName: '考核断面达标率',
+						seriesValue: '150',
+					}, {
+						titleText: '江河监测点位129个',
+						seriesName: '河流水达标率',
+						seriesValue: '170',
+					}, {
+						titleText: '饮用水监测点位10个',
+						seriesName: '饮用水达标率',
+						seriesValue: '160',
+					}]
+				}
+			},
+			mounted() {
+				this.sample();
+			},
+			methods: {
+				hovering(images, index) {
+					var el = images.target;
+					el.src = this.headRight[index].departure;
+				},
+				departure(images, index) {
+					var el = images.target;
+					el.src = this.headRight[index].hovering;
+				},
+				setFontSize() {
+					var windowWidth = document.body.clientWidth;
+					if (windowWidth > 1600) {
+						return size = 14;
+					} else if (windowWidth <= 1600 && windowWidth > 1366) {
+						return size = 12;
+					} else if (windowWidth <= 1366) {
+						return size = 10;
+					}
+				},
+				sample() {
+					var contras = echarts.init(document.getElementById('contras'));
+					var network = echarts.init(document.getElementById('network'));
+					var upload = echarts.init(document.getElementById('upload'));
+					var dashboard1 = echarts.init(document.getElementById('dashboard1'));
+					var dashboard2 = echarts.init(document.getElementById('dashboard2'));
+					var dashboard3 = echarts.init(document.getElementById('dashboard3'));
+					var FontSize = this.setFontSize();
+					var meterData = this.meterData
+					this.broken(contras, FontSize);
+					this.pies(network, FontSize);
+					this.histogram(upload, FontSize);
+					this.meter(dashboard1, FontSize, meterData[0]);
+					this.meter(dashboard2, FontSize, meterData[1]);
+					this.meter(dashboard3, FontSize, meterData[2]);
+				},
+				broken(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'axis'
+						},
+						legend: {
+							orient: 'horizontal',
+							x: 'center',
+							data: ['平山区监测站', '淮天区监测站', '大雁区监测站', '黄河区监测站'],
+							textStyle: {
+								color: '#ffffff',
+								fontSize: FontSize - 2,
+							}
+						},
+						color: ['#ff8205', '#17bffc', '#fdbf04', '#03e989'],
+						grid: {
+							top: 45,
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,
+							data: ['2019/1/4', '2019/1/5', '2019/1/6', '2019/1/7', '2019/1/8', '2019/1/9', '2019/1/10', '2019/1/11',
+								'2019/1/12', '2019/1/13', '2019/1/14'
+							],
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								interval: 1,
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+						},
+						yAxis: {
+							type: 'value',
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						},
+						series: [{
+							name: '平山区监测站',
+							type: 'line',
+							data: [8, 10, 12, 13, 5, 7, 6, 9, 3, 4, 9]
+						}, {
+							name: '淮天区监测站',
+							type: 'line',
+							data: [11, 13, 12, 15, 16, 18, 11, 10, 9, 13, 15]
+						}, {
+							name: '大雁区监测站',
+							type: 'line',
+							data: [5, 6, 5, 7, 8, 4, 9, 10, 5, 7, 6]
+						}, {
+							name: '黄河区监测站',
+							type: 'line',
+							data: [3, 5, 2, 7, 5, 4, 7, 4, 8, 3, 5]
+						}]
+					}
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				pies(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'item',
+							formatter: "{b}: {c} ({d}%)"
+						},
+						color: ['#24a3fc', '#b3b3b3'],
+						legend: {
+							orient: 'horizontal',
+							x: 'left',
+							data: ['在线点位', '离线点位'],
+							textStyle: {
+								color: '#ffffff',
+								fontSize: FontSize,
+							}
+						},
+						series: [{
+							type: 'pie',
+							radius: ['60%', '70%'],
+							data: [{
+								value: 82,
+								name: '在线点位',
+								label: {
+									color: '#FFFFFF',
+									formatter: "{d}%",
+									fontSize: FontSize,
+								}
+							}, {
+								value: 18,
+								name: '离线点位',
+								label: {
+									color: '#FFFFFF',
+									formatter: "{d}%",
+									fontSize: FontSize,
+								}
+							}],
+							itemStyle: {
+								emphasis: {
+									shadowBlur: 10,
+									shadowOffsetX: 0,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						}],
+					};
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				histogram(myChart, FontSize) {
+					var option = {
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							top: '50',
+							left: '0',
+							right: '0',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['平山区', '大雁区', '淮河区', '黄河区', '昌山区', '怀山区', '秦江区', '山河区', '河里区'],
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								rotate: 25,
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+						}],
+						yAxis: [{
+							type: 'value',
+							name: '上传率%',
+							min: 0,
+							max: 100,
+							nameTextStyle: {
+								color: '#fff'
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#095b96',
+									width: 2,
+								}
+							},
+							axisTick: {
+								show: false,
+							},
+							axisLabel: {
+								color: '#fefefe',
+								fontSize: FontSize,
+							},
+							splitLine: {
+								lineStyle: {
+									color: '#0a2b6e',
+								}
+							}
+						}],
+						visualMap: {
+							min: 0,
+							max: 100,
+							left: 'center',
+							inverse: true,
+							top: 0,
+							orient: 'horizontal',
+							pieces: [{
+								min: 0,
+								max: 20,
+								label: '0-20%',
+								color: '#fc2450',
+							}, {
+								min: 20,
+								max: 40,
+								label: '20-40%',
+								color: '#f5e100',
+							}, {
+								min: 40,
+								max: 80,
+								label: '40-80%',
+								color: '#24a3fc',
+							}, {
+								min: 80,
+								max: 100,
+								label: '>80%',
+								color: '#78dd8c',
+							}],
+							color: ['#d94e5d', '#eac736', '#50a3ba'],
+							textStyle: {
+								color: '#fff',
+								fontSize: FontSize,
+							}
+						},
+						series: [{
+							type: 'bar',
+							barWidth: 20,
+							data: [91, 65, 70, 40, 68, 57, 76, 20, 55]
+						}]
+					};
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+				meter(myChart, FontSize, meterData) {
+					var option = {
+						title: {
+							text: meterData.titleText,
+							x: 'center',
+							textStyle: {
+								color: '#bbe7ff',
+								fontSize: FontSize + 2,
+							},
+						},
+						tooltip: {
+							formatter: "{a} <br/>{b} : {c}%"
+						},
+						toolbox: {
+							feature: {
+								restore: {},
+								saveAsImage: {}
+							}
+						},
+						series: [{
+							name: meterData.seriesName,
+							radius: '85%',
+							center: ['50%', '65%'],
+							type: 'gauge',
+							min: 0,
+							max: 200,
+							axisLine: {
+								lineStyle: {
+									width: 10, // 这个是修改宽度的属性
+									color: [
+										[0.2, '#78dd8c'],
+										[0.79, '#24a3fc'],
+										[1, '#fc2450']
+									],
+								}
+							},
+							splitLine: {
+								length: 16,
+							},
+							axisTick: {
+								length: 14,
+							},
+							pointer: {
+								width: 3,
+								length: "60%",
+							},
+							axisLabel: {
+								fontSize: FontSize - 3,
+							},
+							itemStyle: {
+								color: '#24a3fc',
+							},
+							detail: {
+								formatter: '{value}%',
+								fontSize: FontSize,
+								offsetCenter: ['0%', '70%']
+							},
+							title: {
+								show: true,
+								offsetCenter: [0, '-25%'], // x, y，单位px
+								textStyle: {
+									color: '#bbe7ff',
+									fontSize: FontSize,
+								}
+							},
+							data: [{
+								value: meterData.seriesValue,
+								name: '占用率',
+							}]
+						}]
+					}
+					myChart.setOption(option);
+					window.addEventListener("resize", function() {
+						myChart.resize();
+					});
+				},
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,2468 @@
+<html>
+<script src="/gdgf/static/plugin/jquery/jquery-2.2.2.min.js"></script>
+<script src="/gdgf/static/plugin/vuejs/2.5.16/vue.js"></script>
+<script type="text/javascript">
+var _ctx="/gdgf";
+var _ctxRoot="/gdgf";
+var _version="1563270487761";
+
+</script>
+<script src="/gdgf/static/plugin/echarts3/echarts.min.js" type="text/javascript"></script>
+		<link href="/gdgf/static/plugin/layer/layer-2.3/skin/layer.css" type="text/css" rel="stylesheet" />
+			<script src="/gdgf/static/plugin/layer/layer-2.3/layer.js" type="text/javascript"></script>
+			<script src="/gdgf/static/common/js/layer-extends.js" type="text/javascript"></script>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			<!--[if lt IE 9]>
+				<script src="/gdgf/static/plugin/common/respond.min.js"></script>
+        		<script src="/gdgf/static/plugin/common/html5.js"></script>
+        		
+<![endif]--><link rel="stylesheet" href="/gdgf/static/plugin/font-awesome-4.7.0/css/font-awesome.min.css" />
+<script src="/gdgf/static/plugin/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<!-- 整体样式 -->
+<link rel="stylesheet" href="/gdgf/static/modules/index/css/main.css?v=1563270487745"/>
+<!-- 头部样式 -->
+<link rel="stylesheet" href="/gdgf/static/modules/index/css/title.css?v=1563270487745"/>
+<script type="text/javascript" src="/gdgf/static/modules/index/js/title.js?v=1563270487745"></script>
+<!-- 各个模块样式 -->
+<link rel="stylesheet" href="/gdgf/static/modules/index/css/csdw/content.css?v=1563270487745"/>
+<!-- 一些公用的方法 -->
+<script type="text/javascript" src="/gdgf/static/modules/index/js/indexUtils.js?v=1563270487745"></script>
+<!-- 百度地图 -->
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=wT3D2wAZGPmL6wZXDqwMKDkhvAGrSkvr"></script>
+<script type="text/javascript" src="/gdgf/static/modules/index/css/csdw/baiduStyle.js?v=1563270487745"></script>
+<!-- 遮罩层 -->
+<link href="/gdgf/static/modules/index/css/csdw/mapSpiner.css?v=1563270487745" rel="stylesheet">
+<!-- 筛选点位工具类 -->
+<script src="/gdgf/static/modules/index/css/csdw/turf.js"></script>
+<head>
+<!-- bigIndex.jsp -->
+<title>广东省固体废物环境监管信息平台</title>
+</head>
+<body id="body">
+<div id="vue">
+<!-- 顶部 -->
+<div id="header">
+	<!-- 左侧选项卡按钮 -->
+	<div id="leftPageBtn">
+		<!-- 当前时间 -->
+		<div id="nowtime">
+			<img>
+			<div>
+				<span id="nowtime_top"></span>
+				<br>
+				<span id="nowtime_bottom"></span>
+			</div>
+		</div>
+		<!-- [主页]按钮 -->
+		<div id="pageBtn1">
+			<img>
+			<span>转移分析</span>
+		</div>
+		<!-- [产生源]按钮 -->
+		<div id="pageBtn2">
+			<img>
+			<span>一张图</span>
+		</div>
+	</div>
+	<!-- 文字 -->
+	<h2 id="headerTitle" >
+		广东省固体废物环境监管信息平台
+	</h2>
+	<!-- 右侧选项卡按钮 -->
+	<div id="rightPageBtn">
+		<!-- [经营情况]按钮 -->
+		<div id="pageBtn3">
+			<img>
+			<span>经营情况</span>
+		</div>
+		<!-- [系统监控]按钮 -->
+		<div id="pageBtn4">
+			<img>
+			<span>系统监控</span>
+		</div>
+		<!-- 日期控件 -->
+		<div id="datepicker">
+			<img>
+			<span>{{year}}</span>
+			<p>年</p>
+			<img>
+		</div>
+	</div>
+</div>
+<!-- 各个模块 -->
+<div id="content">
+	<!-- 左边5个模块 -->
+	<div id="wrapLeft">
+		<!-- 上边3个模块 -->
+		<div id="wrapLeftTop">
+			<!-- 地图 -->
+			<div id="wrapMap" :style="background['mapBorder']">
+				<!-- 搜索框 -->
+				<div id="mapSearch">
+					<div id="s1" @click="clickMapS1()">
+						<div :style="map.searchStyle.s11"></div>
+						<div :style="map.searchStyle.s12"></div>
+						<div :style="map.searchStyle.s13"></div>
+					</div>
+					<div id="mapSearchDiv">
+						<div id="s2" :style="map.mapSearchDivStyle">
+							<div id="s2Input" class="sInput" :style="map.searchStyle.s2" @click="clickSearchTheme()">{{map.themeValue}}</div>
+							<div id="s2Option" class="sOption" v-if="map.searchStyleS2">
+								<div v-for="o in map.themeList" @click="selectTheme(o)">{{o.name}}</div>
+							</div>
+						</div>
+						<div id="s3" :style="map.mapSearchDivStyle">
+							<div id="s3Input" class="sInput" :style="map.searchStyle.s3" @click="clickSearchYear()">{{year}}年</div>
+							<div id="s3Option" class="sOption" v-if="map.searchStyleS3">
+								<div v-for="o in map.yearList" @click="selectYear(o)">{{o}}年</div>
+							</div>
+						</div>
+						<div id="s4" :style="map.mapSearchDivStyle" v-if="map.searchS4">
+							<div id="s4Input" class="sInput" :style="map.searchStyle.s3" @click="clickSearchMonth()">{{map.month}}月</div>
+							<div id="s4Option" class="sOption" v-if="map.searchStyleS4">
+								<div v-for="o in map.monthList" @click="selectMonth(o)">{{o}}月</div>
+							</div>
+						</div>
+						<div id="s5" :style="map.mapSearchDivStyle">
+							<div id="s5Input" class="sInput" :style="map.searchStyle.s5" @click="clickSearchDwlx()">{{intercept(map.dwlxName, 14)}}</div>
+							<div id="s5Option" class="sOption" v-if="map.searchStyleS5">
+								<div v-for="dwlx in map.dwlxList">
+									<div class="dwlxTitle" @click="selectDwlxTitle(dwlx.pItem)">
+										&nbsp;<i :class="dwlx.pItem.selected=='1'?'fa fa-stop-circle-o':'fa fa-circle-o'"></i>&nbsp;
+										{{intercept(dwlx.pItem.name, 12)}}
+									</div>
+									<div v-for="o in dwlx.childList" @click="selectDwlx(o)">
+										&nbsp;<i :class="o.selected=='1'?'fa fa-dot-circle-o':'fa fa-circle-o'"></i>&nbsp;
+										{{intercept(o.VALUE, 12)}}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="s6" :style="map.mapSearchDivStyle">
+							<div id="s6Input" class="sInput" :style="map.searchStyle.s6" @click="clickSearchDw()">{{intercept(map.dwName, 11)}}</div>
+							<div id="s6Option" class="sOption" v-if="map.searchStyleS6">
+								<div v-for="(o,i) in map.dwList" @click="selectDw(o)">
+									&nbsp;<i :class="map.dwExist[o.id]==null?'fa fa-circle-o':'fa fa-dot-circle-o'" :style="'color:'+map.pointColorList[i]"></i>&nbsp;
+									{{o.name}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 加载层 -->
+				<div class="spiner" id="mapSpiner" v-if="map.spinerFlag">
+	                <div class="sk-spinner sk-spinner-chasing-dots">
+	                    <div class="sk-dot1"></div>
+	                    <div class="sk-dot2"></div>
+	                </div>
+                </div>
+                
+                
+                <div v-if="map.theme=='qx'"  @click="clickPrintBtn()" id="printDiv" style="background-image: url(/gdgf/static/modules/index/image/csdw/1920/nianfen.png);">
+                	<a id="printBtn">生成报告</a>
+                </div>
+                
+                
+				<!-- 地图 -->
+				<div id="container"></div>
+			</div>
+			<!-- 地图右边2个模块 -->
+			<div id="wrapMapRight">
+				<!-- 环形图 -->
+				<div id="wrapCycle" :style="background['RightBorder']">
+					<div class="title">［ 产废规模分析 ］</div>
+					<div id="cycleEcharts">
+						<div id="cycleEcharts1"></div>
+						<div id="cycleEcharts2">
+							<div v-for="o in cycleList" class="cycleOneData">
+								<div class="color" :style="'background-color: '+o.COLOR"></div>
+								<div class="oneData">
+									<span class="oneData1">{{o.LEV}}<br></span>
+									<span class="oneData2">{{o.ECOUNT}}&nbsp;&nbsp;{{o.CCOUNT}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 雷达图 -->
+				<div id="wrapRadar" :style="background['RightBorder']">
+					<div class="title">
+						<span v-if="map.theme=='sbdj'">［产废去向情况分析(万吨) ］</span>
+						<span v-if="map.theme=='tz'">［台账各量分析(万吨) ］</span>
+					</div>
+					<div id="radarEcharts">
+						<div id="radarEchartsDiv1">
+							<div id="radarEchartsTitle1">
+								<span v-if="map.theme=='sbdj'">总体利用处置</span>
+								<span v-if="map.theme=='tz'">{{year}}年各量分析</span>
+							</div>
+							<div id="radarEcharts1"></div>
+						</div>
+						<div id="radarEchartsDiv2">
+							<div id="radarEchartsTitle2" @click="clickRadarSelect()">
+								<div v-if="map.theme=='sbdj'">
+									{{radar.selectValue}}
+									&nbsp;<i class="fa fa-caret-down"></i>
+									<div v-if="radar.selectFlag" id="radarSelectOption">
+										<div v-for="o in radar.selectList" @click.stop="selectRadarOption(o)">{{o.name}}</div>
+									</div>
+								</div>
+								<div v-if="map.theme=='tz'">{{year}}年{{map.month}}月各量分析</div>
+							</div>
+							<div id="radarEcharts2"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 下边2个模块 -->
+		<div id="wrapLeftBottom">
+			<!-- 柱状图模块 -->
+			<div id="wrapBar" :style="background['barBorder']">
+				<div class="title">［数据分布情况］</div>
+				<div id="barTabs">
+					<div v-for="o in bar.tabList" :class="{'active':bar.curTab==o.id}" @click="clickBarTabs(o.id)">
+						<i v-if="bar.curTab==o.id" class="fa fa-hand-o-right"></i>
+						&nbsp;{{o.name}}
+					</div>
+					<div id="barSelect" @click="clickBarSelect()">
+						{{bar.selectValue}}
+						&nbsp;<i class="fa fa-caret-down"></i>
+						<div v-if="bar.selectFlag" id="barSelectOption">
+							<div v-for="o in bar.selectList[bar.curTab]" @click.stop="selectBarOption(o)">{{o.name}}</div>
+						</div>
+					</div>
+				</div>
+				<div id="barEcharts"></div>
+			</div>
+			<!-- 表格数据模块 -->
+			<div id="wrapTableDiv" :style="background['tableBorder']">
+				<div class="title">［历史数据趋势分析 ］</div>
+				<table id="wrapTable">
+					<tr>
+						<th>年份</th>
+						<th>上年底贮存量</th>
+						<th>本年产废量</th>
+						<th>自行利用处置量</th>
+						<th>委托处理量</th>
+						<th>年底库存量</th>
+					</tr>
+					<tr v-for="o in tableDataList">
+						<td>{{o.NF}}&nbsp;<span :style="'color:'+o.NF_TrendColor">{{o.NF_Trend}}</span></td>
+						<td>{{o.SNDZCL}}&nbsp;<span :style="'color:'+o.SNDZCL_TrendColor">{{o.SNDZCL_Trend}}</span></td>
+						<td>{{o.BNCFL}}&nbsp;<span :style="'color:'+o.BNCFL_TrendColor">{{o.BNCFL_Trend}}</span></td>
+						<td>{{o.ZXLYCZL}}&nbsp;<span :style="'color:'+o.ZXLYCZL_TrendColor">{{o.ZXLYCZL_Trend}}</span></td>
+						<td>{{o.WTCLL}}&nbsp;<span :style="'color:'+o.WTCLL_TrendColor">{{o.WTCLL_Trend}}</span></td>
+						<td>{{o.NDKCL}}&nbsp;<span :style="'color:'+o.NDKCL_TrendColor">{{o.NDKCL_Trend}}</span></td>
+					</tr>
+					<tr>
+						<td colspan="6" id="tableRemark">备注：计量单位为万吨</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- 右边1个模块 -->
+	<div id="wrapRight">
+		<div id="wrapCity" :style="background['cityBorder']">
+			<div id="cityScroll">
+				<div v-for="o in city.cityDataList" :style="city.cityDivStyle[o.CODE==city.selectedCity]" @click="clickCityDiv(o)">
+					<div class="cityName" :style="city.cityNameStyle[o.CODE==city.selectedCity]">{{o.NAME}}</div>
+					<div class="cityCount" :style="city.cityNameStyle[o.CODE==city.selectedCity]">{{o.COUNT}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+// 分辨率
+var screenWidth = null;
+if(screen.width <= 1919) {
+	screenWidth = 1366;
+} else if(screen.width <= 1920) {
+	screenWidth = 1920;
+} else {
+	screenWidth = 2560;
+}
+var vm = new Vue({
+	el:"#vue",
+	data: function() {
+		// 全部单位类型
+		var dwlxList = [
+			{
+				"pItem":{
+					"name":"工业危险废物产生源单位",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"shljfscldw_cs","VALUE":"生活垃圾焚烧处理单位","selected":"1"},
+					{"CODE":"bfjdccjcldw","VALUE":"报废机动车拆解处理单位","selected":"1"},
+					{"CODE":"fjjdcjcldw","VALUE":"废旧家电拆解处理单位","selected":"1"},
+					{"CODE":"tcscqy","VALUE":"陶瓷生产企业","selected":"1"},
+					{"CODE":"xlbscqy","VALUE":"线路板生产企业","selected":"1"},
+					{"CODE":"hddgxscqy","VALUE":"含电镀工序生产企业","selected":"1"},
+					{"CODE":"qtybgyqy","VALUE":"其他（一般工业企业）","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"非工业危险废物产生源单位",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"jdcwxdw","VALUE":"机动车维修单位（如：汽车4S店、汽车维修店、汽车美容店等）","selected":"1"},
+					{"CODE":"dzyx","VALUE":"大中院校","selected":"1"},
+					{"CODE":"kyjg","VALUE":"科研机构/检测机构","selected":"1"},
+					{"CODE":"txwlyys","VALUE":"通信网络运营商","selected":"1"},
+					{"CODE":"ylwsjg","VALUE":"医疗卫生机构","selected":"1"},
+					{"CODE":"ggssgl","VALUE":"公共设施管理（市政、环境卫生管理等）","selected":"1"},
+					{"CODE":"qtdzcpwx","VALUE":"其他（加油站、仓储、码头、电子产品维修、批发零售、租赁和商务服务等第三产业服务业）","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"一般工业固废产生源单位",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"ybgygfcsydw","VALUE":"一般工业固废产生源单位","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"城镇生活污水处理厂",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"czshwsclc","VALUE":"城镇生活污水处理厂","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"危险废物经营许可证单位",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"ylfwjzcldw","VALUE":"医疗废物集中处理单位","selected":"1"},
+					{"CODE":"wxfwsjzczydw","VALUE":"危险废物收集、贮存、转运单位（收集许可证）","selected":"1"},
+					{"CODE":"wxfwlyczdw","VALUE":"危险废物利用处置单位","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"符合豁免管理规定的利用处置单位",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"pgfsljglydw","VALUE":"皮革废碎料加工利用单位","selected":"1"},
+					{"CODE":"mjyjglydw","VALUE":"煤焦油加工利用单位","selected":"1"},
+					{"CODE":"shljwstmc","VALUE":"生活垃圾卫生填埋场","selected":"1"},
+					{"CODE":"snjxtczdw","VALUE":"水泥窖协同处置单位","selected":"1"},
+					{"CODE":"shljfscldw_js","VALUE":"生活垃圾焚烧处理单位","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"道路运输许可证单位",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"pthwys","VALUE":"普通货物运输许可证单位","selected":"1"},
+					{"CODE":"wxhwys","VALUE":"危险废物运输许可证单位","selected":"1"}
+				]
+			},
+			{
+				"pItem":{
+					"name":"其他单位（机关事业单位、执法部门等）",
+					"selected":"1"
+				},
+				"childList":[
+					{"CODE":"xzzfbm","VALUE":"行政执法部门（基层地方政府、基层管理部门）","selected":"1"},
+					{"CODE":"jcdfzf","VALUE":"有害垃圾管理部门（如社区居委、城市管理、物业公司等）","selected":"1"},
+					{"CODE":"jcglbm","VALUE":"其他特殊管理对象","selected":"1"}
+				]
+			}
+		];
+		var dwlx = [];
+		for (var i = 0; i < dwlxList.length; i++) {
+			dwlx = dwlx.concat(dwlxList[i]["childList"]);
+		}
+		return {
+			// 基本配置
+			"config":{
+				// 1-返回随机数；0-查库统计
+				"demo":"1",
+				// 各个echarts
+				"echarts":{},
+				// 各个echarts的option
+				"option":{},
+			},
+			// 各个背景框
+			"background": {
+				"mapBorder": {
+					"background-image":"url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/ditukuang-zhijiao.png?v=1563270487745)"
+				},
+				"RightBorder": {
+					"background-image":"url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/youshangkuang.png?v=1563270487745)"
+				},
+				"cityBorder": {
+					"background-image":"url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/biaotikuang.png?v=1563270487745)"
+				},
+				"barBorder": {
+					"background-image":"url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/zuoxiakuang.png?v=1563270487745)"
+				},
+				"tableBorder": {
+					"background-image":"url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/zuoyoukuang.png?v=1563270487745)"
+				}
+			},
+			// 当前年份
+			"year":"",
+			// 筛选结果-各市统计
+			"city":{
+				// 城市菜单列表
+				"cityDataList":[],
+				// 选中地区(默认广东省)
+				"selectedCity":"44000000",
+				// 城市菜单样式
+				"cityDivStyle": {
+					"true": {
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/xuanzhong.png?v=1563270487745)"
+					},
+					"false": {
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/weixuan.png?v=1563270487745)"
+					}
+				},
+				// 每一个城市字体样式
+				"cityNameStyle": {
+					"true": {
+						"color": "#FFF"
+					},
+					"false": {
+						"color": "#00DEFF"
+					}
+				}
+			},
+			// 环形图数据展示
+			"cycleList": [],
+			// 雷达图数据
+			"radar": {
+				// 下拉框集合
+				"selectList":[
+					{"id":"ww","name":"委外利用处置"},
+					{"id":"zz","name":"自行利用处置"}
+				],
+				// 当前选中的下拉框-值
+				"select":"ww",
+				// 当前选中的下拉框-名字
+				"selectValue":"委外利用处置"
+			},
+			// 表格数据
+			"tableDataList": [],
+			// 柱状图部分数据
+			"bar": {
+				// 当前选中选项卡
+				"curTab":"xzqh",
+				// 选项卡集合
+				"tabList":[
+					{"id":"xzqh","name":"按区划"},
+					{"id":"dq","name":"按片区"},
+					{"id":"hylx","name":"按行业"},
+					{"id":"fwlb","name":"按类别"}
+				],
+				// 下拉框展开/隐藏
+				"selectFlag":false,
+				// 选择的下拉框几个选项
+				"selectList": {
+					"xzqh":[
+						{"id":"fwsl","name":"废物量"},
+						{"id":"qy","name":"企业数"}
+					],
+					"dq":[
+						{"id":"fwsl","name":"废物量"},
+						{"id":"qy","name":"企业数"}
+					],
+					"hylx":[
+						{"id":"fwsl","name":"废物量"},
+						{"id":"qy","name":"企业数"}
+					],
+					"fwlb":[
+						{"id":"fwsl","name":"废物量"}
+					]
+				},
+				// 选择的下拉框选项-值
+				"select":"fwsl",
+				// 选择的下拉框选项-名字
+				"selectValue":"废物量"
+			},
+			// 地图
+			"map": {
+				// true-打开遮罩层;false-关闭
+				"spinerFlag":true,
+				// 搜索框宽度
+				"mapSearchDivStyle":"opacity:1;",
+				// 专题图
+				"themeList":[
+					{"id":"sbdj","name":"一企一档专题图"},
+					{"id":"tz","name":"产生情况专题图"},
+					{"id":"cz","name":"处置情况专题图"},
+					{"id":"jk","name":"转移监控专题图"},
+					{"id":"qx","name":"转移过程迁徙图"}
+				],
+				// 当前专题,默认是申报登记
+				"theme":"sbdj",
+				"themeValue":"一企一档专题图",
+				// true-展开专题图选择；false-收起来
+				"searchStyleS2": false,
+				// 年份选择下拉项
+				"yearList":[],
+				// true-展开年份选择；false-收起来
+				"searchStyleS3": false,
+				// true-需要显示月份搜索框；false-隐藏
+				"searchS4":false,
+				// 月份选择下拉项
+				"monthList":[1,2,3,4,5,6,7,8,9,10,11,12],
+				// 当前选择月份,默认当前时间上一个月
+				"month": "",
+				// true-展开月份选择；false-收起来
+				"searchStyleS4": false,
+				// 单位类型集合
+				"dwlxList":dwlxList,
+				// 单位类型-值
+				"dwlx":JSON.stringify(dwlx),
+				// 单位类型-名字
+				"dwlxName":"全部企业",
+				// true-展开单位类型选择；false-收起来
+				"searchStyleS4": false,
+				// 年份选择下拉项
+				"dwList":[
+					{"id":"1","name":"1吨以下企业"},
+					{"id":"2","name":"1-10吨企业"},
+					{"id":"3","name":"10-100吨企业"},
+					{"id":"4","name":"100-1000吨企业"},
+					{"id":"5","name":"1000吨及以上企业"}
+				],
+				// 吨位-值
+				"dwExist":{"4":"1","5":"1"},
+				"dw":"4,5",
+				// 吨位-名字
+				"dwName":"全部",
+				// true-展开吨位级别选择；false-收起来
+				"searchStyleS5": false,
+				// 搜索框样式
+				"searchStyle": {
+					"s11":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/tu1.png?v=1563270487745)"
+					},
+					"s12":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/dian.png?v=1563270487745)",
+					},
+					"s13":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/wai.png?v=1563270487745)"
+					},
+					"s2":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/kuang1.png?v=1563270487745)"
+					},
+					"s3":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/nianfen.png?v=1563270487745)"
+					},
+					"s5":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/qiyeleixing.png?v=1563270487745)"
+					},
+					"s6":{
+						"background-image": "url(/gdgf/static/modules/index/image/csdw/"+screenWidth+"/dunwei.png?v=1563270487745)"
+					}
+				},
+				// 5个等级的颜色(绿色,蓝色,黄色,橘红色,红色)
+				"pointColorList": ["#65B739","#1F8DCC","#DEC433","#E67620","#DD1C1F"]
+			}
+		}
+	},
+	mounted : function() {
+		this.$nextTick(function () {
+			// 初始化年份下拉框
+			var curYear = getCurTime(8);
+			vm.$data.map.yearList.push(curYear);
+			vm.$data.map.yearList.push(curYear - 1);
+			vm.$data.map.yearList.push(curYear - 2);
+			vm.$data.map.yearList.push(curYear - 3);
+			// 初始化顶部四个按钮
+			initTitle(2);
+			// 初始化年份
+			vm.$data.year = getCurTime(8) - 1;
+			// 初始化月份
+			var lastMonth = parseInt(getCurTime(9)) - 1;
+			if(lastMonth == 0) {
+				lastMonth = 12;
+			}
+			vm.$data.map.month = lastMonth;
+			// 响应式
+			$(window).bind("resize", function() {
+				getCycleEcharts().resize();
+				getRadarEcharts(1).resize();
+				getRadarEcharts(2).resize();
+				getBarEcharts().resize();
+			});
+			// 启动各个模块
+			initData();
+		});
+	},
+	methods: {
+		// 截取字符串
+		intercept: function(val, len) {
+			if(val.length > len) {
+				return val.substr(0,len)+"...";
+			} else {
+				return val;
+			}
+		},
+		// 点击一个城市方块--------------------------------------------------------------------------
+		clickCityDiv: function(o) {
+			// 赋值当前城市
+			Vue.set(vm.city, "selectedCity", o.CODE);
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 环形图
+			initCycle();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图(柱状图如果模式是地区，则不加载)
+			if(vm.$data.bar.curTab != "dq") {
+				initBarEcharts();
+			}
+			// 历年趋势表格
+			initTableData();
+		},
+		// 点击雷达图下拉框，展开/隐藏下拉选项--------------------------------------------------------------------------
+		clickRadarSelect: function() {
+			Vue.set(vm.radar, "selectFlag", !vm.$data.radar.selectFlag);
+		},
+		// 点击选择一个雷达图下拉项
+		selectRadarOption: function(o) {
+			Vue.set(vm.radar, "select", o.id);
+			Vue.set(vm.radar, "selectValue", o.name);
+			Vue.set(vm.radar, "selectFlag", false);
+			initRadar(2);
+		},
+		// 点击选择一个柱状图选项卡--------------------------------------------------------------------------
+		clickBarTabs: function(type) {
+			Vue.set(vm.bar, "curTab", type);
+			Vue.set(vm.bar, "select", vm.$data.bar.selectList[type][0]["id"]);
+			Vue.set(vm.bar, "selectValue", vm.$data.bar.selectList[type][0]["name"]);
+			initBarEcharts();
+		},
+		// 点击柱状图下拉框，展开/隐藏下拉选项
+		clickBarSelect: function() {
+			Vue.set(vm.bar, "selectFlag", !vm.$data.bar.selectFlag);
+		},
+		// 选择的某一个下拉框选项
+		selectBarOption: function(o) {
+			Vue.set(vm.bar, "select", o.id);
+			Vue.set(vm.bar, "selectValue", o.name);
+			Vue.set(vm.bar, "selectFlag", false);
+			initBarEcharts();
+		},
+		// 点击选择专题图下拉--------------------------------------------------------------------------
+		clickSearchTheme: function() {
+			Vue.set(vm.map, "searchStyleS2", !vm.$data.map.searchStyleS2);
+		},
+		// 选择某一个专题
+		selectTheme: function(o) {
+			// 赋值vue的年份字段
+			Vue.set(vm.map,"theme",o.id);
+			Vue.set(vm.map,"themeValue",o.name);
+			// 关闭下拉框
+			vm.clickSearchTheme();
+			// 台账-打开月份下拉框
+			if(o.id == "tz") {
+				Vue.set(vm.map,"searchS4",true);
+			} else {
+				Vue.set(vm.map,"searchS4",false);
+			}
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 环形图
+			initCycle();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图
+			initBarEcharts();
+			// 历年趋势表格
+			initTableData();
+		},
+		// 点击选择年份下拉--------------------------------------------------------------------------
+		clickSearchYear: function() {
+			Vue.set(vm.map, "searchStyleS3", !vm.$data.map.searchStyleS3);
+		},
+		// 选择某一个年份
+		selectYear: function(o) {
+			// 赋值vue的年份字段
+			Vue.set(vm,"year",o);
+			// 关闭下拉框
+			vm.clickSearchYear();
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 环形图
+			initCycle();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图
+			initBarEcharts();
+		},
+		// 点击选择月份下拉--------------------------------------------------------------------------
+		clickSearchMonth: function() {
+			Vue.set(vm.map, "searchStyleS4", !vm.$data.map.searchStyleS4);
+		},
+		// 选择某一个月份
+		selectMonth: function(o) {
+			// 赋值vue的年份字段
+			Vue.set(vm.map,"month",o);
+			// 关闭下拉框
+			vm.clickSearchMonth();
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 环形图
+			initCycle();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图
+			initBarEcharts();
+			// 历年趋势表格
+			initTableData();
+		},
+		// 点击选择单位类型下拉--------------------------------------------------------------------------
+		clickSearchDwlx: function() {
+			Vue.set(vm.map, "searchStyleS5", !vm.$data.map.searchStyleS5);
+		},
+		// 选择单位类型大类
+		selectDwlxTitle: function(d) {
+			for (var i = 0; i < vm.$data.map.dwlxList.length; i++) {
+				var dwlx = vm.$data.map.dwlxList[i];
+				if(dwlx.pItem.name == d.name) {
+					if(dwlx.pItem.selected == "1") {
+						dwlx.pItem.selected = "-1";
+						for (var j = 0; j < dwlx.childList.length; j++) {
+							dwlx.childList[j]["selected"] = "-1";
+						}
+					} else {
+						dwlx.pItem.selected = "1";
+						for (var j = 0; j < dwlx.childList.length; j++) {
+							dwlx.childList[j]["selected"] = "1";
+						}
+					}
+					break;
+				}
+			}
+			// 遍历勾选了哪些元素，取出名字放到输入框
+			var dwlxName = "";
+			for (var i = 0; i < vm.$data.map.dwlxList.length; i++) {
+				var dwlx = vm.$data.map.dwlxList[i];
+				for (var j = 0; j < dwlx.childList.length; j++) {
+					if(dwlx.childList[j].selected == "1") {
+						dwlxName += dwlx.childList[j].VALUE + "，";
+					}
+				}
+			}
+			Vue.set(vm.map,"dwlxName",dwlxName);
+			// 拼接集合，给ajax当参数
+			var dwlx = [];
+			for (var i = 0; i < vm.$data.map.dwlxList.length; i++) {
+				dwlx = dwlx.concat(vm.$data.map.dwlxList[i]["childList"]);
+			}
+			Vue.set(vm.map,"dwlx",JSON.stringify(dwlx));
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 环形图
+			initCycle();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图
+			initBarEcharts();
+			// 历年趋势表格
+			initTableData();
+		},
+		// 选择一个单位类型
+		selectDwlx: function(o) {
+			// 遍历全部集合，判断勾选的是哪个元素，给它重置相反值
+			var clickIndex;
+			for (var i = 0; i < vm.$data.map.dwlxList.length; i++) {
+				var dwlx = vm.$data.map.dwlxList[i];
+				for (var j = 0; j < dwlx.childList.length; j++) {
+					if(o.CODE == dwlx.childList[j].CODE) {
+						if(dwlx.childList[j].selected == "1") {
+							dwlx.childList[j]["selected"] = "-1";
+						} else {
+							dwlx.childList[j]["selected"] = "1";
+						}
+						clickIndex = i;
+						break;
+					}
+				}
+			}
+			// 某一类全部勾选，才勾选父节点
+			var clickItem = vm.$data.map.dwlxList[clickIndex].childList;
+			var clickItemLen = clickItem.length;
+			var clickCount = 0;
+			for (var i = 0; i < clickItemLen; i++) {
+				if(clickItem[i].selected == "1") {
+					clickCount++;
+				}
+			}
+			if(clickItemLen == clickCount) {
+				vm.$data.map.dwlxList[clickIndex].pItem.selected = "1";
+			} else {
+				vm.$data.map.dwlxList[clickIndex].pItem.selected = "-1";
+			}
+			// 遍历勾选了哪些元素，取出名字放到输入框
+			var dwlxName = "";
+			for (var i = 0; i < vm.$data.map.dwlxList.length; i++) {
+				var dwlx = vm.$data.map.dwlxList[i];
+				for (var j = 0; j < dwlx.childList.length; j++) {
+					if(dwlx.childList[j].selected == "1") {
+						dwlxName += dwlx.childList[j].VALUE + "，";
+					}
+				}
+			}
+			Vue.set(vm.map,"dwlxName",dwlxName);
+			// 拼接集合，给ajax当参数
+			var dwlx = [];
+			for (var i = 0; i < vm.$data.map.dwlxList.length; i++) {
+				dwlx = dwlx.concat(vm.$data.map.dwlxList[i]["childList"]);
+			}
+			Vue.set(vm.map,"dwlx",JSON.stringify(dwlx));
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 环形图
+			initCycle();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图
+			initBarEcharts();
+			// 历年趋势表格
+			initTableData();
+		},
+		// 点击选择吨位下拉--------------------------------------------------------------------------
+		clickSearchDw: function() {
+			Vue.set(vm.map, "searchStyleS6", !vm.$data.map.searchStyleS6);
+		},
+		// 选择一个吨位
+		selectDw: function(o) {
+			// 如果存在就撤销，不在就保存
+			if(isNull(vm.$data.map.dwExist[o.id])) {
+				vm.$data.map.dwExist[o.id] = "1";
+			} else {
+				delete vm.$data.map.dwExist[o.id];
+			}
+			var dw = "";
+			for ( var k in vm.$data.map.dwExist) {
+				dw += "" + k + ",";
+			}
+			if(!isNull(dw)) {
+				dw = dw.substr(0, dw.length-1);
+			}
+			Vue.set(vm.map, "dw", dw);
+			// 拼接框内显示内容
+			var dwName = "";
+			for ( var k in vm.$data.map.dwExist) {
+				for (var i = 0; i < vm.$data.map.dwList.length; i++) {
+					if(vm.$data.map.dwList[i].id == k) {
+						dwName += "" + vm.$data.map.dwList[i].name + "，";
+						break;
+					}
+				}
+			}
+			if(!isNull(dwName)) {
+				dwName = dwName.substr(0, dwName.length-1);
+			}
+			Vue.set(vm.map, "dwName", dwName);
+			// 获取地图企业点位/行政区划企业数统计
+			setMapData();
+			// 雷达图
+			initRadar(1);
+			initRadar(2);
+			// 柱状图
+			initBarEcharts();
+			// 历年趋势表格
+			initTableData();
+		},
+		// 点击收放搜索框
+		clickMapS1: function() {
+			if(vm.$data.map.mapSearchDivStyle == "opacity:1;") {
+				Vue.set(vm.map,"mapSearchDivStyle","opacity:0;");
+			} else {
+				Vue.set(vm.map,"mapSearchDivStyle","opacity:1;");
+			}
+			if(vm.$data.map.searchStyle.s12.transform == "rotate(0deg)" || isNull(vm.$data.map.searchStyle.s12.transform)) {
+				vm.$data.map.searchStyle.s12.transform = "rotate(-720deg)";
+				vm.$data.map.searchStyle.s13.transform = "rotate(720deg)";
+			} else {
+				vm.$data.map.searchStyle.s12.transform = "rotate(0deg)";
+				vm.$data.map.searchStyle.s13.transform = "rotate(0deg)";
+			}
+		},
+		
+		//
+		clickPrintBtn: function() {
+			openPage("/gdgf/static/download/转移过程迁徙分析报告.pdf","","60%,90%");
+		}
+	}
+});
+/* ===============================================日期控件================================================================================= */
+// title.js里,当年份改变会触发changeYear,年份存储在vm.$data.year里
+function changeYear() {
+	// 获取地图企业点位/行政区划企业数统计
+	setMapData();
+	// 环形图
+	initCycle();
+	// 雷达图
+	initRadar(1);
+	initRadar(2);
+	// 柱状图
+	initBarEcharts();
+}
+/* ===============================================功能总开关================================================================================= */
+function initData(t) {
+	// 加载地图数据
+	setMapData();
+	// 环形图
+	initCycle();
+	// 雷达图
+	initRadar(1);
+	initRadar(2);
+	// 历年趋势表格
+	initTableData();
+	// 柱状图
+	initBarEcharts();
+}
+/* ===============================================环形图================================================================================= */
+function initCycle() {
+	// 五个吨位的颜色
+	var colorList = ["#A916FD","#02E989","#24A3FD","#FE00B5","#FF8D04"];
+	// 统计图对象和配置
+	var ec = getCycleEcharts();
+	var option = getCycleEchartsOption(colorList);
+	ec.showLoading(echartsLoading());
+	// 拼装参数
+	var param = {};
+	param["theme"] = vm.$data.map.theme;
+	param["demo"] = vm.$data.config.demo;
+	param["xzqh"] = vm.$data.city.selectedCity;
+	param["nf"] = vm.$data.year;
+	param["yf"] = vm.$data.map.month;
+	param["dwlx"] = vm.$data.map.dwlx;
+	/* var msg = [
+		{"lev":"1","eCount":rndNum2(1,1000),"cCount":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"lev":"2","eCount":rndNum2(1,1000),"cCount":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"lev":"3","eCount":rndNum2(1,1000),"cCount":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"lev":"4","eCount":rndNum2(1,1000),"cCount":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"lev":"5","eCount":rndNum2(1,1000),"cCount":rndNum2(1,1000)+"."+rndNum2(1,100)},
+	]; */
+	ajax_f("/gdgf/index/csdw/getCycleData",param,function(msg){
+		var eData = [], cData = [], cycleList = [];
+		var eCount_sum = 0, cCount_sum = 0;
+		for (var i = 0; i < msg.length; i++) {
+			var m = msg[i];
+			eData.push({
+				name: m["LEV"],
+				value: m["ECOUNT"]
+			});
+			cData.push({
+				name: m["LEV"],
+				value: m["CCOUNT"]
+			});
+			eCount_sum = add([eCount_sum, m["ECOUNT"]]);
+			cCount_sum = add([cCount_sum, m["CCOUNT"]]);
+		}
+		for (var i = 0; i < msg.length; i++) {
+			var m = msg[i];
+			cycleList.unshift({
+				"COLOR": colorList[parseInt(m["LEV"])-1],
+				"LEV": lev2Name(parseInt(m["LEV"])),
+				"ECOUNT": m["ECOUNT"] + "家("+(cCount_sum==0?0:m["ECOUNT"]/eCount_sum*100).toFixed(1)+"%)",
+				"CCOUNT": m["CCOUNT"] + "万吨("+(cCount_sum==0?0:m["CCOUNT"]/cCount_sum*100).toFixed(1)+"%)"
+			});
+		}	
+		vm.$data.cycleList = cycleList;
+		option.series[0].data = eData;
+		option.series[1].data = cData;
+		option.title.text = eCount_sum+"家\n"+cCount_sum+"万吨";
+		ec.setOption(option);
+		ec.hideLoading();
+	});
+}
+// 等级转成名字
+function lev2Name(lev) {
+	if(lev == "1") {
+		lev = "1吨以下企业";
+	} else if(lev == "2") {
+		lev = "1-10吨企业";
+	} else if(lev == "3") {
+		lev = "10-100吨企业";
+	} else if(lev == "4") {
+		lev = "100-1000吨企业";
+	} else if(lev == "5") {
+		lev = "1000吨及以上企业";
+	}
+	return lev;
+}
+// 初始化环形图对象
+function getCycleEcharts() {
+	var ec = vm.$data.config.echarts["cycleEcharts1"];
+	if(isNull(ec)) {
+		ec = echarts.init(document.getElementById("cycleEcharts1"));
+		vm.$data.config.echarts["cycleEcharts1"] = ec;
+	}
+	return ec;
+}
+// 初始化环形图配置
+function getCycleEchartsOption(colorList) {
+	var option = vm.$data.config.option["cycleEchartsOption1"];
+	if(isNull(option)) {
+		option = {
+			title: {
+				x: "center",
+				y: "center",
+				textStyle: {
+					color: "#FFF",
+					fontWeight: "normal"
+				}
+			},
+			color: colorList,
+			tooltip: {
+				trigger: "item",
+				formatter: function(params) {
+					var result = "";
+					result += "规模：" + lev2Name(params.name) + "<br>";
+					if(params.seriesName == "企业数") {
+						result += "企业数：" + params.value + "家（"+params.percent+"%）<br>";
+					} else {
+						result += "产废量：" + params.value + "万吨（"+params.percent+"%）<br>";
+					}
+					return result;
+				}
+			},
+			series: [
+				{
+					name: "企业数",
+		    		type: "pie",
+					radius: ["70%", "80%"],
+					center: ["50%","50%"],
+					avoidLabelOverlap: false,
+					label: {
+		               normal: {
+		                   show: false
+		               }
+		           },
+		           labelLine: {
+		               normal: {
+		                   show: false
+		               }
+		           }
+		    	},
+		    	{
+		    		name: "产废量",
+		    		type: "pie",
+		            radius: ["50%","60%"],
+		            center: ["50%","50%"],
+		            label: {
+						normal: {
+						    show: false
+						}
+		            }
+		        }
+			]
+		};
+		// 低分辨率
+		if(screenWidth < 1920) {
+			option.title.textStyle.fontSize = 11;
+		} else {
+			option.title.textStyle.fontSize = 16;
+		}
+		vm.$data.config.option["cycleEchartsOption1"] = option;
+	}
+	return option;
+}
+/* ===============================================雷达图================================================================================= */
+function initRadar(k) {
+	/* var msg = [
+		{"czfs":"物化处理","count":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"czfs":"利用","count":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"czfs":"填埋","count":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"czfs":"水泥窑共处置","count":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"czfs":"焚烧","count":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"czfs":"其他","count":rndNum2(1,1000)+"."+rndNum2(1,100)}
+	] */
+	// 拼装参数
+	var param = {};
+	param["theme"] = vm.$data.map.theme;
+	param["demo"] = vm.$data.config.demo;
+	param["xzqh"] = vm.$data.city.selectedCity;
+	param["nf"] = vm.$data.year;
+	param["yf"] = vm.$data.map.month;
+	param["dwlx"] = vm.$data.map.dwlx;
+	param["dw"] = vm.$data.map.dw;
+	if(k == "1") {
+		param["type"] = "sum";
+	} else {
+		param["type"] = vm.$data.radar.select;
+	}
+	ajax_f("/gdgf/index/csdw/getRadarData",param,function(msg){
+		// 各个量的最大值
+		var max = 0;
+		for (var i = 0; i < msg.length; i++) {
+			var m = msg[i];
+			var count = parseFloat(m["COUNT"]);
+			if(max < count) {
+				max = count;
+			}
+		}
+		// 计算雷达图数据
+		// 	indicator数据结构:[{"name":"某一方向代表的意思","max":"全部方向里的最大值"}...]
+		// 	dataList数据结构:["",""...],各个方向的值
+		// 	上述两个数据顺序要一致
+		var indicator = [];
+		var dataList = [];
+		for (var i = 0; i < msg.length; i++) {
+			var m = msg[i];
+			indicator.push({
+				name: m["CZFS"],
+				max: max
+			});
+			dataList.push(m["COUNT"]);
+		}
+		// 初始化自行处置雷达图
+		var ec = getRadarEcharts(k);
+		var option = getRadarEchartsOption(k);
+		option.radar[0].indicator = indicator;
+		option.series[0].data[0].value = dataList;
+		// 方向上的文字，带上值
+		option.radar[0].name.formatter = function(value) {
+			var result = value+"\n";
+			for (var i = 0; i < msg.length; i++) {
+				var m = msg[i];
+				if(m.CZFS == value) {
+					result += m.COUNT;
+					break;
+				}
+			}
+			return result;
+		};
+		ec.setOption(option);
+	});
+}
+// 初始化雷达图对象
+function getRadarEcharts(k) {
+	var ec = vm.$data.config.echarts["radarEcharts"+k];
+	if(isNull(ec)) {
+		ec = echarts.init(document.getElementById("radarEcharts"+k));
+		vm.$data.config.echarts["radarEcharts"+k] = ec;
+	}
+	return ec;
+}
+// 初始化雷达图配置
+function getRadarEchartsOption(k) {
+	var option = vm.$data.config.option["radarEchartsOption"+k];
+	if(isNull(option)) {
+		var option = {
+			radar: [{
+		    	// 指示器名称和指示器轴的距离
+		        nameGap: 7,
+			    center: ["50%", "55%"],
+		        name: {
+		            textStyle: {
+		                color: "#C7FCFF"
+		            }
+		        },
+		        splitLine: {
+		            lineStyle: {
+		                color: "#11326B",
+		                width: 1
+		            },
+		        },
+		        splitArea: {
+		            show: true,
+		            areaStyle: {
+		                color: "#16264C"
+		            }
+		        },
+		        axisLine: {
+		            show: true,
+		            lineStyle: {
+		                color: "#1B6B9A",
+		                width: 2
+		            }
+		        }
+		    }],
+		    series: [{
+		    	type: "radar",
+		        animation: false,
+		        data: [{}],
+		        symbol: "circle",
+		        symbolSize: 8,
+		        itemStyle: {
+		            normal: {
+		                color: "#00DEFF"
+		            }
+		        },
+		        lineStyle: {
+		            normal: {
+		                color: "#FFC000",
+		                width: 1
+		            }
+		        },
+		        areaStyle: {
+		            normal: {
+		                color: "#303F61"
+		            }
+		        }
+		    }]
+		};
+		// 低分辨率
+		if(screenWidth < 1920) {
+			option.radar[0].name.textStyle.fontSize = 8;
+			option.radar[0].radius = "40%";
+		} else if(screenWidth <= 1920) {
+			option.radar[0].name.textStyle.fontSize = 13;
+			option.radar[0].radius = "60%";
+		} else {
+			option.radar[0].name.textStyle.fontSize = 16;
+			option.radar[0].radius = "60%";
+		}
+		vm.$data.config.option["radarEchartsOption"+k] = option;
+	}
+	return option;
+}
+/* ===============================================历年对比列表================================================================================= */
+function initTableData() {
+	/* var msg = [
+		{"nf":"2016","sndzcl":rndNum2(1,1000)+"."+rndNum2(1,100),"bncfl":rndNum2(1,1000)+"."+rndNum2(1,100),"zxlyczl":rndNum2(1,1000)+"."+rndNum2(1,100),"ndkcl":rndNum2(1,1000)+"."+rndNum2(1,100),"wtcll":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"nf":"2017","sndzcl":rndNum2(1,1000)+"."+rndNum2(1,100),"bncfl":rndNum2(1,1000)+"."+rndNum2(1,100),"zxlyczl":rndNum2(1,1000)+"."+rndNum2(1,100),"ndkcl":rndNum2(1,1000)+"."+rndNum2(1,100),"wtcll":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"nf":"2018","sndzcl":rndNum2(1,1000)+"."+rndNum2(1,100),"bncfl":rndNum2(1,1000)+"."+rndNum2(1,100),"zxlyczl":rndNum2(1,1000)+"."+rndNum2(1,100),"ndkcl":rndNum2(1,1000)+"."+rndNum2(1,100),"wtcll":rndNum2(1,1000)+"."+rndNum2(1,100)},
+		{"nf":"2019","sndzcl":rndNum2(1,1000)+"."+rndNum2(1,100),"bncfl":rndNum2(1,1000)+"."+rndNum2(1,100),"zxlyczl":rndNum2(1,1000)+"."+rndNum2(1,100),"ndkcl":rndNum2(1,1000)+"."+rndNum2(1,100),"wtcll":rndNum2(1,1000)+"."+rndNum2(1,100)},
+	]; */
+	// 拼装参数
+	var param = {};
+	param["theme"] = vm.$data.map.theme;
+	param["demo"] = vm.$data.config.demo;
+	param["xzqh"] = vm.$data.city.selectedCity;
+	param["nf"] = vm.$data.year;
+	param["yf"] = vm.$data.map.month;
+	param["dwlx"] = vm.$data.map.dwlx;
+	param["dw"] = vm.$data.map.dw;
+	ajax_f("/gdgf/index/csdw/getTableData",param,function(msg){
+		var keyList = ["SNDZCL","BNCFL","ZXLYCZL","WTCLL","NDKCL"];
+		var tableDataList = [];
+		for (var i = 0; i < msg.length; i++) {
+			if(i == 0) {
+			} else {
+				var last = msg[i-1];
+				var cur = msg[i];
+				for (var j = 0; j < keyList.length; j++) {
+					var k = keyList[j];
+					if(parseFloat(cur[k]) < parseFloat(last[k])) {
+						cur[k+"_TrendColor"] = "green";
+						cur[k+"_Trend"] = "↓";
+					} else {
+						cur[k+"_TrendColor"] = "red";
+						cur[k+"_Trend"] = "↑";
+					}
+				}
+			}
+		}
+		vm.$data.tableDataList = msg;
+	});
+}
+/* ===============================================柱状图================================================================================= */
+function initBarEcharts() {
+	// 当前选中选项卡:xzqh-行政区划;hylx-行业类型;fwlb-废物类型
+	var type = vm.$data.bar.curTab; 
+	var select = vm.$data.bar.select;
+	// 获取柱状图对象和配置
+	var ec = getBarEcharts();
+	var option = getBarEchartsOption(type);
+	ec.showLoading(echartsLoading());
+	// 查询数据
+	/* var msg = [];
+	if(type == "xzqh") {
+		if(select == "qy") {
+			msg = {
+				"x":[
+					"惠州市", "梅州市", "汕尾市", "河源市", "湛江市", "东莞市", "中山市", "潮州市", "揭阳市", "茂名市", "云浮市", "肇庆市", "广州市", "珠海市", "汕头市", "佛山市", "江门市", "阳江市", "清远市", "深圳市", "韶关市"
+				],
+				"y":[
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)
+				],
+				"sum":rndNum(6)
+			};
+		} else if(select == "fwsl") {
+			msg = {
+				"x":[
+					"惠州市", "梅州市", "汕尾市", "河源市", "湛江市", "东莞市", "中山市", "潮州市", "揭阳市", "茂名市", "云浮市", "肇庆市", "广州市", "珠海市", "汕头市", "佛山市", "江门市", "阳江市", "清远市", "深圳市", "韶关市"
+				],
+				"y":[
+					{name:"上年底贮存量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"本年产生量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"自行利用处置量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"年底库存量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"委托处理量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"其他",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+				]
+			};
+		}
+	} else if(type == "hylx") {
+		if(select == "qy") {
+			msg = {
+				"x":[
+					"烟草制品业", "纺织业", "纺织服装、服饰业", "皮革、毛皮、羽毛及其制品和制鞋业", "木材加工和木、竹、藤、棕、草制品业", "家具制造业", "造纸和纸制品业", "印刷和记录媒介复制业", "文教、工美、体育和娱乐用品制造业", "石油加工、炼焦和核燃料加工业", "化学原料和化学制品制造业", "航空运输业", "管道运输业", "多式联运和运输代理业", "装卸搬运和仓储业", "邮政业", "住宿业"
+				],
+				"y":[
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)
+				],
+				"sum":rndNum(6)
+			};
+		} else if(select == "fwsl") {
+			msg = {
+				"x":[
+					"烟草制品业", "纺织业", "纺织服装、服饰业", "皮革、毛皮、羽毛及其制品和制鞋业", "木材加工和木、竹、藤、棕、草制品业", "家具制造业", "造纸和纸制品业", "印刷和记录媒介复制业", "文教、工美、体育和娱乐用品制造业", "石油加工、炼焦和核燃料加工业", "化学原料和化学制品制造业", "航空运输业", "管道运输业", "多式联运和运输代理业", "装卸搬运和仓储业", "邮政业", "住宿业"
+				],
+				"y":[
+					{name:"上年底贮存量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"本年产生量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"自行利用处置量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"年底库存量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"委托处理量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"其他",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+				]
+			};
+		}
+	} else if(type == "fwlb") {
+		if(select == "fwsl") {
+			msg = {
+				"x":[
+					"HW01", "HW02", "HW03", "HW04", "HW05", "HW06", "HW07", "HW08", "HW09", "HW10", "HW11", "HW12","HW13", "HW14", "HW15", "HW16", "HW17", "HW18","HW19", "HW20", "HW21", "HW22", "HW23", "HW24"
+				],
+				"y":[
+					{name:"上年底贮存量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"本年产生量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"自行利用处置量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"年底库存量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"委托处理量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"其他",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+				]
+			};
+		}
+	} else if(type == "dq") {
+		if(select == "qy") {
+			msg = {
+				"x":[
+					"珠三角", "粤北", "粤东", "粤西"
+				],
+				"y":[
+					rndNum(4),rndNum(4),rndNum(4),rndNum(4)
+				],
+				"sum":rndNum(6)
+			};
+		} else if(select == "fwsl") {
+			msg = {
+				"x":[
+					"珠三角", "粤北", "粤东", "粤西"
+				],
+				"y":[
+					{name:"上年底贮存量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"本年产生量",stack:"来源",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"自行利用处置量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"年底库存量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"委托处理量",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+					{name:"其他",stack:"去向",data:[rndNum(4),rndNum(4),rndNum(4),rndNum(4)]},
+				]
+			};
+		}
+	} */
+	// 拼装参数
+	var param = {};
+	param["theme"] = vm.$data.map.theme;
+	param["demo"] = vm.$data.config.demo;
+	param["xzqh"] = vm.$data.city.selectedCity;
+	param["nf"] = vm.$data.year;
+	param["yf"] = vm.$data.map.month;
+	param["dwlx"] = vm.$data.map.dwlx;
+	param["dw"] = vm.$data.map.dw;
+	param["t1"] = type;
+	param["t2"] = select;
+	ajax_f("/gdgf/index/csdw/getBarData",param,function(msg){
+		var xAxis = msg.x;
+		var yAxis = msg.y;
+		// 横坐标，如果名字太长就截取前4位
+		var xAxis_update = [];
+		for (var i = 0; i < xAxis.length; i++) {
+			var x = xAxis[i];
+			if(x.length > 4) {
+				x = x.substring(0,4) + "..";
+			}
+			xAxis_update.push(x);
+		}
+		option.xAxis.data = xAxis_update;
+		// 行政区划-企业/行业类型-企业
+		if(select == "qy") {
+			option.yAxis.name = "家";
+			option = setOneSeries(option, yAxis, xAxis, msg.sum);
+		} else {
+			option.yAxis.name = "万吨";
+			option = setManySeries(option, yAxis, xAxis);
+		}
+		ec.setOption(option, true);
+		ec.hideLoading();
+	});
+}
+// 配置series(多个)
+function setManySeries(option, yAxis, xAxis) {
+	var series = [];
+	for (var i = 0; i < yAxis.length; i++) {
+		var y = yAxis[i];
+		series.push({
+			name: y["NAME"],
+            type: "bar",
+            stack: y["STACK"],
+            data: y["DATA"]
+		});
+	}
+	// 柱子样式
+	if(screenWidth <= 1366) {
+		var radius = 10;
+		for (var i = 0; i < series.length; i++) {
+			var s = series[i];
+			s.barWidth = 10;
+			if(i == 0) {
+				s.itemStyle = {normal: {barBorderRadius: [0,0,radius,radius]}};
+			} else if(i == 1) {
+				s.itemStyle = {normal: {barBorderRadius: [radius,radius,0,0]}};
+			} else if(i == 2) {
+				s.itemStyle = {normal: {barBorderRadius: [0,0,radius,radius]}};
+			} else if(i == 4) {
+				s.itemStyle = {normal: {barBorderRadius: [radius,radius,0,0]}};
+			}
+		}
+	} else {
+		var radius = 5;
+		for (var i = 0; i < series.length; i++) {
+			var s = series[i];
+			s.barWidth = 15;
+			if(i == 0) {
+				s.itemStyle = {normal: {barBorderRadius: [0,0,radius,radius]}};
+			} else if(i == 1) {
+				s.itemStyle = {normal: {barBorderRadius: [radius,radius,0,0]}};
+			} else if(i == 2) {
+				s.itemStyle = {normal: {barBorderRadius: [0,0,radius,radius]}};
+			} else if(i == 4) {
+				s.itemStyle = {normal: {barBorderRadius: [radius,radius,0,0]}};
+			}
+		}
+	}
+	option.series = series;
+	option.color = ["#00D40B","#B303FE","#20C2FD","#FDC700","#DB1D1C"];
+	// 鼠标挪上去显示的黑框，内容显示的是全称
+	option.tooltip.formatter = function(param) {
+		var res = xAxis[param[0].dataIndex]+"<br>";
+		for (var i = 0; i < param.length; i++) {
+			var p = param[i];
+			res += p["seriesName"]+"："+p["value"]+"万吨<br>";
+		}
+		return res;
+	};
+	return option;
+}
+// 配置series(一个)
+function setOneSeries(option, yAxis, xAxis, sum) {
+	var series = [{
+        type: "bar",
+        data: yAxis,
+        itemStyle: {
+        	normal: {
+                color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                        {offset: 0, color: "#46f5e2"},
+                        {offset: 0.25, color: "#00c0ff"},
+                        {offset: 0.5, color: "#0078ff"},
+                        {offset: 0.75, color: "#155eb0"}
+                    ]
+                )
+            },
+            emphasis: {
+                barBorderWidth: 3,
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowColor: "rgba(0,0,0,1)"
+            }
+        }
+    }];
+	if(screenWidth <= 1366) {
+		series[0].barWidth = 10;
+		series[0].itemStyle.normal.barBorderRadius = 10;
+	} else {
+		series[0].barWidth = 15;
+		series[0].itemStyle.normal.barBorderRadius = 10;
+	}
+	option.series = series;
+	// 鼠标挪上去显示的黑框，内容显示的是全称
+	option.tooltip.formatter = function(param) {
+		var res = "";
+		res += "汇总："+ sum + "家<br>";
+		var val = param[0].value;
+		res += xAxis[param[0].dataIndex] + "：" + val + "家（"+(val/sum*100).toFixed(2)+"%）<br>";
+		return res;
+	};
+	return option;
+}
+// 获取柱状图对象
+function getBarEcharts() {
+	var ec = vm.$data.config.echarts.barEcharts;
+	if(isNull(ec)) {
+		ec = echarts.init(document.getElementById("barEcharts"));
+		vm.$data.config.echarts.barEcharts = ec;
+	}
+	return ec;
+}
+// 获取柱状图配置
+function getBarEchartsOption() {
+	var option = vm.$data.config.option["barEchartsOption"];
+	if(isNull(option)) {
+		option = {
+		    tooltip: {
+		        trigger: "axis"
+		    },
+		    xAxis: {
+		        type: "category",
+		        axisLine: {
+		        	show: true,
+		        	lineStyle: {
+		        		color: ["#0C2D61"],
+		        		width: 1,
+		                type: "solid"
+		        	}
+		        }
+		    },
+		    yAxis: {
+		        type: "value",
+		        splitLine: {
+		        	show: true,
+		        	lineStyle: {
+		        		color: ["#0C2D61"],
+		        		width: 1,
+		                type: "solid"
+		        	},
+		        	axisLabel: {
+			        	show: true,
+			        	color: "#87BAF8",
+			        	rotate: 10
+			        }
+		        },
+		        axisLabel: {
+		        	show: true,
+		        	color: "#fff"
+		        },
+		        nameTextStyle: {
+		        	color: "#fff"
+		        }
+		    },
+		    series: []
+		};
+		// 低分辨率，legend和横坐标文字全部去掉
+		if(screenWidth <= 1366) {
+			option.xAxis.axisLabel = {
+				show: false
+			};
+			option.grid = {
+		        left: "1%",
+		        right: "0%",
+		        bottom: "12%",
+		        top: "18%",
+		        containLabel: true,
+		    };
+			option.yAxis.axisLabel.fontSize = 10;
+			option.yAxis.nameTextStyle.fontSize = 10;
+		} else {
+			option.xAxis.axisLabel = {
+				show: true,
+	        	color: "#fff",
+	        	rotate: 30
+			};
+			option.grid = {
+		        left: "1%",
+		        right: "0%",
+		        bottom: "5%",
+		        top: "13%",
+		        containLabel: true,
+		    };
+			option.yAxis.axisLabel.fontSize = 15;
+			option.yAxis.nameTextStyle.fontSize = 15;
+		}
+		vm.$data.config.option["barEchartsOption"] = option;
+	}
+	return option;
+}
+/* ===============================================地图================================================================================= */
+var map;
+// 获取地图企业点位/行政区划企业数统计
+function setMapData() {
+	// 拼装参数
+	var param = {};
+	param["theme"] = vm.$data.map.theme;
+	param["demo"] = vm.$data.config.demo;
+	param["xzqh"] = vm.$data.city.selectedCity;
+	param["nf"] = vm.$data.year;
+	param["yf"] = vm.$data.map.month;
+	param["dwlx"] = vm.$data.map.dwlx;
+	param["dw"] = vm.$data.map.dw;
+	Vue.set(vm.map,"spinerFlag",false);
+	/* Vue.set(vm.map,"spinerFlag",true);
+	ajax_f("/gdgf/index/csdw/getMapData",param,function(msg){
+		console.log(JSON.stringify(msg));
+		// 行政区划数据
+		vm.$data.city.cityDataList = msg.x;
+		// 在地图上叠加点位
+		setMarks(msg.e);
+	}); */
+	var theme = vm.$data.map.theme;
+	if(theme == "sbdj") {
+		$("#container").empty();
+		//创建地图实例
+		map = new BMap.Map("container");
+		//允许滚动缩放地图
+		map.enableScrollWheelZoom();
+		//以广州为中心,初始放大倍数
+		map.centerAndZoom("广州", 8);
+		// 自定义样式
+		map.setMapStyle({styleJson: styleJson});
+		vm.$data.map.dwList = [
+			{"id":"1","name":"1吨以下企业"},
+			{"id":"2","name":"1-10吨企业"},
+			{"id":"3","name":"10-100吨企业"},
+			{"id":"4","name":"100-1000吨企业"},
+			{"id":"5","name":"1000吨及以上企业"}
+		];
+		$.getJSON("/gdgf/static/modules/index/js/index/mapData.json?4", function(msg) {
+			// 行政区划数据
+			vm.$data.city.cityDataList = msg.x;
+			// 在地图上叠加点位
+			setMarks(msg.e);
+		});
+	} else if(theme == "tz" || theme == "cz" || theme == "jk") {
+		$("#container").empty().css("background-color","transparent");
+		vm.$data.map.dwList = [
+			{"id":"1","name":"危险废物"},
+			{"id":"2","name":"一般工业固废"},
+			{"id":"3","name":"污水污泥"},
+			{"id":"4","name":"医疗废物"},
+		];
+		setMap();
+	} else if(theme == "qx") {
+		$("#container").empty().css("background-color","transparent");
+		setQxMap();
+	}
+}
+
+function setQxMap() {
+	var mapName = "广东";
+	//var option = vm.$data.config.option.mapEchartsOption;
+	var mapEcharts = vm.$data.config.echarts.mapEcharts;
+	if(mapEcharts != null) {
+		mapEcharts.dispose();
+	}
+	registerMap(mapName);
+	mapEcharts = echarts.init(document.getElementById("container"));
+	vm.$data.config.echarts.mapEcharts = mapEcharts;
+	//if(isNull(option)) {
+	var	option = {
+		    tooltip : {
+	            trigger: "item",
+	            /* formatter: function(param) {
+	            	if(isNull(param.data.toName)) {
+	            		return null;
+	            	}
+	            	var res = "";
+	            	res += "产废单位：" + param.data.toName;
+	            	return res;
+	            } */
+	        },
+		    geo: {
+		        map: mapName,
+		        show : true,
+				zoom : 1.2,
+				aspectScale: 1,
+				label : {
+					normal : {
+						show : false
+					},
+					emphasis : {
+						show : false,
+					}
+				},
+				roam : true,
+				itemStyle : {
+					normal : {
+						areaColor : "transparent",
+						borderColor : "white"
+					},
+					emphasis : {
+						areaColor : "#00b7be",
+						borderWidth : 0
+					}
+				},
+		        //regions: getRegionsColor()
+		    },
+		    series: [{
+		        name: "地点",
+		        type: "effectScatter",
+		        coordinateSystem: "geo",
+		        zlevel: 2,
+		        rippleEffect: {
+		            brushType: "stroke"
+		        },
+		        label: {
+		        	normal: {
+		                show: true,
+		                position: "right",
+		                formatter: "{b}"
+		            },
+		            emphasis: {
+		                show: true,
+		                position: "right",
+		                formatter: "{b}",
+		                fontWeight: "bolder"
+		            }
+		        },
+		        symbolSize: 10,
+		        showEffectOn: "render",
+		        itemStyle: {
+		        	color: "white"
+		        }
+		    }, {
+		        name: "线路",
+		        type: "lines",
+		        coordinateSystem: "geo",
+		        zlevel: 2,
+		        large: true,
+		        effect: {
+		            show: true,
+		            constantSpeed: 30,
+		            symbol: "pin",
+		            symbolSize: 10,
+		            trailLength: 0,
+		        },
+		        lineStyle: {
+		            normal: {
+		                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+		                        offset: 0, color: "#a6c84c"
+		                    }, {
+		                        offset: 1, color: "#346C98"
+		                    }], false),
+		                width: 1.5,
+		                opacity: 1,
+		                curveness: 0.1
+		            }
+		        }
+		    },{
+		        name: "地点",
+		        type: "effectScatter",
+		        coordinateSystem: "geo",
+		        zlevel: 2,
+		        rippleEffect: {
+		            brushType: "stroke"
+		        },
+		        label: {
+		        	normal: {
+		                show: true,
+		                position: "right",
+		                formatter: "{b}"
+		            },
+		            emphasis: {
+		                show: true,
+		                position: "right",
+		                formatter: "{b}",
+		                fontWeight: "bolder"
+		            }
+		        },
+		        symbolSize: 10,
+		        showEffectOn: "render",
+		        itemStyle: {
+		        	color: "white"
+		        }
+		    }, {
+		        name: "线路",
+		        type: "lines",
+		        coordinateSystem: "geo",
+		        zlevel: 2,
+		        large: true,
+		        effect: {
+		            show: true,
+		            constantSpeed: 30,
+		            symbol: "pin",
+		            symbolSize: 10,
+		            trailLength: 0,
+		        },
+		        lineStyle: {
+		            normal: {
+		                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+		                        offset: 0, color: "#a6c84c"
+		                    }, {
+		                        offset: 1, color: "#346C98"
+		                    }], false),
+		                width: 1.5,
+		                opacity: 1,
+		                curveness: 0.1
+		            }
+		        }
+		    }]
+		};
+		//vm.$data.config.option.mapEchartsOption = option;
+	//}
+	option = setLine(option,"广州中滔绿由环保科技有限公司",[113.41, 22.95],[
+		{ENTERNAME:"饶平广茂工艺品有限公司",LNG:"116.55",LAT:"23.401"},
+		{ENTERNAME:"佛山（云浮）产业转移工业园60号地",LNG:"112.101",LAT:"23.1"},
+		{ENTERNAME:"中山市三角镇高平工业区古河街锦成西1号",LNG:"113.48",LAT:"22.71"},
+		{ENTERNAME:"广东冠豪高新技术股份有限公司",LNG:"110.22",LAT:"21.11"},
+		{ENTERNAME:"江门市新会经能石油有限公司",LNG:"113.16",LAT:"22.65"},
+		{ENTERNAME:"广东奥优涂料有限公司",LNG:"113.53",LAT:"24.27"}
+	],0);
+	option = setLine(option,"汕头市生活垃圾卫生处理场",[116.35, 23.26],[
+		{ENTERNAME:"广州市萌辉电子科技有限公司",LNG:"113.48",LAT:"23.8"},
+		{ENTERNAME:"珠海容川饲料有限公司",LNG:"113.17",LAT:"22.2"},
+		{ENTERNAME:"梅州利裕达电路板有限公司",LNG:"115.18",LAT:"23.23"},
+		{ENTERNAME:"江门市荣利金属表面处理有限公司",LNG:"112.54",LAT:"22.33"},
+		{ENTERNAME:"中国石化湛江东兴石油化工有限公司",LNG:"111.22",LAT:"21.9"},
+		{ENTERNAME:"韶关比亚迪实业有限公司",LNG:"113.32",LAT:"24.55"}
+	],2);
+	
+	
+	mapEcharts.setOption(option);
+}
+
+function setLine(option,czdw_entername,czdw_ll,msg,k) {
+	// 填充地图
+	var citys = [{
+		"name": czdw_entername,
+		"value": czdw_ll,
+		"symbolSize": 10,
+		"itemStyle": {
+			"normal": {
+				"color": "white"
+			}
+		},
+		"label": {
+			"normal": {
+				"color": "white"
+			}
+		},
+		"tooltip": function(){
+			return "1";
+		}
+	}];
+	var moveLines = [];
+	for (var i = 0; i < msg.length; i++) {
+		var e = msg[i];
+		citys.push({
+			"name": e.ENTERNAME,
+			"value": [e.LNG, e.LAT],
+			"symbolSize": 2,
+			"itemStyle": {
+				"normal": {
+					"color": "#31921E"
+				}
+			},
+			"label": {
+				"normal": {
+					"color": "white"
+				}
+			}
+		});
+		moveLines.push({
+			"fromName": czdw_entername,
+			"toName": e.ENTERNAME,
+			"coords": [
+				[e.LNG, e.LAT],
+				czdw_ll
+			],
+			"qrfwsl": e.QRFWSL
+		});
+		(option.series[k]).data = citys;
+		(option.series[k+1]).data = moveLines;
+	}
+	return option;
+}
+
+//获取区域颜色
+function getRegionsColor() {
+	return [
+		{name: "韶关市",itemStyle: {areaColor: "#A8A5D2"},emphasis:{itemStyle:{color:"#A8A5D2"}}},
+		{name: "清远市",itemStyle: {areaColor: "#F8AF50"},emphasis:{itemStyle:{color:"#F8AF50"}}},
+		{name: "肇庆市",itemStyle: {areaColor: "#83C1E8"},emphasis:{itemStyle:{color:"#83C1E8"}}},
+		{name: "云浮市",itemStyle: {areaColor: "#A8A5D2"},emphasis:{itemStyle:{color:"#A8A5D2"}}},
+		{name: "茂名市",itemStyle: {areaColor: "#BAD97B"},emphasis:{itemStyle:{color:"#BAD97B"}}},
+		{name: "湛江市",itemStyle: {areaColor: "#5D91B8"},emphasis:{itemStyle:{color:"#5D91B8"}}},
+		{name: "阳江市",itemStyle: {areaColor: "#20679F"},emphasis:{itemStyle:{color:"#20679F"}}},
+		{name: "江门市",itemStyle: {areaColor: "#F8AF50"},emphasis:{itemStyle:{color:"#F8AF50"}}},
+		{name: "佛山市",itemStyle: {areaColor: "#69BD44"},emphasis:{itemStyle:{color:"#69BD44"}}},
+		{name: "广州市",itemStyle: {areaColor: "#64ABDF"},emphasis:{itemStyle:{color:"#64ABDF"}}},
+		{name: "东莞市",itemStyle: {areaColor: "#F9AF4F"},emphasis:{itemStyle:{color:"#F9AF4F"}}},
+		{name: "中山市",itemStyle: {areaColor: "#BAD97B"},emphasis:{itemStyle:{color:"#BAD97B"}}},
+		{name: "珠海市",itemStyle: {areaColor: "#5D91B8"},emphasis:{itemStyle:{color:"#5D91B8"}}},
+		{name: "惠州市",itemStyle: {areaColor: "#83C1E8"},emphasis:{itemStyle:{color:"#83C1E8"}}},
+		{name: "深圳市",itemStyle: {areaColor: "#5E91B8"},emphasis:{itemStyle:{color:"#5E91B8"}}},
+		{name: "河源市",itemStyle: {areaColor: "#6AC290"},emphasis:{itemStyle:{color:"#6AC290"}}},
+		{name: "汕尾市",itemStyle: {areaColor: "#5D91B8"},emphasis:{itemStyle:{color:"#5D91B8"}}},
+		{name: "梅州市",itemStyle: {areaColor: "#A8A5D2"},emphasis:{itemStyle:{color:"#A8A5D2"}}},
+		{name: "潮州市",itemStyle: {areaColor: "#5E91B8"},emphasis:{itemStyle:{color:"#5E91B8"}}},
+		{name: "汕头市",itemStyle: {areaColor: "#69BD44"},emphasis:{itemStyle:{color:"#69BD44"}}},
+		{name: "揭阳市",itemStyle: {areaColor: "#F8AF50"},emphasis:{itemStyle:{color:"#F8AF50"}}}
+	];
+}
+
+
+
+
+
+
+
+//资源目录
+var path = _ctx + "/static/modules/index/map/";
+// 各个行政区划geojson数据包
+var guangdong = "广东.json"
+var shaoguan = "韶关市.json";
+var qingyuan = "清远市.json";
+var zhaoqing = "肇庆市.json";
+var yunfu = "云浮市.json";
+var maoming = "茂名市.json";
+var zhanjiang = "湛江市.json";
+var yangjiang = "阳江市.json";
+var jiangmen = "江门市.json";
+var foshan = "佛山市.json";
+var guangzhou = "广州市.json";
+var donggaun = "东莞市.json";
+var zhongshan = "中山市.json";
+var zhuhai = "珠海市.json";
+var huizhou = "惠州市.json";
+var shenzhen = "深圳市.json";
+var heyuan = "河源市.json";
+var shanwei = "汕尾市.json";
+var meizhou = "梅州市.json";
+var chaozhou = "潮州市.json";
+var shantou = "汕头市.json";
+var jieyang = "揭阳市.json";
+// 注册地图
+var geoCoordMap = {};
+function registerMap(mapName) {
+	var map = echarts.getMap(mapName);
+	if(map == null) {
+		$.ajaxSettings.async = false;
+		$.getJSON(path + mapName + ".json", function(geoJson) {
+			echarts.registerMap(mapName,geoJson);
+		});
+		$.ajaxSettings.async = true;
+		var mapFeatures = echarts.getMap(mapName).geoJson.features;
+		mapFeatures.forEach(function(v) {
+			// 地区名称
+			var name = v.properties.name;
+			// 地区经纬度
+			geoCoordMap[name] = v.properties.cp;
+		});
+	}
+}
+// 启动地图
+function setMap() {
+	var mapName = "广东";
+	//var option = vm.$data.config.option.mapEchartsOption;
+	var mapEcharts = vm.$data.config.echarts.mapEcharts;
+	if(mapEcharts != null) {
+		mapEcharts.dispose();
+	}
+	mapEcharts = echarts.init(document.getElementById("container"));
+	vm.$data.config.echarts.mapEcharts = mapEcharts;
+	//if(isNull(option)) {
+	var	option = {
+		tooltip : {
+			trigger : "item"
+		},
+		visualMap : {
+			show : true,
+			left : "left",
+			top : "bottom",
+			text : [ "高", "低" ],
+			calculable : true,
+			seriesIndex : [ 1 ],
+			inRange : {
+				color : [ "#6cd000","#2666b2","#208dcb","#f5ca30","#f3811e","#f0151d","#bf1218" ]
+			},
+			textStyle : {
+				color : "white"
+			}
+		},
+		geo : {
+			show : true,
+			zoom : 1.2,
+			aspectScale: 1,
+			label : {
+				normal : {
+					show : false
+				},
+				emphasis : {
+					show : false,
+				}
+			},
+			roam : true,
+			itemStyle : {
+				normal : {
+					areaColor : "#031525",
+					borderColor : "white"
+				},
+				emphasis : {
+					areaColor : "#00b7be",
+					borderWidth : 0
+				}
+			}
+		},
+		series : [ {
+				name: "涟漪",
+				type: "effectScatter",
+				coordinateSystem: "geo",
+				zlevel: 4,
+				itemStyle: {
+				    normal: {
+				        color: "#3AB5FE"
+				    }
+				},
+				rippleEffect: {
+				    scale: 4,
+				    brushType: "stroke"
+				}
+			}, {
+			name : "地图",
+			type : "map",
+			geoIndex : 0,
+			aspectScale : 0.9,
+			showLegendSymbol : false,
+			label : {
+				normal : {
+					show : true
+				},
+				emphasis : {
+					show : false,
+					textStyle : {
+						color : "#FFF"
+					}
+				}
+			},
+			roam : true,
+			itemStyle : {
+				normal : {
+					areaColor : "#031525",
+					borderColor : "white"
+				},
+				emphasis : {
+					areaColor : "skyblue",
+					borderWidth : 0
+				}
+			},
+			animation : false
+		} ]
+	};
+		//vm.$data.config.option.mapEchartsOption = option;
+	//}
+	// 注册地图
+	registerMap(mapName);
+	option.geo.map = mapName;
+	(option.series[1]).map = mapName;
+	mapEcharts.showLoading(echartsLoading());
+	var param = {};
+	param["demo"] = vm.$data.config.demo;
+	param["theme"] = vm.$data.map.theme;
+	ajax_f("/gdgf/index/csdw/getMapData",param,function(msg){
+		// 新地图中心点
+		var center = geoCoordMap[mapName];
+		if(!isNull(center)) {
+			option.geo.center = geoCoordMap[mapName];
+		} else {
+			option.geo.center = geoCoordMap["广东省"];
+		}
+		// 计算颜色块梯度量化
+		var min = null, max = null;
+		for ( var name in msg) {
+			var val = parseInt(msg[name]["csdw_1_zl"]);
+			if(min == null) {
+				min = val;
+				max = val;
+			} else {
+				if(val < min) {
+					min = val;
+				}
+				if(val > max) {
+					max = val;
+				}
+			}
+		}
+		option.visualMap.min = min;
+		option.visualMap.max = max;
+		// 点位大小值量化
+		var diff = max - min;
+		(option.series[0]).symbolSize = function(val) {
+			if(diff == 0) {
+				return 1;
+			}
+			var res = (20*val[2])/diff;
+			if(res == 0) {
+				return 1;
+			}
+			return res;
+		};
+		// 设置地图区域色块/点位格式
+		(option.series[0]).data = scatterData(msg);
+		(option.series[1]).data = mapData(msg);
+		// 鼠标挪到区域显示内容
+		var theme = vm.$data.map.theme;
+		if(theme == "cz") {
+			option.tooltip.formatter = function(params) {
+				var name = params.name;
+				var value = msg[name];
+				var csdw_1_zl = value.csdw_1_zl;
+				var csdw_1_ld = value.csdw_1_ld;
+				var csdw_2_zl = value.csdw_2_zl;
+				var csdw_2_ld = value.csdw_2_ld;
+				var csdw_3_zl = value.csdw_3_zl;
+				var csdw_3_ld = value.csdw_3_ld;
+				var csdw_4_zl = value.csdw_4_zl;
+				var csdw_4_ld = value.csdw_4_ld;
+				var res = "";
+				
+				res += "<table border='1' id='mapTips'>";
+				res += "<tr>";
+				res += 		"<td colspan='7'>";
+				res += 			name;
+				res += 		"</td>";
+				res += "</tr>";
+				res += "<tr>";
+				res += 		"<td colspan='3'>";
+				res += 			"处理能力情况";
+				res += 		"</td>";
+				res += "</tr>";
+				res += "<tr>";
+				res += 		"<td>自行处理</td>";
+				res += 		"<td>经营单位</td>";
+				res += 		"<td>豁免单位</td>";
+				res += "</tr>";
+				res += "<tr>";
+				res += 		"<td>"+csdw_1_zl+"吨</td>";
+				res += 		"<td>"+csdw_1_ld+"吨</td>";
+				res += 		"<td>"+csdw_2_zl+"吨</td>";
+				res += "</tr>";
+				res += "</table>";
+				res += "<table border='1' id='mapTips'>";
+				res += "<tr>";
+				res += 		"<td colspan='4'>";
+				res += 			"能力缺口情况";
+				res += 		"</td>";
+				res += "</tr>";
+				res += "<tr>";
+				res += 		"<td>考虑所有</td>";
+				res += 		"<td>仅考虑经营单位</td>";
+				res += 		"<td>仅考虑“经营豁免”</td>";
+				res += 		"<td>仅考虑“经营自建”</td>";
+				res += "</tr>";
+				res += "<tr>";
+				res += 		"<td>"+csdw_2_ld+"吨</td>";
+				res += 		"<td>"+csdw_3_zl+"吨</td>";
+				res += 		"<td>"+csdw_3_ld+"吨</td>";
+				res += 		"<td>"+csdw_4_zl+"吨</td>";
+				res += "</tr>";
+				res += "</table>";
+				
+				return res;
+			};
+		} else {
+			option.tooltip.formatter = function(params) {
+				var name = params.name;
+				var value = msg[name];
+				var csdw_1_zl = value.csdw_1_zl;
+				var csdw_1_ld = value.csdw_1_ld;
+				var csdw_2_zl = value.csdw_2_zl;
+				var csdw_2_ld = value.csdw_2_ld;
+				var csdw_3_zl = value.csdw_3_zl;
+				var csdw_3_ld = value.csdw_3_ld;
+				var csdw_4_zl = value.csdw_4_zl;
+				var csdw_4_ld = value.csdw_4_ld;
+				var jsdw_1_zl = value.jsdw_1_zl;
+				var jsdw_1_ld = value.jsdw_1_ld;
+				var jsdw_2_zl = value.jsdw_2_zl;
+				var jsdw_2_ld = value.jsdw_2_ld;
+				var jsdw_3_zl = value.jsdw_3_zl;
+				var jsdw_3_ld = value.jsdw_3_ld;
+				var jsdw_4_zl = value.jsdw_4_zl;
+				var jsdw_4_ld = value.jsdw_4_ld;
+				var res = "<table border='1' id='mapTips'>";
+				if(theme == "tz") {
+					res += 	"<tr>";
+					res += 		"<td colspan='8'>申报量汇总</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td rowspan='8'>";
+					res += 			name;
+					res += 		"</td>";
+					res += 		"<td rowspan='4'>产废</td>";
+					res += 		"<td>总体情况</td>";
+					res += 		"<td>"+csdw_1_zl+"万吨</td>";
+					res += 		"<td>"+csdw_1_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>本市转移</td>";
+					res += 		"<td>"+csdw_2_zl+"万吨</td>";
+					res += 		"<td>"+csdw_2_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨市转出</td>";
+					res += 		"<td>"+csdw_3_zl+"万吨</td>";
+					res += 		"<td>"+csdw_3_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨省转出</td>";
+					res += 		"<td>"+csdw_4_zl+"万吨</td>";
+					res += 		"<td>"+csdw_4_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td rowspan='4'>接废</td>";
+					res += 		"<td>总体情况</td>";
+					res += 		"<td>"+jsdw_1_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_1_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>本市转移</td>";
+					res += 		"<td>"+jsdw_2_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_2_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨市转入</td>";
+					res += 		"<td>"+jsdw_3_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_3_ld+"份</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨省转入</td>";
+					res += 		"<td>"+jsdw_4_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_4_ld+"份</td>";
+					res += 	"</tr>";
+					res += "</table>";
+				} else {
+					res += 	"<tr>";
+					res += 		"<td colspan='8'>转移联单汇总</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td rowspan='8'>";
+					res += 			name;
+					res += 		"</td>";
+					res += 		"<td rowspan='4'>产废</td>";
+					res += 		"<td>总体情况</td>";
+					res += 		"<td>"+csdw_1_zl+"万吨</td>";
+					res += 		"<td>"+csdw_1_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>本市转移</td>";
+					res += 		"<td>"+csdw_2_zl+"万吨</td>";
+					res += 		"<td>"+csdw_2_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨市转出</td>";
+					res += 		"<td>"+csdw_3_zl+"万吨</td>";
+					res += 		"<td>"+csdw_3_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨省转出</td>";
+					res += 		"<td>"+csdw_4_zl+"万吨</td>";
+					res += 		"<td>"+csdw_4_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td rowspan='4'>接废</td>";
+					res += 		"<td>总体情况</td>";
+					res += 		"<td>"+jsdw_1_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_1_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>本市转移</td>";
+					res += 		"<td>"+jsdw_2_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_2_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨市转入</td>";
+					res += 		"<td>"+jsdw_3_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_3_ld+"个</td>";
+					res += 	"</tr>";
+					res += 	"<tr>";
+					res += 		"<td>跨省转入</td>";
+					res += 		"<td>"+jsdw_4_zl+"万吨</td>";
+					res += 		"<td>"+jsdw_4_ld+"个</td>";
+					res += 	"</tr>";
+					res += "</table>";
+				}
+				return res;
+			};
+		}
+		mapEcharts.setOption(option);
+		mapEcharts.hideLoading();
+	});
+}
+// 地图点位数据格式器
+function scatterData(data) {
+	var res = [];
+	for ( var name in data) {
+		var geoCoord = geoCoordMap[name];
+		if (geoCoord) {
+	        res.push({
+	            name: name,
+	            value: geoCoord.concat(data[name]["csdw_1_zl"]),
+	        });
+	    }
+	}
+	return res;
+};
+// 地图区域块数据格式器
+function mapData(data) {
+	var res = [];
+	for ( var name in data) {
+		res.push({"name":name,"value":data[name]["csdw_1_zl"]});
+	}
+	return res;
+}
+//创建点位
+var eJson = {};
+var guangdongPoly;
+function setMarks(eList){
+	// 先请空掉点位
+	clearMarks();
+	// 筛选掉非广东地区的点位
+	if(guangdongPoly == null) {
+		$.ajaxSettings.async = false;
+		$.getJSON("/gdgf/static/modules/index/map/广东省(无子域).json", function(geoJson) {
+			var coordinates = geoJson.features[0].geometry.coordinates;
+			guangdongPoly = turf.polygon([
+				coordinates[coordinates.length-1]
+			]);
+		});
+		$.ajaxSettings.async = true;
+	}
+	var enterpriseList = [];
+	for (var i = 0; i < eList.length; i++) {
+		var e = eList[i];
+		var pt = turf.point([e.LNG, e.LAT]);
+		if(turf.booleanPointInPolygon(pt, guangdongPoly)) {
+			enterpriseList.push(e);
+		}
+	}
+	// 记录企业信息
+	eJson = {};
+	var points = {"1":[],"2":[],"3":[],"4":[],"5":[]};
+	//循环把企业的点位放进地图里
+	for (var i = 0; i < enterpriseList.length; i++) {
+		var e = enterpriseList[i];
+		var p = new BMap.Point(e.LNG, e.LAT);
+		points[e.LEV].push(p);
+		eJson[e.LNG+"-"+e.LAT] = e;
+	}
+	// 5个等级不同颜色不同层级叠加到地图上
+	for (var k in points) {
+		var pointCollection = new BMap.PointCollection(points[k], {
+			size: BMAP_POINT_SIZE_SMALL,
+		    shape: BMAP_POINT_SHAPE_CIRCLE,
+		    color: vm.$data.map.pointColorList[rndNum2(0, 5)]
+		});
+		pointCollection.addEventListener("click", function(e) {
+			var enterprise = eJson[e.point.lng+"-"+e.point.lat];
+			console.log(e.point.lng+"-"+e.point.lat + "==>" + enterprise.entername);
+			var content = "";
+			content += "<div id='mapTip'>";
+			content += "<table>";
+			content += 		"<tr>";
+			content += 			"<td class='title'>企业名称：</td>";
+			content += 			"<td>广东奥优涂料有限公司</td>";
+			content += 		"</tr>";
+			content += 		"<tr>";
+			content += 			"<td class='title'>"+(vm.$data.year-1)+"年底贮存量：</td>";
+			content += 			"<td>"+1.28+"吨</td>";
+			content += 		"</tr>";
+			content += 		"<tr>";
+			content += 			"<td class='title'>"+(vm.$data.year)+"年产废量：</td>";
+			content += 			"<td>"+31.44+"吨</td>";
+			content += 		"</tr>";
+			content += 		"<tr>";
+			content += 			"<td class='title'>"+(vm.$data.year)+"自行利用处置量：</td>";
+			content += 			"<td>"+0.21+"吨</td>";
+			content += 		"</tr>";
+			content += 		"<tr>";
+			content += 			"<td class='title'>"+(vm.$data.year)+"委托处理量：</td>";
+			content += 			"<td>"+30+"吨</td>";
+			content += 		"</tr>";
+			content += 		"<tr>";
+			content += 			"<td class='title'>"+(vm.$data.year)+"年底库存量：</td>";
+			content += 			"<td>"+2.93+"吨</td>";
+			content += 		"</tr>";
+			content += 		"<tr>";
+			content += 			"<td align='center'><a style='color: #00DEFF;cursor: pointer;' onclick='clickYqyd(\""+enterprise.USERNAME+"\")'>一企一档</a></td>";
+			content += 			"<td align='center'><a style='color: #00DEFF;cursor: pointer;' onclick='clickVideo()'>视频监控</a></td>";
+			content += 		"</tr>";
+			content += "</table>";
+			content += "</div>";
+			var width = 200;
+			if(!isNull(enterprise.ENTERNAME)) {
+				var len = enterprise.ENTERNAME.length;
+				width = 150 + 15*len;
+			}
+			var infoWindow = new BMap.InfoWindow(content, {
+				width: width
+			});
+			map.openInfoWindow(infoWindow, e.point);
+        });
+		map.addOverlay(pointCollection);
+	}
+	//Vue.set(vm.map,"spinerFlag",false);
+}
+function clickVideo() {
+	openPage("/gdgf/myVideoPage?videoUrl=a.mp4","","70%,90%");
+}
+//清空点位
+var boundaries = [];
+function clearMarks(){
+	var allOverlay = map.getOverlays();
+	for (var i = 0; i < allOverlay.length; i++){
+		map.removeOverlay(allOverlay[i]);
+	}
+	// 描出广东边界
+	if(boundaries.length == 0) {
+		var bdary = new BMap.Boundary();
+		bdary.get("广东省", function(rs){
+			boundaries = rs.boundaries;
+			for (var i = 0; i < boundaries.length; i++) {
+				var ply = new BMap.Polyline(boundaries[i], {strokeColor:"#00A7EA", strokeWeight:2, strokeOpacity:0.5});
+				map.addOverlay(ply);
+			}
+		});
+	} else {
+		for (var i = 0; i < boundaries.length; i++) {
+			var ply = new BMap.Polyline(boundaries[i], {strokeColor:"#00A7EA", strokeWeight:2, strokeOpacity:0.5});
+			map.addOverlay(ply);
+		}
+	}
+}
+// 一企一档
+function clickYqyd(username) {
+	openPage_p("/gdgf/enterprise/yqyd/yqydPage?id="+username);
+}
+</script>
+</html>

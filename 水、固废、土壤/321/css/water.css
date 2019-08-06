@@ -1,0 +1,324 @@
+/* 布局 */
+.content {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	background: #0c0024;
+}
+
+.all-left,
+.all-right {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: 10px;
+}
+
+.quality {
+	width: 100%;
+	height: calc(50% - 10px);
+	margin-bottom: 10px;
+}
+
+.calenda {
+	width: 100%;
+	height: calc(22% - 10px);
+	margin-bottom: 10px;
+}
+
+.contras,
+.informa {
+	width: calc(50% - 5px);
+	height: 28%;
+	margin-right: 10px;
+}
+
+.informa {
+	margin-right: 0px;
+}
+
+.all-right {
+	margin-right: 0;
+}
+
+.all-right .box {
+	width: calc(50% - 5px);
+	height: calc((72% - 20px) / 2);
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.all-right .box:nth-child(n+5):nth-child(-n+6) {
+	height: 28%;
+	margin-bottom: 0px;
+}
+
+.all-right .box:nth-child(2n) {
+	margin-right: 0px;
+}
+
+.box {
+	background: url(../images/zuoshang.png), url(../images/youshang.png), url(../images/zuoxia.png), url(../images/youxia.png);
+	background-size: 25px 25px;
+	background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.box-title {
+	padding: 5px 20px 0;
+	font-size: 1.14rem;
+	height: 1.8rem;
+	color: #FBFBFB;
+}
+
+.box-title .SubText,
+.box-title .choice {
+	font-size: 0.9rem;
+	color: #abd3ea;
+	float: right;
+	margin-right: 10px;
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+}
+
+.box-title .choice {
+	margin-right: 0px;
+}
+
+.box-title .choice span {
+	margin-right: 15px;
+	cursor: pointer;
+}
+
+.box-title .choice span.active {
+	color: #FFFFFF;
+}
+
+.box-content {
+	width: 100%;
+	height: calc(100% - 1.8rem);
+}
+/* 内容 */
+#contras,
+#network,
+#upload {
+	width: 100%;
+	height: 100%;
+}
+
+.dashboard {
+	width: calc(100% / 3);
+	height: 100%;
+	float: left;
+}
+
+#dashboard1,
+#dashboard2,
+#dashboard3 {
+	width: 100%;
+	height: 85%;
+}
+
+.dashboard span {
+	width: 100%;
+	height: 10%;
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 0.8rem;
+	text-align: center;
+}
+
+/* 日历 */
+.box-left,
+.box-right {
+	width: 50%;
+	height: 100%;
+	float: left;
+	padding: 0 5px;
+}
+
+.box-text {
+	width: 100%;
+	height: 1.4rem;
+	color: #FFFFFF;
+	font-size: 1rem;
+}
+
+.box-calendar {
+	width: 100%;
+	height: calc(100% - 1.4rem);
+	padding: 5px;
+}
+
+.box-calendar ul {
+	width: 100%;
+	height: 100%;
+}
+
+.box-calendar ul li {
+	width: calc(100% / 9);
+	height: calc(100% / 4);
+	float: left;
+	color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #78dd8c;
+}
+
+/* 表格 */
+.table {
+	width: calc(100% - 30px);
+	height: 100%;
+	vertical-align: middle;
+	margin: 0 15px;
+}
+
+.table thead tr {
+	display: block;
+	width: 100%;
+	height: 35px;
+	line-height: 35px;
+	background: #063d80;
+	font-size: 1.1rem;
+}
+
+.table tbody {
+	display: block;
+	width: 100%;
+	height: calc(100% - 15px);
+	overflow: auto;
+}
+
+.table tbody tr {
+	display: block;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	font-size: 1rem;
+}
+
+.table tbody tr:nth-child(even) {
+	background: #152356;
+}
+
+.table th,
+.table td {
+	text-align: center;
+	display: inline-block;
+	border: 0px;
+}
+
+.table th {
+	color: #bbe7ff;
+	font-weight: normal;
+}
+
+.table td {
+	color: #ffffff;
+}
+
+/* 自动监测站预警、报警信息 */
+.warning thead tr {
+	height: 50px;
+	line-height: 50px;
+}
+
+.warning tbody tr {
+	height: 40px;
+	line-height: 20px;
+}
+
+.warning th:nth-child(1),
+.warning td:nth-child(1) {
+	width: 45%;
+}
+
+.warning th:nth-child(2),
+.warning td:nth-child(2) {
+	width: 25%;
+}
+
+.warning th:nth-child(3),
+.warning td:nth-child(3) {
+	width: 23%;
+}
+
+/* 自动站排名 */
+.ranking th:nth-child(1),
+.ranking td:nth-child(1) {
+	width: 25%;
+}
+
+.ranking th:nth-child(2),
+.ranking td:nth-child(2) {
+	width: 45%;
+}
+
+.ranking th:nth-child(3),
+.ranking td:nth-child(3) {
+	width: 27%;
+}
+
+/* 水质实况 */
+.situation th:nth-child(1),
+.situation td:nth-child(1) {
+	width: 36%;
+}
+
+.situation th:nth-child(2),
+.situation td:nth-child(2) {
+	width: 20%;
+}
+
+.situation th:nth-child(3),
+.situation td:nth-child(3) {
+	width: 20%;
+}
+
+.situation th:nth-child(4),
+.situation td:nth-child(4) {
+	width: 20%;
+}
+
+.situation td:nth-child(4) span {
+	display: inline-block;
+	height: 24px;
+	line-height: 24px;
+	padding: 0 0.5rem;
+	border: 1px solid #f18423;
+	border-radius: 12px;
+}
+
+/* 水质监测任务完成情况 */
+.complete th:nth-child(1),
+.complete td:nth-child(1) {
+	width: 22%;
+}
+
+.complete th:nth-child(2),
+.complete td:nth-child(2) {
+	width: 22%;
+}
+
+.complete th:nth-child(3),
+.complete td:nth-child(3) {
+	width: 10%;
+}
+
+.complete th:nth-child(4),
+.complete td:nth-child(4) {
+	width: 10%;
+}
+
+.complete th:nth-child(5),
+.complete td:nth-child(5) {
+	width: 10%;
+}
+
+.complete th:nth-child(6),
+.complete td:nth-child(6) {
+	width: 18%;
+}

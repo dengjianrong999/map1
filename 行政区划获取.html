@@ -1,0 +1,260 @@
+<!-- 重点： on, setAreaNodesForLocating -->
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 原始地址：//webapi.amap.com/ui/1.0/ui/geo/DistrictExplorer/examples/events.html -->
+    <base href="https://webapi.amap.com/ui/1.0/ui/geo/DistrictExplorer/examples/" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>事件处理</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+        }
+
+        .amap-overlay-text-container {
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript"
+        src='https://webapi.amap.com/maps?v=1.4.15&key=409a1ee5427f6b95b961e8f44e12501c&plugin=AMap.DistrictSearch'></script>
+    <!-- UI组件库 1.0 -->
+    <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <script type="text/javascript">
+        //创建地图
+        var map = new AMap.Map('container', {
+            cursor: 'default',
+            zoom: 4,
+            resizeEnable: true,
+        });
+
+
+        // 坐标
+        // map.on('click', function (e) {
+        //     // console.log(e, 'llllll')
+        //     alert(e.lnglat.getLng() + ',' + e.lnglat.getLat());
+        // });
+
+        // map.setOnCameraChangeListener(new AMap.OnCameraChangeListener(),function(){
+
+        // } )
+
+
+        var arrText = [
+            {
+                name: '大同市',
+                position: [113.719202, 39.806936],
+
+            },
+            {
+                name: '朔州市',
+                position: [112.502467, 39.534215],
+
+            },
+            {
+                name: '朔州市',
+                position: [112.502467, 39.534215],
+
+            },
+            {
+                name: '朔州市',
+                position: [112.502467, 39.534215],
+
+            },
+            {
+                name: '祁州市',
+                position: [112.299219, 38.797425],
+
+            },
+            {
+                name: '太原市',
+                position: [112.321192, 37.905723],
+
+            },
+            {
+                name: '吕梁市',
+                position: [111.480738, 37.514609],
+
+            },
+            {
+                name: '晋中市',
+                position: [112.996851, 37.296433],
+
+            },
+            {
+                name: '阳泉市',
+                position: [113.452784, 38.083212],
+
+            },
+            {
+                name: '临汾市',
+                position: [111.337916, 36.240378],
+
+            },
+            {
+                name: '长治市',
+                position: [112.958399, 36.443914],
+
+            },
+            {
+                name: '运城市',
+                position: [111.024805, 35.16537],
+
+            },
+            {
+                name: '晋城市',
+                position: [112.705714, 35.653372],
+
+            },
+        ]
+        function gettext(arrText) {
+           
+            // 创建纯文本标记
+            for (let i = 0; i < arrText.length; i++) {
+                console.log(arrText[i].name,'dsdssd')
+                var text = new AMap.Text({
+                    text: arrText[i].name,
+                    anchor: 'center', // 设置文本标记锚点
+                    draggable: true,
+                    cursor: 'pointer',
+                    angle: 10,
+                    style: {
+                        'border-width': 0,
+                        'text-align': 'center',
+                        'font-size': '14px',
+                        'color': '#333',
+                        'z-index':'999'
+                    },
+                    position: arrText[i].position,
+                });
+                text.setMap(map);
+            }
+
+        }
+        gettext(arrText);
+
+
+        // 镂空
+        new AMap.DistrictSearch({
+            extensions: 'all',
+            subdistrict: 0
+        }).search('山西省', function (status, result) {
+            // 外多边形坐标数组和内多边形坐标数组
+            var outer = [
+                new AMap.LngLat(-360, 90, true),
+                new AMap.LngLat(-360, -90, true),
+                new AMap.LngLat(360, -90, true),
+                new AMap.LngLat(360, 90, true),
+            ];
+            var holes = result.districtList[0].boundaries
+
+            var pathArray = [
+                outer
+            ];
+            pathArray.push.apply(pathArray, holes)
+            var polygon = new AMap.Polygon({
+                pathL: pathArray,
+                strokeColor: '#00eeff',
+                strokeWeight: 1,
+                fillColor: '#71B3ff',
+                fillOpacity: 0.3
+            });
+            polygon.setPath(pathArray);
+            map.add(polygon)
+        })
+        // 镂空
+        //just some colors
+        var colors = [
+            "#02d65c", "#01dbe9", "#0288ff", "#a304fe", "#f8f972", "#fe0491"
+        ];
+
+        AMapUI.loadUI(['geo/DistrictExplorer'], function (DistrictExplorer) {
+
+            // var iconStyles = SimpleMarker.getBuiltInIconStyles('default');
+            //创建一个实例
+            var districtExplorer = new DistrictExplorer({
+                eventSupport: true,
+                map: map
+            });
+
+            //创建一个辅助Marker，提示鼠标内容
+            var tipMarker = new AMap.Marker({
+                //启用冒泡，否则click事件会被marker自己拦截
+                bubble: true
+            });
+
+            //feature被点击
+            districtExplorer.on('featureClick', function (e, feature) {
+
+                console.log('点击fff: ' + feature.properties.name);
+            });
+
+            function renderAreaNode(areaNode) {
+
+                if ([140000].indexOf(areaNode.getAdcode()) >= 0) {
+                    //绘制子区域
+                    districtExplorer.renderSubFeatures(areaNode, function (feature, i) {
+
+                        var fillColor = colors[i % colors.length];
+                        var strokeColor = colors[colors.length - 1 - i % colors.length];
+
+                        return {
+                            cursor: 'default',
+                            bubble: true,
+                            strokeColor: strokeColor, //线颜色
+                            strokeOpacity: 1, //线透明度
+                            strokeWeight: 1, //线宽
+                            fillColor: fillColor, //填充色
+                            fillOpacity: 1, //填充透明度
+                        };
+                    });
+                }
+
+                //绘制父区域
+                districtExplorer.renderParentFeature(areaNode, {
+                    cursor: 'default',
+                    bubble: true,
+                    strokeColor: 'black', //线颜色
+                    strokeOpacity: 1, //线透明度
+                    strokeWeight: 1, //线宽
+                    fillColor: 'gray', //填充色
+                    fillOpacity: 0.2, //填充透明度
+                });
+            }
+
+            var adcodes = [
+                140000, //山西
+            ];
+
+            districtExplorer.loadMultiAreaNodes(adcodes, function (error, areaNodes) {
+
+                //设置定位节点，支持鼠标位置识别
+                //注意节点的顺序，前面的高优先级
+                districtExplorer.setAreaNodesForLocating(areaNodes);
+
+                //清除已有的绘制内容
+                districtExplorer.clearFeaturePolygons();
+
+
+                for (var i = 0, len = areaNodes.length; i < len; i++) {
+                    renderAreaNode(areaNodes[i]);
+                }
+
+                //更新地图视野
+                map.setFitView(districtExplorer.getAllFeaturePolygons());
+            });
+        });
+    </script>
+</body>
+
+</html>
