@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function speckText(str) {
+      //var request=  new URLRequest();
+      var url =
+        "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&text=" +
+        encodeURI(str); // baidu
+      //url = "http://translate.google.cn/translate_tts?ie=UTF-8&tl=zh-CN&total=1&idx=0&textlen=19&prev=input&q=" + encodeURI(str); // google
+      //request.url = encodeURI(url);
+      // request.contentType = "audio/mp3"; // for baidu
+      //request.contentType = "audio/mpeg"; // for google
+
+      var n = new Audio(url);
+
+      n.src = url;
+
+      n.play(); // $("...").play(); // var sound = new Sound(request); // sound.play();
+    }
+    speckText("李果然收到付款10元。");
+  </script>
+</html>

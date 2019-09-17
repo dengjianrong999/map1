@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .head {
+      width: 200px;
+      background: #ededed;
+    }
+    .head > div {
+      display: inline-block;
+      width: 30%;
+    }
+    .ty {
+      height: 100px;
+      overflow: scroll;
+    }
+    .body {
+      background: #ededed;
+      width: 200px;
+      border-bottom: 1px solid red;
+    }
+    .body > div {
+      display: inline-block;
+      width: 30%;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+    .re {
+      background-color: red;
+      color: #fff;
+    }
+  </style>
+  <body class="body">
+    <div class="head">
+      <div>序号</div>
+      <div>name</div>
+      <div>sex</div>
+    </div>
+    <div class="ty">
+      <div class="body">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
+      <div class="body">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
+      <div class="body">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
+      <div class="body">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var ht =
+    `<div class="re">
+          这个是red
+      </div>`;
+    var body =  document.getElementsByClassName('body')
+    console.log(body)
+    body.appendChild(ht)
+    document.innerHTML += ht;
+  </script>
+</html>

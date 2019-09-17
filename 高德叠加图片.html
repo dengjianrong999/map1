@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0, user-scalable=no, width=device-width"
+    />
+    <title>图片图层</title>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=409a1ee5427f6b95b961e8f44e12501c"></script>
+    <style>
+      html,
+      body,
+      #container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      var imageLayer = new AMap.ImageLayer({
+        url:
+        //   "http://amappc.cn-hangzhou.oss-pub.aliyun-inc.com/lbs/static/img/dongwuyuan.jpg",
+          "./images/queshi.png",
+        bounds: new AMap.Bounds(
+        //   [116.327911, 39.939229],
+        //   [116.342659, 39.946275]
+        [116.649246,23.29406],
+        [116.728688,23.34214],
+     
+     
+        ),
+        zooms: [12, 18]
+      });
+      var map = new AMap.Map("container", {
+        resizeEnable: true,
+        // center: [116.33719, 39.942384],
+        center: [116.693598,23.317846],
+        zoom: 14,
+        layers: [new AMap.TileLayer(), imageLayer]
+      });
+      map.on("click", function(e) {
+        alert(e.lnglat.lng+','+e.lnglat.lat)
+      });
+
+
+      
+    </script>
+    
+  </body>
+</html>
